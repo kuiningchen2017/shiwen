@@ -7,18 +7,31 @@
     </mt-swipe>
     <div class="navlist">
       <router-link :to="item.path" tag="li" v-for = "(item, index) of navList" :key = "index">
-        <img :src="item.imgUrl" alt="#">
+        <img :src="item.imgUrl" alt="#"/>
         <p>{{ item.name }}</p>
       </router-link>
     </div>
     <div class="teacher">
+      <div class="teacher-box">
+        <div class="teacher-head">
+          <h2>专家智库</h2>
+          <span>查看更多<i class="iconfont icon-iconfontjiantou4"></i></span>
+        </div>
+        <div class="teacher-content">
 
+        </div>
+      </div>
     </div>
     <div class="lesson">
-      
+      <div class="lesson-box">
+        <div class="lesson-head">
+          <h2>精品微课</h2>
+          <span>查看更多<i class="iconfont icon-iconfontjiantou4"></i></span>
+        </div>
+      </div>
     </div>
     <div class="company">
-      <p>&copy2018年石水源教育有限公司</p>
+      <p>&copy;2018年石水源教育有限公司</p>
       <p>豫ICP备17001731号-2</p>
     </div>
   </div>
@@ -92,16 +105,66 @@ export default {
   }
   .teacher {
     width:100%;
-    height:rem750(412);
+    height:rem750(378);
     background: #fff;
     margin-bottom: rem750(16);
     flex-shrink: 0;
+    .teacher-head {
+      margin: rem750(27) 0 0 rem750(24);
+      width: rem750(702);
+      height: rem750(34);
+      border-left: rem750(7) solid #000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      h2 {
+        padding-left: rem750(16);
+        font-size: rem750(30);
+        line-height: rem750(34);
+      }
+      span {
+        font-size: rem750(20);
+        color: #3e3e3e;
+        line-height: rem750(34);
+        i {
+          font-size: rem750(20);
+        }
+      }
+    }
+    .teacher-content {
+      background: #00f;
+      width: rem750(688);
+      height: rem750(294);
+      margin: rem750(24) 0 0 rem750(31);
+    }
   }
   .lesson {
     width:100%;
     height:rem750(390);
     background: #fff;
     flex-shrink: 0;
+    .lesson-head {
+      margin: rem750(27) 0 0 rem750(24);
+      width: rem750(702);
+      height: rem750(34);
+      border-left: rem750(7) solid #000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      h2 {
+        padding-left: rem750(16);
+        font-size: rem750(30);
+        line-height: rem750(34);
+      }
+      span {
+        font-size: rem750(20);
+        color: #3e3e3e;
+        line-height: rem750(34);
+        i {
+          font-size: rem750(20);
+        }
+      }
+    }
   }
   .company {
     width:100%;
