@@ -17,12 +17,8 @@
           <h2>专家智库</h2>
           <span>查看更多<i class="iconfont icon-iconfontjiantou4"></i></span>
         </div>
-        <div class="teacher-content">
-          <div class="img">
-            <img src="" alt="">
-            <span>教师：</span>
-            <p>院长</p>
-          </div>
+        <div class="content">
+
         </div>
       </div>
     </div>
@@ -55,17 +51,17 @@ export default {
         {
           imgUrl: require('@/assets/icon_03.png'),
           name: '教师学院',
-          path: '/teacherhome'
+          path: '123'
         },
         {
           imgUrl: require('@/assets/icon_05.png'),
           name: '翻转课堂',
-          path: '/turnhome'
+          path: '123'
         },
         {
           imgUrl: require('@/assets/icon_07.png'),
           name: '亲子课堂',
-          path: '/parentinghome'
+          path: '123'
         }
       ]
     }
@@ -111,13 +107,12 @@ export default {
     .teacher-head {
       margin: rem750(27) 0 0 rem750(24);
       width: rem750(702);
+      line-height: rem750(34);
       border-left: rem750(7) solid #000;
       @include _flex(space-between,center);
       h2 {
         padding-left: $bottom;
-        font-size: $font-30;
-        height: rem750(34);
-        line-height: rem750(34);
+        font-size: rem750(30);
       }
       span {
         font-size: $font-20;
@@ -127,11 +122,11 @@ export default {
         }
       }
     }
-    .teacher-content {
+    .content {
       background: #00f;
       width: rem750(688);
       height: rem750(294);
-      margin: rem750(23) 0 0 rem750(31);
+      margin: rem750(24) 0 0 rem750(31);
     }
   }
   .lesson {
@@ -142,13 +137,12 @@ export default {
     .lesson-head {
       margin: rem750(27) 0 0 rem750(24);
       width: rem750(702);
+      line-height: rem750(34);
       border-left: rem750(7) solid #000;
       @include _flex(space-between,center);
       h2 {
         padding-left: $bottom;
-        font-size: $font-30;
-        height: rem750(34);
-        line-height: rem750(34);
+        font-size: rem750(30);
       }
       span {
         font-size: $font-20;
