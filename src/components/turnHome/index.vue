@@ -11,28 +11,58 @@
         <p>{{ item.name }}</p>
       </router-link>
     </div>
-    <div class="teacher">
-      <div class="teacher-box">
-        <div class="teacher-head">
-          <h2>专家智库</h2>
-          <span>查看更多<i class="iconfont icon-iconfontjiantou4"></i></span>
-        </div>
-        <div class="content">
-
-        </div>
+    <div class="course">
+      <div class="head">
+        <h2>
+          <b></b>
+          精品课程
+        </h2>
+        <span>
+          更多
+          <i class="iconfont icon-iconfontjiantou4"></i>
+        </span>
+      </div>
+      <div class="box">
+        <router-link to = "" tag = "li">
+          <img src="" alt="">
+          <span></span>
+          <span></span>
+        </router-link>
       </div>
     </div>
-    <div class="lesson">
-      <div class="lesson-box">
-        <div class="lesson-head">
-          <h2>精品微课</h2>
-          <span>查看更多<i class="iconfont icon-iconfontjiantou4"></i></span>
-        </div>
+    <div class="common">
+      <div class="head">
+        <h2>
+          <b></b>
+          家校共建
+        </h2>
+        <span>
+          更多
+          <i class="iconfont icon-iconfontjiantou4"></i>
+        </span>
+      </div>
+    </div>
+    <div class="classroom">
+      <div class="head">
+        <h2>
+          <b></b>
+          第二课堂
+        </h2>
+        <span>
+          更多
+          <i class="iconfont icon-iconfontjiantou4"></i>
+        </span>
+      </div>
+      <div class="box">
+        <router-link to = "" tag = "li">
+          <img src="" alt="">
+          <span></span>
+          <span></span>
+        </router-link>
       </div>
     </div>
     <div class="company">
-      <p>&copy;2018年石水源教育有限公司</p>
-      <p>豫ICP备17001731号-2</p>
+     <p>&copy;2018郑州石水源教育科技有限公司&nbsp;&nbsp;豫ICP备17001731号-2</p>
     </div>
   </div>
 </template>
@@ -49,18 +79,23 @@ export default {
       ],
       navList: [
         {
-          imgUrl: require('@/assets/icon_03.png'),
-          name: '教师学院',
+          imgUrl: require('@/assets/icon_04.png'),
+          name: '同步课堂',
           path: '123'
         },
         {
           imgUrl: require('@/assets/icon_05.png'),
-          name: '翻转课堂',
+          name: '疑难解析',
+          path: '123'
+        },
+        {
+          imgUrl: require('@/assets/icon_06.png'),
+          name: '直播课堂',
           path: '123'
         },
         {
           imgUrl: require('@/assets/icon_07.png'),
-          name: '亲子课堂',
+          name: '我的学习',
           path: '123'
         }
       ]
@@ -76,90 +111,78 @@ export default {
   .mint-swipe {
     width:100%;
     height: rem750(300);
-    background: #00f;
     flex-shrink: 0;
   }
   .navlist {
     @include _flex(space-around,center);
     flex-shrink: 0;
     width: 100%;
-    height: rem750(192);
+    height: rem750(212);
     background: $bg-black;
     margin-bottom: $bottom;
     li {
       @include _flex(center,center,column);
       img {
-        width: rem750(80);
-        height: rem750(80);
-        padding-bottom: rem750(24);
+        width: rem750(100);
+        height: rem750(100);
+        padding-bottom: rem750(16);
       }
       p {
         font-size: rem750(22);
       }
     }
   }
-  .teacher {
-    width:100%;
-    height:rem750(378);
-    background: $bg-black;
+  .course {
+    height:rem750(412);
     margin-bottom: $bottom;
-    flex-shrink: 0;
-    .teacher-head {
-      margin: rem750(27) 0 0 rem750(24);
-      width: rem750(702);
-      line-height: rem750(34);
-      border-left: rem750(7) solid #000;
-      @include _flex(space-between,center);
-      h2 {
-        padding-left: $bottom;
-        font-size: rem750(30);
-      }
-      span {
-        font-size: $font-20;
-        color: #4d4d4d;
-        i {
-          font-size: $font-20;
-        }
-      }
-    }
-    .content {
-      background: #00f;
-      width: rem750(688);
-      height: rem750(294);
-      margin: rem750(24) 0 0 rem750(31);
-    }
   }
-  .lesson {
+  .classroom {
+    height:rem750(412);
+  }
+  .common {
+    height:rem750(379);
+    margin-bottom: $bottom;
+  }
+  .course, .classroom, .common{
     width:100%;
-    height:rem750(390);
     background: $bg-black;
     flex-shrink: 0;
-    .lesson-head {
-      margin: rem750(27) 0 0 rem750(24);
-      width: rem750(702);
-      line-height: rem750(34);
-      border-left: rem750(7) solid #000;
+    .head {
+      margin: rem750(29) rem750(28) 0 rem750(24);
+      width: rem750(698);
       @include _flex(space-between,center);
       h2 {
-        padding-left: $bottom;
-        font-size: rem750(30);
+        font-size: $font-30;
+        height: rem750(40);
+        font-weight: 100;
+        @include _flex(center,center);
+        b {
+          width: rem750(6);
+          height: rem750(24);
+          background: #1992cf;
+          border-radius: 30%;
+          margin-right: rem750(8);
+        }
       }
       span {
         font-size: $font-20;
         color: #4d4d4d;
         i {
-          font-size: $font-20;
+          font-size: $font-18;
         }
       }
+    }
+    .box {
+      width: rem750(710);
+      margin: rem750(19) 0 0 rem750(20);
     }
   }
   .company {
     width:100%;
-    height: rem750(78);
-    @include _flex(center,center,column);
-    flex-shrink: 0;
+    height: rem750(55);
     p {
-      line-height: rem750(24);
+      line-height: rem750(55);
+      text-align:center;
       font-size: rem750(12);
       color: #898989;
     }

@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <p>师问</p>
+    <h1>师问</h1>
   </div>
 </template>
 

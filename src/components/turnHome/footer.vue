@@ -15,7 +15,7 @@ export default {
         {
           icon: 'iconfont icon-home',
           name: '首页',
-          path: '/home'
+          path: '/turnhome'
         },
         {
           icon: 'iconfont icon-kecheng',
@@ -23,9 +23,14 @@ export default {
           path: '/course'
         },
         {
+          icon: 'iconfont icon-talk',
+          name: '在线',
+          path: '/course'
+        },
+        {
           icon: 'iconfont icon-geren',
           name: '我的',
-          path: '/user'
+          path: '/turnuser'
         }
       ]
     }
