@@ -13,7 +13,7 @@
     </div>
     <div class="teacher">
       <div class="teacher-head">
-        <h2>
+        <h2 ref="title">
           <b></b>
           中原名师
         </h2>
@@ -76,6 +76,12 @@ export default {
         }
       ]
     }
+  },
+  mounted () {
+    console.log(this.$refs.title.innerText)
+  },
+  methods: {
+
   }
 }
 </script>

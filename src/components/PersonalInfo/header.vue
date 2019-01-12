@@ -1,7 +1,9 @@
 <template>
   <div class="header">
-    <mt-header title="个人中心">
-      <mt-button @click="goSet" slot="right" class="iconfont icon-shezhi"></mt-button>
+    <mt-header title="个人信息">
+      <div @click="back" slot="left">
+        <mt-button icon="back"></mt-button>
+      </div>
     </mt-header>
   </div>
 </template>
@@ -9,8 +11,8 @@
 <script>
 export default {
   methods: {
-    goSet () {
-      this.$router.push('/personalinfo')
+    back () {
+      this.$router.go(-1)
     }
   }
 }

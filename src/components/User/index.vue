@@ -2,7 +2,7 @@
   <div class="content">
     <div class="top">
       <div class="message">
-        <img src="@/assets/logo.png" >
+        <img src="@/assets/headimg.png" >
         <div class="data">
           <h1>师问</h1>
           <p>大家好！</p>
@@ -48,7 +48,7 @@
       </li>
       <li>
         <span class="iconfont icon-peixun"></span>
-        <div class="box">
+        <div class="box mark">
           <h3>我的培训</h3>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
@@ -56,7 +56,7 @@
     </div>
     <div class="foot">
       <li>
-        <span class="iconfont icon-peixun"></span>
+        <span class="iconfont icon-dingdan"></span>
         <div class="box">
           <h3>订单中心</h3>
           <span class="iconfont icon-iconfontjiantou4"></span>
@@ -64,7 +64,7 @@
       </li>
       <li>
         <span class="iconfont icon-chengguo"></span>
-        <div class="box">
+        <div class="box mark">
           <h3>我的成果</h3>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
@@ -153,7 +153,8 @@ export default {
       }
       .box {
         width: rem750(614);
-        height: rem750(99);
+        height: rem750(100);
+        box-sizing: border-box;
         padding-right: rem750(36);
         border-bottom: rem750(1) solid #efefef;
         @include _flex(space-between,center);
@@ -165,6 +166,9 @@ export default {
           font-size: rem750(25);
           color: #a5a5a5;
         }
+      }
+      .mark {
+        border: 0;
       }
     }
   }

@@ -102,6 +102,14 @@ export default new Router({
         default: () => import('@/components/ParentingHome/index'),
         footer: () => import('@/components/ParentingHome/footer')
       }
+    },
+    {
+      path: '/personalinfo',
+      name: 'personalinfo',
+      components: {
+        header: () => import('@/components/PersonalInfo/header'),
+        default: () => import('@/components/PersonalInfo/index')
+      }
     }
   ]
 })
