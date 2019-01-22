@@ -15,7 +15,7 @@ export default {
         {
           icon: 'iconfont icon-home',
           name: '首页',
-          path: '/home'
+          path: '/teacherhome'
         },
         {
           icon: 'iconfont icon-kecheng',
@@ -23,9 +23,14 @@ export default {
           path: '/course'
         },
         {
+          icon: 'iconfont icon-peixun',
+          name: '培训',
+          path: '/train'
+        },
+        {
           icon: 'iconfont icon-geren',
           name: '我的',
-          path: '/user'
+          path: '/teacheruser'
         }
       ]
     }
@@ -43,6 +48,9 @@ export default {
     align-items: center;
     &.router-link-active {
       color:#1296db;
+    }
+    span {
+      font-size: $font-40
     }
   }
 }

@@ -100,14 +100,12 @@ export default {
       img {
         width: rem750(120);
         height: rem750(120);
-        padding: 0 rem750(10);
+        padding-left: rem750(10);
         border-radius: 50%;
       }
       .data {
-        width: rem750(534);
+        width: rem750(460);
         height: 100%;
-        @include _flex(space-around,flex-start,column);
-        padding-left: rem750(8);
         h1 {
           line-height: rem750(50);
           font-weight: 400;

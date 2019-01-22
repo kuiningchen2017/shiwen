@@ -1,8 +1,10 @@
 <template>
   <div class="content">
     <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="item of banner" :key="item.banner_id" >
-        <img :src="item.banner_img_url"/>
+      <mt-swipe-item v-for="item of banner" :key="item.News_ID">
+        <li @click="see(item.News_URL)">
+          <img :src="item.Attachment_Path"/>
+        </li>
       </mt-swipe-item>
     </mt-swipe>
     <div class="navlist">
@@ -68,37 +70,48 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Vue from 'vue'
 import { Swipe, SwipeItem } from 'mint-ui'
 Vue.use(Swipe, SwipeItem)
 export default {
   data () {
     return {
-      banner: [
-
-      ],
+      banner: [],
       navList: [
         {
-          imgUrl: require('@/assets/icon_04.png'),
+          imgUrl: require('@/assets/icon_08.png'),
           name: '同步课堂',
           path: '123'
         },
         {
-          imgUrl: require('@/assets/icon_05.png'),
+          imgUrl: require('@/assets/icon_09.png'),
           name: '疑难解析',
           path: '123'
         },
         {
-          imgUrl: require('@/assets/icon_06.png'),
+          imgUrl: require('@/assets/icon_10.png'),
           name: '直播课堂',
           path: '123'
         },
         {
-          imgUrl: require('@/assets/icon_07.png'),
+          imgUrl: require('@/assets/icon_11.png'),
           name: '我的学习',
           path: '123'
         }
       ]
+    }
+  },
+  created () {
+    axios.post('/shishuiyuan/index/fzkt/viewpager')
+      .then(data => {
+        console.log(data.data)
+        this.banner = data.data
+      })
+  },
+  methods: {
+    see (e) {
+        window.location.href = e
     }
   }
 }

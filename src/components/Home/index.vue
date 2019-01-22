@@ -1,18 +1,20 @@
 <template>
   <div class="content">
     <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="item of banner" :key="item.banner_id" >
-        <img :src="item.banner_img_url"/>
+      <mt-swipe-item v-for="item of banner" :key="item.News_ID">
+        <li @click="see(item.News_URL)">
+          <img :src="item.Attachment_Path"/>
+        </li>
       </mt-swipe-item>
     </mt-swipe>
     <div class="navlist">
-      <router-link :to = "item.path" tag = "li" v-for = "(item, index) of navList" :key = "index">
+      <router-link :to = "item.path" tag = "li" v-for = "item of navList" :key = "item.Teacher_ID">
         <img :src = "item.imgUrl" alt = "#"/>
         <p>{{ item.name }}</p>
       </router-link>
     </div>
     <div class="teacher">
-      <div class="teacher-head">
+      <div class="head">
         <h2 ref="title">
           <b></b>
           中原名师
@@ -22,19 +24,38 @@
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
       </div>
-      <div class="teacher-box">
-        <router-link to = "" tag = "li">
-          <img src="" alt="">
-          <span></span>
-          <span></span>
+      <div class="box">
+        <router-link to = "" tag = "li" v-for = "(item,index) of teacherlist" :key ="index">
+          <img :src="item.Attachment_Path" alt="#">
+          <span>教师：{{item.Teacher_Name}}</span>
+          <span>{{item.Teacher_showTitle}}</span>
         </router-link>
       </div>
     </div>
     <div class="lesson">
-      <div class="lesson-head">
+      <div class="head">
         <h2>
           <b></b>
           精品课程
+        </h2>
+        <span>
+          更多
+          <i class="iconfont icon-iconfontjiantou4"></i>
+        </span>
+      </div>
+      <div class="box">
+        <router-link to = "" tag = "li" v-for = "(item,index) of lessonlist" :key ="index">
+          <img :src="item.Attachment_Path" alt="#">
+          <span>{{item.Resource_Name}}</span>
+          <span>{{item.Teacher_showTitle}}</span>
+        </router-link>
+      </div>
+    </div>
+    <div class="theory">
+      <div class="head">
+        <h2>
+          <b></b>
+          名师论道
         </h2>
         <span>
           更多
@@ -49,15 +70,16 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Vue from 'vue'
 import { Swipe, SwipeItem } from 'mint-ui'
 Vue.use(Swipe, SwipeItem)
 export default {
   data () {
     return {
-      banner: [
-
-      ],
+      banner: [],
+      teacherlist: [],
+      lessonlist: [],
       navList: [
         {
           imgUrl: require('@/assets/icon_01.png'),
@@ -77,11 +99,33 @@ export default {
       ]
     }
   },
+  created () {
+    axios.post('/shishuiyuan/index/index/viewpager')
+      .then(data => {
+        console.log(data.data)
+        this.banner = data.data
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    axios.post('/shishuiyuan/index/index/famous')
+      .then(data => {
+        console.log(data.data)
+        this.teacherlist = data.data
+      })
+    axios.post('/shishuiyuan/index/index/excellent')
+      .then(data => {
+        console.log(data.data)
+        this.lessonlist = data.data
+      })
+  },
   mounted () {
     console.log(this.$refs.title.innerText)
   },
   methods: {
-
+    see (e) {
+        window.location.href = e
+    }
   }
 }
 </script>
@@ -94,6 +138,12 @@ export default {
     width:100%;
     height: rem750(300);
     flex-shrink: 0;
+    li {
+      @include rect(100%, 100%);
+      img {
+        @include rect(100%, 100%);
+      }
+    }
   }
   .navlist {
     @include _flex(space-around,center);
@@ -114,51 +164,18 @@ export default {
       }
     }
   }
-  .teacher {
-    width:100%;
-    height:rem750(412);
-    background: $bg-black;
+  .teacher, .lesson {
+    @include rect(100%, rem750(412));
     margin-bottom: $bottom;
-    flex-shrink: 0;
-    .teacher-head {
-      margin: rem750(28) rem750(28) 0 rem750(24);
-      width: rem750(698);
-      @include _flex(space-between,center);
-      h2 {
-        font-size: $font-30;
-        height: rem750(40);
-        font-weight: 100;
-        @include _flex(center,center);
-        b {
-          width: rem750(6);
-          height: rem750(24);
-          background: #1992cf;
-          border-radius: 30%;
-          margin-right: rem750(8);
-        }
-      }
-      span {
-        font-size: $font-20;
-        color: #4d4d4d;
-        i {
-          font-size: $font-18;
-        }
-      }
-    }
-    .teacher-box {
-      background: #00f;
-      width: rem750(710);
-      height: rem750(325);
-      margin: rem750(19) 0 0 rem750(20);
-    }
   }
-  .lesson {
-    width:100%;
-    height:rem750(390);
+  .theory {
+    @include rect(100%, rem750(388))
+  }
+  .teacher, .lesson, .theory {
     background: $bg-black;
     flex-shrink: 0;
-    .lesson-head {
-      margin: rem750(33) 0 0 rem750(24);
+    .head {
+      margin: rem750(29) rem750(28) 0 rem750(24);
       width: rem750(698);
       @include _flex(space-between,center);
       h2 {
@@ -179,6 +196,26 @@ export default {
         color: #4d4d4d;
         i {
           font-size: $font-18;
+        }
+      }
+    }
+    .box {
+      width: rem750(710);
+      margin: rem750(19) 0 0 rem750(20);
+      @include _flex(space-between,flex-start);
+      li {
+        @include rect(rem750(350), rem750(210));
+        @include _flex(flex-start,flex-start,column);
+        img {
+          @include rect(100%, 100%);
+          border-radius: rem750(10);
+          margin-bottom: rem750(17);
+        }
+        span {
+          line-height: rem750(34);
+          font-size: $font-20;
+          color: #090909;
+          padding-left: rem750(15)
         }
       }
     }

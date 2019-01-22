@@ -44,6 +44,9 @@ export default {
     &.router-link-active {
       color:#1296db;
     }
+    span {
+      font-size: $font-40
+    }
   }
 }
 </style>

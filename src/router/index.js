@@ -45,6 +45,24 @@ export default new Router({
       }
     },
     {
+      path: '/teacheruser',
+      name: 'teacheruser',
+      components: {
+        header: () => import('@/components/User/header'),
+        default: () => import('@/components/User/index'),
+        footer: () => import('@/components/TeacherHome/footer')
+      }
+    },
+    {
+      path: '/parentinguser',
+      name: 'parentinguser',
+      components: {
+        header: () => import('@/components/User/header'),
+        default: () => import('@/components/User/index'),
+        footer: () => import('@/components/ParentingHome/footer')
+      }
+    },
+    {
       path: '/login',
       name: 'login',
       components: {
@@ -109,6 +127,33 @@ export default new Router({
       components: {
         header: () => import('@/components/PersonalInfo/header'),
         default: () => import('@/components/PersonalInfo/index')
+      }
+    },
+    {
+      path: '/videodetail',
+      name: 'videodetail',
+      components: {
+        header: () => import('@/components/Detail/header'),
+        default: () => import('@/components/Detail/index'),
+        footer: () => import('@/components/Detail/footer')
+      }
+    },
+    {
+      path: '/booksdetail',
+      name: 'booksdetail',
+      components: {
+        header: () => import('@/components/Detail/header'),
+        default: () => import('@/components/Detail/index1'),
+        footer: () => import('@/components/Detail/footer')
+      }
+    },
+    {
+      path: '/teacherdetail',
+      name: 'teacherdetail',
+      components: {
+        header: () => import('@/components/Detail/header'),
+        default: () => import('@/components/Detail/index2'),
+        footer: () => import('@/components/Detail/footer1')
       }
     }
   ]
