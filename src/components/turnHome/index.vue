@@ -15,21 +15,21 @@
     </div>
     <div class="course">
       <div class="head">
-        <h2>
+        <h2 ref="course">
           <b></b>
           精品课程
         </h2>
-        <span>
+        <span @click="gocourse">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
       </div>
       <div class="box">
-        <router-link to = "" tag = "li">
-          <img src="" alt="">
-          <span></span>
-          <span></span>
-        </router-link>
+        <li v-for = "(item,index) of courselist" :key ="index">
+          <img :src="item.Attachment_Path" alt="#">
+          <span>{{item.Resource_Name}}</span>
+          <span>{{item.Teacher_showTitle}}</span>
+        </li>
       </div>
     </div>
     <div class="common">
@@ -78,6 +78,7 @@ export default {
   data () {
     return {
       banner: [],
+      courselist: [],
       navList: [
         {
           imgUrl: require('@/assets/icon_08.png'),
@@ -108,10 +109,18 @@ export default {
         console.log(data.data)
         this.banner = data.data
       })
+    axios.post('/shishuiyuan/index/fzkt/excellent')
+      .then(data => {
+        console.log(data.data)
+        this.courselist = data.data
+      })
   },
   methods: {
     see (e) {
-        window.location.href = e
+      window.location.href = e
+    },
+    gocourse () {
+      this.$router.push({name: 'lessonlist', params: {title: this.$refs.course.innerText}})
     }
   }
 }
@@ -188,6 +197,22 @@ export default {
     .box {
       width: rem750(710);
       margin: rem750(19) 0 0 rem750(20);
+      @include _flex(space-between,flex-start);
+      li {
+        @include rect(rem750(350), rem750(210));
+        @include _flex(flex-start,flex-start,column);
+        img {
+          @include rect(100%, 100%);
+          border-radius: rem750(10);
+          margin-bottom: rem750(17);
+        }
+        span {
+          line-height: rem750(34);
+          font-size: $font-20;
+          color: #090909;
+          padding-left: rem750(15)
+        }
+      }
     }
   }
   .company {

@@ -1,13 +1,22 @@
 <template>
   <div class="header">
     <span @click="back" class=" back iconfont icon-jiantou2" ></span>
-    <h1>找回密码</h1>
+    <h1>{{this.title}}</h1>
     <i></i>
   </div>
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+      title: ''
+    }
+  },
+  mounted () {
+    this.title = this.$route.params.title
+    console.log(this.$route.params.title)
+  },
   methods: {
     back () {
       this.$router.go(-1)
@@ -24,7 +33,6 @@ export default {
   .header {
     padding:0 rem750(27);
     box-sizing: border-box;
-    border-bottom: rem750(1) solid #ccc;
     @include _flex(space-between,center);
     span {
       font-size: $font-30;

@@ -15,40 +15,40 @@
     </div>
     <div class="teacher">
       <div class="head">
-        <h2 ref="title">
+        <h2 ref="teacher">
           <b></b>
           中原名师
         </h2>
-        <span>
+        <span @click="goteacher">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
       </div>
       <div class="box">
-        <router-link to = "" tag = "li" v-for = "(item,index) of teacherlist" :key ="index">
+        <li v-for = "(item,index) of teacherlist" :key ="index">
           <img :src="item.Attachment_Path" alt="#">
-          <span>教师：{{item.Teacher_Name}}</span>
+          <span>{{item.Teacher_Name}}</span>
           <span>{{item.Teacher_showTitle}}</span>
-        </router-link>
+        </li>
       </div>
     </div>
-    <div class="lesson">
+    <div class="course">
       <div class="head">
-        <h2>
+        <h2 ref="course">
           <b></b>
           精品课程
         </h2>
-        <span>
+        <span @click="gocourse">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
       </div>
       <div class="box">
-        <router-link to = "" tag = "li" v-for = "(item,index) of lessonlist" :key ="index">
+        <li v-for = "(item,index) of courselist" :key ="index">
           <img :src="item.Attachment_Path" alt="#">
           <span>{{item.Resource_Name}}</span>
           <span>{{item.Teacher_showTitle}}</span>
-        </router-link>
+        </li>
       </div>
     </div>
     <div class="theory">
@@ -79,7 +79,7 @@ export default {
     return {
       banner: [],
       teacherlist: [],
-      lessonlist: [],
+      courselist: [],
       navList: [
         {
           imgUrl: require('@/assets/icon_01.png'),
@@ -94,7 +94,7 @@ export default {
         {
           imgUrl: require('@/assets/icon_03.png'),
           name: '亲子课堂',
-          path: '/parentinghome'
+          path: '/parenthome'
         }
       ]
     }
@@ -116,15 +116,18 @@ export default {
     axios.post('/shishuiyuan/index/index/excellent')
       .then(data => {
         console.log(data.data)
-        this.lessonlist = data.data
+        this.courselist = data.data
       })
-  },
-  mounted () {
-    console.log(this.$refs.title.innerText)
   },
   methods: {
     see (e) {
-        window.location.href = e
+      window.location.href = e
+    },
+    goteacher () {
+      this.$router.push({name: 'teacherlist', params: {title: this.$refs.teacher.innerText}})
+    },
+    gocourse () {
+      this.$router.push({name: 'courselist', params: {title: this.$refs.course.innerText}})
     }
   }
 }
@@ -164,14 +167,14 @@ export default {
       }
     }
   }
-  .teacher, .lesson {
+  .teacher, .course {
     @include rect(100%, rem750(412));
     margin-bottom: $bottom;
   }
   .theory {
     @include rect(100%, rem750(388))
   }
-  .teacher, .lesson, .theory {
+  .teacher, .course, .theory {
     background: $bg-black;
     flex-shrink: 0;
     .head {

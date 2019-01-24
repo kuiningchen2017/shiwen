@@ -135,6 +135,7 @@ export default {
       @include _flex(start,center);
       span {
         color: #c2c2c2;
+        font-size: $font-30
       }
       input {
         width: rem750(500);

@@ -1,14 +1,15 @@
 <template>
   <div class="header">
-    <mt-header title="注册">
-      <div @click="back" slot="left">
-        <mt-button icon="back"></mt-button>
-      </div>
-    </mt-header>
+    <span @click="back" class=" back iconfont icon-jiantou2" ></span>
+    <h1>注册</h1>
+    <i></i>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
+import { Header } from 'mint-ui'
+Vue.use(Header)
 export default {
   methods: {
     back () {
@@ -23,18 +24,14 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/base/index.scss';
-  .mint-header {
-    width: 100%;
-    background: #fff;
-    color: #262626;
-    height:100%;
-    padding: 0 rem750(30);
-    border-bottom: rem750(1) solid #bfbfbf;
-    font-size: $font-30;
-    .mint-header-button {
-      .mint-button {
-        color: #333333;
-      }
+  .header {
+    padding:0 rem750(27);
+    box-sizing: border-box;
+    border-bottom: rem750(1) solid #ccc;
+    @include _flex(space-between,center);
+    span {
+      font-size: $font-30;
+      color: #000;
     }
   }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <span @click="back" class=" back iconfont icon-jiantou2" ></span>
-    <div class="box">
+    <div class="headbox">
       <span class="iconfont icon-icon-"></span>
       <input ref="tip" id="txt" type="text" @focus="goFocus" placeholder="搜索">
       <div class="cancel">
@@ -26,6 +26,7 @@ export default {
     goSearch () {
       let n = this.$refs.tip.value
       this.$router.push({name: 'detail', query: {}})
+      this.$router.push({name: 'lessonlist', params: {title: this.$refs.course.innerText}})
     },
     goclear () {
       this.$refs.tip.value = ''
@@ -47,7 +48,7 @@ export default {
       color:#515151;
       font-size: $font-30;
     }
-    .box {
+    .headbox {
       width: rem750(604);
       height: rem750(47);
       background: #f2f2f2;

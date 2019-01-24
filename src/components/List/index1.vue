@@ -2,10 +2,10 @@
   <div class="content">
     <div class="choose"></div>
     <div class="list" >
-      <li v-for = "item of list" :key = "item.Teacher_ID">
+      <li v-for = "item of list" :key = "item.Resource_ID">
         <img :src="item.Attachment_Path" alt="#">
-        <h3>{{item.Teacher_Name}}</h3>
-        <p>{{item.Teacher_showTitle}}</p>
+        <h3>{{item.Resource_Name}}</h3>
+        <p>{{item.Resource_Order}}</p>
       </li>
     </div>
   </div>
@@ -20,7 +20,7 @@ export default {
     }
   },
   mounted () {
-    axios.post('/shishuiyuan/index/zymslist/list')
+    axios.post('/shishuiyuan/index/jpkclist/list')
       .then(data => {
         console.log(data.data)
         this.list = data.data

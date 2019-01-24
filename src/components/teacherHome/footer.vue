@@ -20,7 +20,7 @@ export default {
         {
           icon: 'iconfont icon-kecheng',
           name: '课程',
-          path: '/course'
+          path: '/teachercourse'
         },
         {
           icon: 'iconfont icon-peixun',

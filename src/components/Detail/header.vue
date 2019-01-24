@@ -30,7 +30,7 @@ export default {
     color: #262626;
     font-size: $font-30;
     height:100%;
-    padding: 0 rem750(30);
+    padding: 0 rem750(27);
     .mint-header-button {
       .mint-button {
         color: #000000;

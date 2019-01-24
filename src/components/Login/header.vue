@@ -1,14 +1,9 @@
 <template>
   <div class="header">
-    <mt-header>
-      <div @click="back" slot="left">
-        <mt-button icon="back"></mt-button>
-      </div>
-      <mt-button @click="goRegister" slot="right">注册</mt-button>
-    </mt-header>
+    <span @click="back" class=" back iconfont icon-jiantou2" ></span>
+    <h1 @click="goRegister">注册</h1>
   </div>
 </template>
-
 <script>
 export default {
   methods: {
@@ -24,18 +19,14 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/base/index.scss';
-  .mint-header {
-    width: 100%;
-    height:100%;
-    padding: 0 rem750(30);
-    border-bottom: rem750(1) solid #bfbfbf;
-    background: #fff;
-    color: #262626;
-    font-size: $font-30;
-    .mint-header-button {
-      .mint-button {
-        color: #333333;
-      }
+  .header {
+    padding:0 rem750(27);
+    box-sizing: border-box;
+    border-bottom: rem750(1) solid #ccc;
+    @include _flex(space-between,center);
+    span {
+      font-size: $font-30;
+      color: #000;
     }
   }
 </style>

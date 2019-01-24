@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <p>师问</p>
+    <p>课本</p>
   </div>
 </template>
 
@@ -10,4 +10,10 @@ export default {}
 
 <style lang='scss' scoped>
 @import '@/style/base/index.scss';
+  .header {
+    p {
+      font-size: rem750(34);
+      color: #000;
+    }
+  }
 </style>

@@ -15,12 +15,12 @@ export default {
         {
           icon: 'iconfont icon-home',
           name: '首页',
-          path: '/parentinghome'
+          path: '/parenthome'
         },
         {
           icon: 'iconfont icon-kecheng',
           name: '课程',
-          path: '/course'
+          path: '/parentcourse'
         },
         {
           icon: 'iconfont icon-talk',
@@ -30,7 +30,7 @@ export default {
         {
           icon: 'iconfont icon-geren',
           name: '我的',
-          path: '/parentinguser'
+          path: '/parentuser'
         }
       ]
     }

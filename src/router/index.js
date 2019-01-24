@@ -19,11 +19,66 @@ export default new Router({
       }
     },
     {
+      path: '/teacherhome',
+      name: 'teacherhome',
+      components: {
+        header: () => import('@/components/TeacherHome/header'),
+        default: () => import('@/components/TeacherHome/index'),
+        footer: () => import('@/components/TeacherHome/footer')
+      }
+    },
+    {
+      path: '/turnhome',
+      name: 'turnhome',
+      components: {
+        header: () => import('@/components/TurnHome/header'),
+        default: () => import('@/components/TurnHome/index'),
+        footer: () => import('@/components/TurnHome/footer')
+      }
+    },
+    {
+      path: '/parenthome',
+      name: 'parenthome',
+      components: {
+        header: () => import('@/components/ParentHome/header'),
+        default: () => import('@/components/ParentHome/index'),
+        footer: () => import('@/components/ParentHome/footer')
+      }
+    },
+    {
       path: '/course',
       name: 'course',
       components: {
         header: () => import('@/components/Course/header'),
-        default: () => import('@/components/Course/index')
+        default: () => import('@/components/Course/index'),
+        footer: () => import('@/components/Home/footer')
+      }
+    },
+    {
+      path: '/teachercourse',
+      name: 'teachercourse',
+      components: {
+        header: () => import('@/components/Course/header'),
+        default: () => import('@/components/Course/index'),
+        footer: () => import('@/components/TeacherHome/footer')
+      }
+    },
+    {
+      path: '/turncourse',
+      name: 'turncourse',
+      components: {
+        header: () => import('@/components/Course/header'),
+        default: () => import('@/components/Course/index'),
+        footer: () => import('@/components/TurnHome/footer')
+      }
+    },
+    {
+      path: '/parentcourse',
+      name: 'parentcourse',
+      components: {
+        header: () => import('@/components/Course/header'),
+        default: () => import('@/components/Course/index'),
+        footer: () => import('@/components/ParentHome/footer')
       }
     },
     {
@@ -54,12 +109,12 @@ export default new Router({
       }
     },
     {
-      path: '/parentinguser',
-      name: 'parentinguser',
+      path: '/parentuser',
+      name: 'parenutser',
       components: {
         header: () => import('@/components/User/header'),
         default: () => import('@/components/User/index'),
-        footer: () => import('@/components/ParentingHome/footer')
+        footer: () => import('@/components/ParentHome/footer')
       }
     },
     {
@@ -95,38 +150,27 @@ export default new Router({
       }
     },
     {
-      path: '/teacherhome',
-      name: 'teacherhome',
-      components: {
-        header: () => import('@/components/TeacherHome/header'),
-        default: () => import('@/components/TeacherHome/index'),
-        footer: () => import('@/components/TeacherHome/footer')
-      }
-    },
-    {
-      path: '/turnhome',
-      name: 'turnhome',
-      components: {
-        header: () => import('@/components/TurnHome/header'),
-        default: () => import('@/components/TurnHome/index'),
-        footer: () => import('@/components/TurnHome/footer')
-      }
-    },
-    {
-      path: '/parentinghome',
-      name: 'parentinghome',
-      components: {
-        header: () => import('@/components/ParentingHome/header'),
-        default: () => import('@/components/ParentingHome/index'),
-        footer: () => import('@/components/ParentingHome/footer')
-      }
-    },
-    {
       path: '/personalinfo',
       name: 'personalinfo',
       components: {
         header: () => import('@/components/PersonalInfo/header'),
         default: () => import('@/components/PersonalInfo/index')
+      }
+    },
+    {
+      path: '/teacherlist/:title',
+      name: 'teacherlist',
+      components: {
+        header: () => import('@/components/List/header'),
+        default: () => import('@/components/List/index')
+      }
+    },
+    {
+      path: '/lessonlist/:title',
+      name: 'lessonlist',
+      components: {
+        header: () => import('@/components/List/header'),
+        default: () => import('@/components/List/index1')
       }
     },
     {

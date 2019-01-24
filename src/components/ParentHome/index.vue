@@ -111,7 +111,7 @@ export default {
   },
   methods: {
     see (e) {
-        window.location.href = e
+      window.location.href = e
     }
   }
 }
