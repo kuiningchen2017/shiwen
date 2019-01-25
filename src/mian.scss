@@ -28,4 +28,27 @@ html, body, .container {
     flex-shrink: 0;
     @include _flex(space-around,center);
   }
+  .content {
+    .detail {
+      .video-player {
+        .video-js {
+          .vjs-poster {
+            background-size: 100% 100%;
+          }
+          .vjs-big-play-button{
+            height: rem750(85) !important ;
+            width: rem750(85);
+            line-height: rem750(85) !important;
+            border-radius: 50%;
+            background-color: rgba(0,0,0,0.8);
+            border: 0
+          }
+        }
+      }
+    }
+  }
+  // .content>.detail>.video-player>.vjs_video_417-dimensions.vjs-fluid {
+  //   @include rect(100%, rem750(300));
+  //   padding-top: 40%;
+  // }
 }

@@ -125,6 +125,12 @@ export default {
     width:100%;
     height: rem750(300);
     flex-shrink: 0;
+    li {
+      @include rect(100%, 100%);
+      img {
+        @include rect(100%, 100%);
+      }
+    }
   }
   .navlist {
     @include _flex(space-around,center);

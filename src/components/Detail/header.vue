@@ -1,10 +1,8 @@
 <template>
   <div class="header">
-    <mt-header title="详情">
-      <div @click="back" slot="left">
-        <mt-button icon="back"></mt-button>
-      </div>
-    </mt-header>
+    <span @click="back" class=" back iconfont icon-jiantou2" ></span>
+    <h1>详情</h1>
+    <i></i>
   </div>
 </template>
 
@@ -13,9 +11,6 @@ export default {
   methods: {
     back () {
       this.$router.go(-1)
-    },
-    goRegister () {
-      this.$router.push('/register')
     }
   }
 }
@@ -23,20 +18,13 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/base/index.scss';
-.header {
-  .mint-header {
-    width: 100%;
-    background: #fff;
-    color: #262626;
-    font-size: $font-30;
-    height:100%;
-    padding: 0 rem750(27);
-    .mint-header-button {
-      .mint-button {
-        color: #000000;
-      }
+  .header {
+    padding:0 rem750(27);
+    box-sizing: border-box;
+    @include _flex(space-between,center);
+    span {
+      font-size: $font-30;
+      color: #000;
     }
   }
-}
-
 </style>

@@ -19,12 +19,38 @@ export default {
       list: []
     }
   },
-  mounted () {
-    axios.post('/shishuiyuan/index/jpkclist/list')
-      .then(data => {
-        console.log(data.data)
-        this.list = data.data
-      })
+  created () {
+    if (this.$route.params.title === 'accurate') {
+      axios.post('/shishuiyuan/index/jpkclist/list')
+        .then(data => {
+          console.log(data.data)
+          this.list = data.data
+        })
+    } else if (this.$route.params.title === 'excellent') {
+      axios.post('/shishuiyuan/index/jpkclist/list')
+        .then(data => {
+          console.log(data.data)
+          this.list = data.data
+        })
+    } else if (this.$route.params.title === 'famous') {
+      axios.post('/shishuiyuan/index/jpkclist/list')
+        .then(data => {
+          console.log(data.data)
+          this.list = data.data
+        })
+    }  else if (this.$route.params.title === 'jxgj') {
+      axios.post('/shishuiyuan/index/jpkclist/list')
+        .then(data => {
+          console.log(data.data)
+          this.list = data.data
+        })
+    }  else if (this.$route.params.title === 'ndclass') {
+      axios.post('/shishuiyuan/index/jpkclist/list')
+        .then(data => {
+          console.log(data.data)
+          this.list = data.data
+        })
+    }
   }
 }
 </script>

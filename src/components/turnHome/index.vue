@@ -15,7 +15,7 @@
     </div>
     <div class="course">
       <div class="head">
-        <h2 ref="course">
+        <h2>
           <b></b>
           精品课程
         </h2>
@@ -38,10 +38,17 @@
           <b></b>
           家校共建
         </h2>
-        <span>
+        <span @click="gocommon">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
+      </div>
+      <div class="box">
+        <li v-for = "(item,index) of commonlist" :key ="index">
+          <img :src="item.Attachment_Path" alt="#">
+          <span>{{item.Resource_Name}}</span>
+          <span>{{item.Teacher_showTitle}}</span>
+        </li>
       </div>
     </div>
     <div class="classroom">
@@ -50,17 +57,17 @@
           <b></b>
           第二课堂
         </h2>
-        <span>
+        <span @click="goclassroom">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
       </div>
       <div class="box">
-        <router-link to = "" tag = "li">
-          <img src="" alt="">
-          <span></span>
-          <span></span>
-        </router-link>
+        <li v-for = "(item,index) of classroomlist" :key ="index">
+          <img :src="item.Attachment_Path" alt="#">
+          <span>{{item.Resource_Name}}</span>
+          <span>{{item.Teacher_showTitle}}</span>
+        </li>
       </div>
     </div>
     <div class="company">
@@ -79,6 +86,8 @@ export default {
     return {
       banner: [],
       courselist: [],
+      commonlist: [],
+      classroomlist: [],
       navList: [
         {
           imgUrl: require('@/assets/icon_08.png'),
@@ -114,14 +123,33 @@ export default {
         console.log(data.data)
         this.courselist = data.data
       })
+    axios.post('/shishuiyuan/index/fzkt/jxgj')
+      .then(data => {
+        console.log(data.data)
+        this.commonlist = data.data
+      })
+    axios.post('/shishuiyuan/index/fzkt/ndclass')
+      .then(data => {
+        console.log(data.data)
+        this.classroomlist = data.data
+      })
   },
   methods: {
     see (e) {
       window.location.href = e
     },
     gocourse () {
-      this.$router.push({name: 'lessonlist', params: {title: this.$refs.course.innerText}})
-    }
+      let title = 'excellent'
+      this.$router.push({name: 'list', params: {title: title}})
+    },
+    gocommon () {
+      let title = 'jxgj'
+      this.$router.push({name: 'list', params: {title: title}})
+    },
+    goclassroom () {
+      let title = 'ndclass'
+      this.$router.push({name: 'list', params: {title: title}})
+    },
   }
 }
 </script>
@@ -134,6 +162,12 @@ export default {
     width:100%;
     height: rem750(300);
     flex-shrink: 0;
+    li {
+      @include rect(100%, 100%);
+      img {
+        @include rect(100%, 100%);
+      }
+    }
   }
   .navlist {
     @include _flex(space-around,center);
@@ -199,7 +233,7 @@ export default {
       margin: rem750(19) 0 0 rem750(20);
       @include _flex(space-between,flex-start);
       li {
-        @include rect(rem750(350), rem750(210));
+        width: rem750(346);
         @include _flex(flex-start,flex-start,column);
         img {
           @include rect(100%, 100%);

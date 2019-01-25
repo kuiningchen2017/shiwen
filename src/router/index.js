@@ -166,8 +166,8 @@ export default new Router({
       }
     },
     {
-      path: '/lessonlist/:title',
-      name: 'lessonlist',
+      path: '/list/:title',
+      name: 'list',
       components: {
         header: () => import('@/components/List/header'),
         default: () => import('@/components/List/index1')

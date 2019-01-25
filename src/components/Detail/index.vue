@@ -41,6 +41,11 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import VideoPlayer from 'vue-video-player'
+import 'video.js/dist/video-js.css'
+import 'vue-video-player/src/custom-theme.css'
+Vue.use(VideoPlayer)
 export default {
   data () {
     return {
@@ -66,10 +71,10 @@ export default {
         fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
         sources: [{
           type: '',
-          src: '' // url地址
+          src: 'http://www.anxin166.com/www/video/01.mp4' // url地址
         }],
-        poster: '@/assets/logon.png', // 你的封面地址
-        // width: document.documentElement.clientWidth,
+        poster: 'http://sw.shishuiyuan999.com//uploads/viewpager/images/2019-01-22/20190122172533717.png', // 你的封面地址
+        width: document.documentElement.clientWidth,
         notSupportedMessage: '此视频暂无法播放，请稍后再试', // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
         controlBar: {
           timeDivider: true,
@@ -82,15 +87,22 @@ export default {
   },
   methods: {
     onPlayerPlay (player) {
+      console.log(player)
+      console.log(this.playerOptions.poster)
+      console.log(this.playerOptions.sources)
       alert('play')
     },
     onPlayerPause (player) {
       alert('pause')
+      console.log(player.controlBar.currentTimeDisplay.formattedTime_)
     },
     goAnchor (selector, index) {
       document.querySelector(selector).scrollIntoView(true)
       this.current = index
     }
+  },
+  updated () {
+    console.log(currentTimeDisplay)
   },
   computed: {
     player () {
@@ -109,19 +121,6 @@ export default {
     background: $bg-black;
     flex-shrink: 0;
     height: rem750(560);
-    .video-player {
-      width: 100%;
-      height: rem750(300);
-      .video-js .vjs-big-play-button{
-        /*
-          播放按钮换成圆形
-        */
-        height: rem750(85);
-        width: rem750(85);
-        line-height: rem750(85);
-        border-radius: 50%;
-      }
-    }
   }
   .general, .comment, .video {
     margin-bottom: rem750(12);

@@ -13,9 +13,18 @@ export default {
       title: ''
     }
   },
-  mounted () {
-    this.title = this.$route.params.title
-    console.log(this.$route.params.title)
+  created () {
+    if (this.$route.params.title === 'accurate') {
+      this.title = '精准培训'
+    } else if (this.$route.params.title === 'excellent') {
+      this.title = '精品课程'
+    } else if (this.$route.params.title === 'famous') {
+      this.title = '中原名师'
+    }  else if (this.$route.params.title === 'jxgj') {
+      this.title = '家校共建'
+    }  else if (this.$route.params.title === 'ndclass') {
+      this.title = '第二课堂'
+    }
   },
   methods: {
     back () {

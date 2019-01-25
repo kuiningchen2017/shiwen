@@ -48,6 +48,7 @@ export default {
     }
     span {
       color: #000;
+      font-size: $font-30
     }
     p {
       width:rem750(90);

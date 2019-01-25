@@ -207,7 +207,7 @@ export default {
       margin: rem750(19) 0 0 rem750(20);
       @include _flex(space-between,flex-start);
       li {
-        @include rect(rem750(350), rem750(210));
+        width: rem750(346);
         @include _flex(flex-start,flex-start,column);
         img {
           @include rect(100%, 100%);

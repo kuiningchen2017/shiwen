@@ -15,7 +15,7 @@
     </div>
     <div class="course">
       <div class="head">
-        <h2 ref="course">
+        <h2>
           <b></b>
           精品课程
         </h2>
@@ -38,18 +38,22 @@
           <b></b>
           精准培训
         </h2>
-        <span>
+        <span @click="gotrain">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
       </div>
       <div class="box">
-
+        <li v-for = "(item,index) of trainlist" :key ="index">
+          <img :src="item.Attachment_Path" alt="#">
+          <span>{{item.Resource_Name}}</span>
+          <span>{{item.Teacher_showTitle}}</span>
+        </li>
       </div>
     </div>
     <div class="teacher">
       <div class="head">
-        <h2 ref="teacher">
+        <h2>
           <b></b>
           中原名师
         </h2>
@@ -83,6 +87,7 @@ export default {
       banner: [],
       teacherlist: [],
       courselist: [],
+      trainlist: [],
       navList: [
         {
           imgUrl: require('@/assets/icon_04.png'),
@@ -123,16 +128,27 @@ export default {
         console.log(data.data)
         this.courselist = data.data
       })
+    axios.post('/shishuiyuan/index/jsxy/accurate')
+      .then(data => {
+        console.log(data.data)
+        this.trainlist = data.data
+      })
   },
   methods: {
     see (e) {
       window.location.href = e
     },
     goteacher () {
-      this.$router.push({name: 'teacherlist', params: {title: this.$refs.teacher.innerText}})
+      let title = 'famous'
+      this.$router.push({name: 'teacherlist', params: {title: title}})
     },
     gocourse () {
-      this.$router.push({name: 'lessonlist', params: {title: this.$refs.course.innerText}})
+      let title = 'excellent'
+      this.$router.push({name: 'list', params: {title: title}})
+    },
+    gotrain () {
+      let title = 'accurate'
+      this.$router.push({name: 'list', params: {title: title}})
     }
   }
 }
@@ -146,6 +162,12 @@ export default {
     width:100%;
     height: rem750(300);
     flex-shrink: 0;
+    li {
+      @include rect(100%, 100%);
+      img {
+        @include rect(100%, 100%);
+      }
+    }
   }
   .navlist {
     @include _flex(space-around,center);
@@ -211,7 +233,7 @@ export default {
       margin: rem750(19) 0 0 rem750(20);
       @include _flex(space-between,flex-start);
       li {
-        @include rect(rem750(350), rem750(210));
+        width: rem750(346);
         @include _flex(flex-start,flex-start,column);
         img {
           @include rect(100%, 100%);

@@ -78,6 +78,7 @@ export default {
         width: rem750(104);
         height: 100%;
         color: #ccc;
+        font-size: $font-30
       }
     }
   }
