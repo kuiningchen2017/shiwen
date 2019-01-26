@@ -183,6 +183,15 @@ export default new Router({
       }
     },
     {
+      path: '/audiodetail',
+      name: 'audiodetail',
+      components: {
+        header: () => import('@/components/Detail/header'),
+        default: () => import('@/components/Detail/index3'),
+        footer: () => import('@/components/Detail/footer')
+      }
+    },
+    {
       path: '/booksdetail',
       name: 'booksdetail',
       components: {

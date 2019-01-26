@@ -38,13 +38,13 @@ export default {
           console.log(data.data)
           this.list = data.data
         })
-    }  else if (this.$route.params.title === 'jxgj') {
+    } else if (this.$route.params.title === 'jxgj') {
       axios.post('/shishuiyuan/index/jpkclist/list')
         .then(data => {
           console.log(data.data)
           this.list = data.data
         })
-    }  else if (this.$route.params.title === 'ndclass') {
+    } else if (this.$route.params.title === 'ndclass') {
       axios.post('/shishuiyuan/index/jpkclist/list')
         .then(data => {
           console.log(data.data)

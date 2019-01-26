@@ -210,7 +210,7 @@ export default {
         width: rem750(346);
         @include _flex(flex-start,flex-start,column);
         img {
-          @include rect(100%, 100%);
+          @include rect(100%, rem750(210));
           border-radius: rem750(10);
           margin-bottom: rem750(17);
         }
