@@ -31,7 +31,7 @@ export default new Router({
       path: '/turnhome',
       name: 'turnhome',
       components: {
-        header: () => import('@/components/TurnHome/header'),
+        header: () => import('@/components/TeacherHome/header'),
         default: () => import('@/components/TurnHome/index'),
         footer: () => import('@/components/TurnHome/footer')
       }
@@ -40,7 +40,7 @@ export default new Router({
       path: '/parenthome',
       name: 'parenthome',
       components: {
-        header: () => import('@/components/ParentHome/header'),
+        header: () => import('@/components/TeacherHome/header'),
         default: () => import('@/components/ParentHome/index'),
         footer: () => import('@/components/ParentHome/footer')
       }

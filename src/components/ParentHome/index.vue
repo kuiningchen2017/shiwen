@@ -17,7 +17,7 @@
       <div class="head">
         <h2>
           <b></b>
-          音频资料
+          <span>音频资料</span>
         </h2>
         <span>
           更多
@@ -36,7 +36,7 @@
       <div class="head">
         <h2>
           <b></b>
-          视频资料
+          <span>视频资料</span>
         </h2>
         <span>
           更多
@@ -48,7 +48,7 @@
       <div class="head">
         <h2>
           <b></b>
-          直播课堂
+          <span>直播课堂</span>
         </h2>
         <span>
           更多
@@ -142,12 +142,13 @@ export default {
     li {
       @include _flex(center,center,column);
       img {
-        width: rem750(100);
-        height: rem750(100);
+        width: rem750(120);
+        height: rem750(120);
         padding-bottom: rem750(16);
       }
       p {
-        font-size: rem750(22);
+        font-size: $font-22;
+        font-weight: 600;
       }
     }
   }
@@ -173,19 +174,24 @@ export default {
       h2 {
         font-size: $font-30;
         height: rem750(40);
-        font-weight: 100;
         @include _flex(center,center);
-        b {
+b {
           width: rem750(6);
           height: rem750(24);
-          background: #1992cf;
+          background: $bg-side;
           border-radius: 30%;
           margin-right: rem750(8);
+        }
+        span {
+          line-height: rem750(40);
+          font-weight: 600;
+          color: $text-black;
+          font-size: $font-28;
         }
       }
       span {
         font-size: $font-20;
-        color: #4d4d4d;
+        color: $text-more;
         i {
           font-size: $font-18;
         }

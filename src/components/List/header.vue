@@ -20,9 +20,9 @@ export default {
       this.title = '精品课程'
     } else if (this.$route.params.title === 'famous') {
       this.title = '中原名师'
-    }  else if (this.$route.params.title === 'jxgj') {
+    } else if (this.$route.params.title === 'jxgj') {
       this.title = '家校共建'
-    }  else if (this.$route.params.title === 'ndclass') {
+    } else if (this.$route.params.title === 'ndclass') {
       this.title = '第二课堂'
     }
   },
@@ -43,9 +43,12 @@ export default {
     padding:0 rem750(27);
     box-sizing: border-box;
     @include _flex(space-between,center);
-    span {
-      font-size: $font-30;
-      color: #000;
+    .back {
+      font-size: $font-50;
+      color:$text-back;;
+    }
+    h1 {
+      font-size: $font-36
     }
   }
 </style>

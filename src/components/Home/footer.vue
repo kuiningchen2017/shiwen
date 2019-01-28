@@ -13,7 +13,7 @@ export default {
     return {
       list: [
         {
-          icon: 'iconfont icon-home',
+          icon: 'iconfont icon-home-',
           name: '首页',
           path: '/home'
         },
@@ -36,17 +36,16 @@ export default {
 <style lang='scss' scoped>
 @import '@/style/base/index.scss';
 .footer {
-  li {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: column;
-    align-items: center;
-    &.router-link-active {
-      color:#1296db;
-    }
-    span {
-      font-size: $font-40
-    }
-  }
+  padding:0 rem750(20);
+  // li {
+  //   @include _flex(space-around, center, column);
+  //   &.router-link-active {
+  //     color:$bg-side;
+  //   }
+  //   span {
+  //     font-size: $font-50;
+  //     padding-bottom: rem750(10)
+  //   }
+  // }
 }
 </style>

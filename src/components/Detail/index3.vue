@@ -89,14 +89,9 @@ export default {
       this.current = index
     },
     gostart () {
-      this.flag = false
-      console.log("false")
-      var timer = setInterval(() => {
-        console.log(this.$refs.tip)
-      }, 10000);
 
     }
-  },
+  }
 }
 </script>
 
@@ -132,7 +127,7 @@ export default {
         border: 0;
         img{
           @include rect(100%, 100%)
-	      }
+       }
       }
       .item {
         li{

@@ -32,8 +32,8 @@ export default {
 <style lang="scss" scoped>
 @import '@/style/base/index.scss';
   .choose{
-    @include rect(100%, rem750(70));
-    background: #f2f2f2;
+    @include rect(100%, rem750(100));
+    background: $bg-base;
   }
   .list {
     padding: 0 rem750(20);
@@ -41,29 +41,29 @@ export default {
     display: flex;
     flex-wrap: wrap;
     li {
-      @include rect(rem750(350), rem750(300));
+      width: rem750(346);
       padding-top: rem750(30);
       &:nth-child(odd) {
-        padding-right: rem750(5);
+        padding-right: rem750(9);
       }
       &:nth-child(even) {
-        padding-left: rem750(5);
+        padding-left: rem750(9);
       }
       img {
-        @include rect(rem750(350), rem750(210));
+        @include rect(100%, rem750(210));
         border-radius: rem750(10)
       }
       h3 {
         line-height: rem750(36);
-        font-size: rem750(22);
-        color: #000;
+        font-size: $font-26;
+        color: $text-black;
         font-weight: normal;
         padding-left: rem750(10);
         padding-top: rem750(9)
       }
       p {
         line-height: rem750(36);
-        font-size: rem750(22);
+        font-size: $font-26;
         color: #595959;
         padding-left: rem750(10);
       }

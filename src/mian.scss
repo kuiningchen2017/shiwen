@@ -10,11 +10,7 @@ html, body, .container {
   .header {
     width: 100%;
     height: rem750(86);
-    @include _flex(center,center);
     flex-shrink: 0;
-    h1 {
-      font-size: rem750(32);
-    }
   }
   .content {
     display: flex;
@@ -27,6 +23,16 @@ html, body, .container {
     height: rem750(100);
     flex-shrink: 0;
     @include _flex(space-around,center);
+    li {
+      @include _flex(space-around, center, column);
+      &.router-link-active {
+        color:$bg-side;
+      }
+      span {
+        font-size: $font-50;
+        padding-bottom: rem750(10)
+      }
+    }
   }
   .content {
     .detail {

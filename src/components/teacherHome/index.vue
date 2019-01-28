@@ -17,7 +17,7 @@
       <div class="head">
         <h2>
           <b></b>
-          精品课程
+          <span>精品课程</span>
         </h2>
         <span @click="gocourse">
           更多
@@ -28,7 +28,7 @@
         <li v-for = "(item,index) of courselist" :key ="index">
           <img :src="item.Attachment_Path" alt="#">
           <span>{{item.Resource_Name}}</span>
-          <span>{{item.Teacher_showTitle}}</span>
+          <span>{{item.Resource_SubName}}</span>
         </li>
       </div>
     </div>
@@ -36,7 +36,7 @@
       <div class="head">
         <h2>
           <b></b>
-          精准培训
+          <span>精准培训</span>
         </h2>
         <span @click="gotrain">
           更多
@@ -55,7 +55,7 @@
       <div class="head">
         <h2>
           <b></b>
-          中原名师
+          <span>中原名师</span>
         </h2>
         <span @click="goteacher">
           更多
@@ -66,7 +66,7 @@
         <li v-for = "(item,index) of teacherlist" :key ="index">
           <img :src="item.Attachment_Path" alt="#">
           <span>{{item.Teacher_Name}}</span>
-          <span>{{item.Teacher_showTitle}}</span>
+          <span>{{item.Teacher_SubName}}</span>
         </li>
       </div>
     </div>
@@ -179,12 +179,13 @@ export default {
     li {
       @include _flex(center,center,column);
       img {
-        width: rem750(100);
-        height: rem750(100);
+        width: rem750(120);
+        height: rem750(120);
         padding-bottom: rem750(16);
       }
       p {
-        font-size: rem750(22);
+        font-size: $font-22;
+        font-weight: 600;
       }
     }
   }
@@ -210,19 +211,24 @@ export default {
       h2 {
         font-size: $font-30;
         height: rem750(40);
-        font-weight: 100;
         @include _flex(center,center);
         b {
           width: rem750(6);
           height: rem750(24);
-          background: #1992cf;
+          background: $bg-side;
           border-radius: 30%;
           margin-right: rem750(8);
+        }
+        span {
+          line-height: rem750(40);
+          font-weight: 600;
+          color: $text-black;
+          font-size: $font-28;
         }
       }
       span {
         font-size: $font-20;
-        color: #4d4d4d;
+        color: $text-more;
         i {
           font-size: $font-18;
         }
@@ -242,8 +248,8 @@ export default {
         }
         span {
           line-height: rem750(34);
-          font-size: $font-20;
-          color: #090909;
+          font-size: $font-26;
+          color: $text-black;
           padding-left: rem750(15)
         }
       }

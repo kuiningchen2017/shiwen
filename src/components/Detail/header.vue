@@ -22,9 +22,12 @@ export default {
     padding:0 rem750(27);
     box-sizing: border-box;
     @include _flex(space-between,center);
-    span {
-      font-size: $font-30;
-      color: #000;
+    .back {
+      font-size: $font-50;
+      color:$text-back;;
+    }
+    h1 {
+      font-size: $font-36
     }
   }
 </style>

@@ -3,7 +3,7 @@
     <span @click="back" class=" back iconfont icon-jiantou2" ></span>
     <div class="headbox">
       <span class="iconfont icon-icon-"></span>
-      <input ref="tip" id="txt" type="text" @focus="goFocus" placeholder="搜索">
+      <input ref="tip" id="txt" type="text" @focus="goFocus" placeholder="课件和知识点">
       <div class="cancel">
         <img src="@/assets/close.png" v-if="flag" class="close" @click="goclear">
       </div>
@@ -44,26 +44,29 @@ export default {
     box-sizing: border-box;
     @include _flex(space-between,center);
     .back {
-      color:#515151;
-      font-size: $font-30;
+      color:$text-back;
+      font-size: $font-50;
     }
     .headbox {
       width: rem750(604);
-      height: rem750(47);
+      height: rem750(56);
       background: #f2f2f2;
       margin-right: rem750(33);
       @include _flex(center,center);
-      border-radius: rem750(23.5);
+      border-radius: rem750(28);
       position: relative;
       span {
         width: rem750(150);
         line-height: rem750(47);
         font-size: rem750(32);
         text-align: end;
+        color: rgb(112, 109, 109);
+        padding-right: rem750(10)
       }
       #txt {
         width: rem750(350);
         height: 100%;
+        color: rgb(112, 109, 109);
       }
       .cancel {
         width: rem750(30);
@@ -76,8 +79,8 @@ export default {
       .btn {
         width: rem750(104);
         height: 100%;
-        color: #ccc;
-        font-size: $font-30
+        color: #f2f2f2;
+        font-size: rem750(22)
       }
     }
   }

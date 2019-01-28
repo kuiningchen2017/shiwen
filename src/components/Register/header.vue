@@ -29,9 +29,12 @@ export default {
     box-sizing: border-box;
     border-bottom: rem750(1) solid #ccc;
     @include _flex(space-between,center);
-    span {
-      font-size: $font-30;
-      color: #000;
+    .back {
+      font-size: $font-50;
+      color:$text-back;;
+    }
+    h1 {
+      font-size: $font-36
     }
   }
 </style>

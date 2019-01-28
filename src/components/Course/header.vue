@@ -11,8 +11,9 @@ export default {}
 <style lang='scss' scoped>
 @import '@/style/base/index.scss';
   .header {
+    @include _flex(center,center);
     p {
-      font-size: rem750(34);
+      font-size: $font-34;
       color: #000;
     }
   }

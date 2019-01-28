@@ -101,9 +101,6 @@ export default {
       this.current = index
     }
   },
-  updated () {
-    console.log(currentTimeDisplay)
-  },
   computed: {
     player () {
       return this.$refs.videoPlayer.player

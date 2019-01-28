@@ -8,6 +8,13 @@
 export default {}
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+@import '@/style/base/index.scss';
+.header {
+  @include _flex(center,center);
+  h1 {
+    font-size: $font-36;
+    letter-spacing: rem750(8);
+  }
+}
 </style>
