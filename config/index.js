@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/shishuiyuan': {
-        target: 'http://sw.shishuiyuan999.com/',
+        target: 'http://sw.shishuiyuan999.com',
         changeOrigin: true,
         pathRewrite: {
           '^/shishuiyuan': ''

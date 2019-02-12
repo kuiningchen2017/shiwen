@@ -13,7 +13,7 @@ export default {
     return {
       list: [
         {
-          icon: 'iconfont icon-home-',
+          icon: 'iconfont icon-shouye',
           name: '首页',
           path: '/teacherhome'
         },

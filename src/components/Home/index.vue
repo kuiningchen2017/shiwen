@@ -1,8 +1,8 @@
 <template>
-  <div class="content">
+  <div class="content animated fadeInLeft">
     <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="item of banner" :key="item.News_ID">
-        <li @click="see(item.News_URL)">
+      <mt-swipe-item v-for="(item, index) of banner" :key="index">
+        <li @click="see(item.News_URL,item.News_Property,item.File_ID,item.File_Code)">
           <img :src="item.Attachment_Path"/>
         </li>
       </mt-swipe-item>
@@ -25,10 +25,10 @@
         </span>
       </div>
       <div class="box">
-        <li v-for = "(item,index) of teacherlist" :key ="index">
+        <li v-for = "(item,index) of teacherlist" :key ="index" @click="godetail(item.File_ID, item.File_Code, 'teacher')">
           <img :src="item.Attachment_Path" alt="#">
-          <span>{{item.Teacher_Name}}</span>
-          <span>{{item.Teacher_SubName}}</span>
+          <span>{{item.File_Name}}</span>
+          <span>{{item.File_SubName}}</span>
         </li>
       </div>
     </div>
@@ -44,10 +44,10 @@
         </span>
       </div>
       <div class="box">
-        <li v-for = "(item,index) of courselist" :key ="index">
+        <li v-for = "(item,index) of courselist" :key ="index" @click="godetail(item.File_ID, item.File_Code, 'video')">
           <img :src="item.Attachment_Path" alt="#">
-          <span>{{item.Resource_Name}}</span>
-          <span>{{item.Resource_SubName}}</span>
+          <span>{{item.File_Name}}</span>
+          <span>{{item.File_SubName}}</span>
         </li>
       </div>
     </div>
@@ -57,10 +57,17 @@
           <b></b>
           <span>名师论道</span>
         </h2>
-        <span>
+        <span @click="gotheory">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
+      </div>
+      <div class="box">
+        <li v-for = "(item,index) of theorylist" :key ="index" @click="godetail(item.File_ID, item.File_Code, 'video')">
+          <img :src="item.Attachment_Path" alt="#">
+          <span>{{item.File_Name}}</span>
+          <span>{{item.File_SubName}}</span>
+        </li>
       </div>
     </div>
     <div class="company">
@@ -80,6 +87,7 @@ export default {
       banner: [],
       teacherlist: [],
       courselist: [],
+      theorylist: [],
       navList: [
         {
           imgUrl: require('@/assets/icon_01.png'),
@@ -93,43 +101,61 @@ export default {
         },
         {
           imgUrl: require('@/assets/icon_03.png'),
-          name: '亲子课堂',
+          name: '家庭学院',
           path: '/parenthome'
         }
       ]
     }
   },
   created () {
-    axios.post('/shishuiyuan/index/index/viewpager')
+    axios.post('/shishuiyuan/index/picture/view/id/dg/num/3')
       .then(data => {
         console.log(data.data)
         this.banner = data.data
       })
-      .catch(err => {
-        console.log(err)
-      })
-    axios.post('/shishuiyuan/index/index/famous')
+    axios.post('/shishuiyuan/index/mod/gaste/key/pm/del/mt/c/f')
       .then(data => {
         console.log(data.data)
         this.teacherlist = data.data
       })
-    axios.post('/shishuiyuan/index/index/excellent')
+    axios.post('/shishuiyuan/index/top/sandglass/id/AB/num/mq/p/fist')
       .then(data => {
         console.log(data.data)
         this.courselist = data.data
       })
+    axios.post('/shishuiyuan/index/top/sandglass/id/gd/num/mq/p/fist')
+      .then(data => {
+        console.log(data.data)
+        this.theorylist = data.data
+      })
   },
   methods: {
-    see (e) {
-      window.location.href = e
+    see (url, property, id, code) {
+      if (property == 0) {
+        window.location.href = url
+      } else if (property == 1) {
+        let URL = `http://sw.shishuiyuan999.com/index/picture/del/id/${id}/key/${code}`
+        window.location.href = URL
+      }
     },
     goteacher () {
-      let title = 'famous'
-      this.$router.push({name: 'teacherlist', params: {title: title}})
+      let title = 'zyms'
+      this.$router.push({name: 'list', params: {title: title}})
     },
     gocourse () {
-      let title = 'excellent'
+      let title = 'jpkc'
       this.$router.push({name: 'list', params: {title: title}})
+    },
+    gotheory () {
+      let title = 'msld'
+      this.$router.push({name: 'list', params: {title: title}})
+    },
+    godetail (id, code, mark) {
+      if (mark === 'video') {
+        this.$router.push({name: 'videodetail', params: {id: id, code: code}})
+      } else {
+        this.$router.push({name: 'teacherdetail', params: {id: id, code: code}})
+      }
     }
   }
 }
@@ -167,8 +193,7 @@ export default {
         padding-bottom: rem750(16);
       }
       p {
-        font-size: $font-22;
-        font-weight: 600;
+        font-size: $font-nav;
       }
     }
   }
@@ -177,14 +202,15 @@ export default {
     margin-bottom: $bottom;
   }
   .theory {
-    @include rect(100%, rem750(388))
+    @include rect(100%, rem750(412))
   }
   .teacher, .course, .theory {
     background: $bg-black;
     flex-shrink: 0;
     .head {
-      margin: rem750(29) rem750(28) 0 rem750(24);
-      width: rem750(698);
+      padding: rem750(29) rem750(28) 0 rem750(24);
+      width: 100%;
+      box-sizing: border-box;
       @include _flex(space-between,center);
       h2 {
         height: rem750(40);
@@ -198,9 +224,8 @@ export default {
         }
         span {
           line-height: rem750(40);
-          font-weight: 600;
           color: $text-black;
-          font-size: $font-28;
+          font-size: $font-title;
         }
       }
       span {
@@ -212,8 +237,9 @@ export default {
       }
     }
     .box {
-      width: rem750(710);
-      margin: rem750(19) 0 0 rem750(20);
+      width: 100%;
+      box-sizing: border-box;
+      padding: rem750(19) rem750(20) 0 rem750(20);
       @include _flex(space-between,flex-start);
       li {
         width: rem750(346);
@@ -224,10 +250,14 @@ export default {
           margin-bottom: rem750(17);
         }
         span {
-          line-height: rem750(34);
+          line-height: rem750(40);
           font-size: $font-26;
           color: $text-black;
-          padding-left: rem750(15)
+          padding-left: rem750(15);
+          width: rem750(320);
+          overflow: hidden;
+          text-overflow:ellipsis;
+          white-space: nowrap;
         }
       }
     }

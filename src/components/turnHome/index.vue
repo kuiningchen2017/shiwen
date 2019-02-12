@@ -1,8 +1,8 @@
 <template>
-  <div class="content">
+  <div class="content animated fadeInLeft">
     <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="item of banner" :key="item.News_ID">
-        <li @click="see(item.News_URL)">
+      <mt-swipe-item v-for="(item, index) of banner" :key="index">
+        <li @click="see(item.News_URL,item.News_Property,item.File_ID,item.File_Code)">
           <img :src="item.Attachment_Path"/>
         </li>
       </mt-swipe-item>
@@ -25,10 +25,10 @@
         </span>
       </div>
       <div class="box">
-        <li v-for = "(item,index) of courselist" :key ="index">
+        <li v-for = "(item,index) of courselist" :key ="index" @click="godetail(item.File_ID, item.File_Code)">
           <img :src="item.Attachment_Path" alt="#">
-          <span>{{item.Resource_Name}}</span>
-          <span>{{item.Resource_SubName}}</span>
+          <span>{{item.File_Name}}</span>
+          <span>{{item.File_SubName}}</span>
         </li>
       </div>
     </div>
@@ -46,8 +46,8 @@
       <div class="box">
         <li v-for = "(item,index) of commonlist" :key ="index">
           <img :src="item.Attachment_Path" alt="#">
-          <span>{{item.Resource_Name}}</span>
-          <span>{{item.Teacher_showTitle}}</span>
+          <span>{{item.File_Name}}</span>
+          <!-- <span>{{item.File_SubName}}</span> -->
         </li>
       </div>
     </div>
@@ -65,8 +65,8 @@
       <div class="box">
         <li v-for = "(item,index) of classroomlist" :key ="index">
           <img :src="item.Attachment_Path" alt="#">
-          <span>{{item.Resource_Name}}</span>
-          <span>{{item.Teacher_showTitle}}</span>
+          <span>{{item.File_Name}}</span>
+          <span>{{item.File_SubName}}</span>
         </li>
       </div>
     </div>
@@ -97,7 +97,7 @@ export default {
         {
           imgUrl: require('@/assets/icon_09.png'),
           name: '疑难解析',
-          path: '123'
+          path: '/list/ynjx'
         },
         {
           imgUrl: require('@/assets/icon_10.png'),
@@ -113,33 +113,38 @@ export default {
     }
   },
   created () {
-    axios.post('/shishuiyuan/index/fzkt/viewpager')
+    axios.post('/shishuiyuan/index/picture/view/id/mvb/num/3')
       .then(data => {
         console.log(data.data)
         this.banner = data.data
       })
-    axios.post('/shishuiyuan/index/fzkt/excellent')
+    axios.post('/shishuiyuan/index/top/sandglass/id/AB/num/mq/p/fist')
       .then(data => {
         console.log(data.data)
         this.courselist = data.data
       })
-    axios.post('/shishuiyuan/index/fzkt/jxgj')
+    axios.post('/shishuiyuan/index/asked/view/id/gk/num/mt/p/f')
       .then(data => {
         console.log(data.data)
         this.commonlist = data.data
       })
-    axios.post('/shishuiyuan/index/fzkt/ndclass')
+    axios.post('/shishuiyuan/index/asked/view/id/doc/num/mt/p/f')
       .then(data => {
         console.log(data.data)
         this.classroomlist = data.data
       })
   },
   methods: {
-    see (e) {
-      window.location.href = e
+    see (url, property, id, code) {
+      if (property == 0) {
+        window.location.href = url
+      } else if (property == 1) {
+        let URL = `http://sw.shishuiyuan999.com/index/picture/del/id/${id}/key/${code}`
+        window.location.href = URL
+      }
     },
     gocourse () {
-      let title = 'excellent'
+      let title = 'jpkc'
       this.$router.push({name: 'list', params: {title: title}})
     },
     gocommon () {
@@ -147,8 +152,11 @@ export default {
       this.$router.push({name: 'list', params: {title: title}})
     },
     goclassroom () {
-      let title = 'ndclass'
+      let title = 'drkt'
       this.$router.push({name: 'list', params: {title: title}})
+    },
+    godetail (id, code) {
+      this.$router.push({name: 'videodetail', params: {id: id, code: code}})
     }
   }
 }
@@ -184,8 +192,7 @@ export default {
         padding-bottom: rem750(16);
       }
       p {
-        font-size: $font-22;
-        font-weight: 600;
+        font-size: $font-nav;
       }
     }
   }
@@ -193,20 +200,21 @@ export default {
     height:rem750(412);
     margin-bottom: $bottom;
   }
-  .classroom {
-    height:rem750(412);
-  }
   .common {
     height:rem750(379);
     margin-bottom: $bottom;
+  }
+  .classroom {
+    height:rem750(412);
   }
   .course, .classroom, .common{
     width:100%;
     background: $bg-black;
     flex-shrink: 0;
     .head {
-      margin: rem750(29) rem750(28) 0 rem750(24);
-      width: rem750(698);
+      padding: rem750(29) rem750(28) 0 rem750(24);
+      width: 100%;
+      box-sizing: border-box;
       @include _flex(space-between,center);
       h2 {
         font-size: $font-30;
@@ -221,9 +229,8 @@ export default {
         }
         span {
           line-height: rem750(40);
-          font-weight: 600;
           color: $text-black;
-          font-size: $font-28;
+          font-size: $font-title;
         }
       }
       span {
@@ -235,8 +242,9 @@ export default {
       }
     }
     .box {
-      width: rem750(710);
-      margin: rem750(19) 0 0 rem750(20);
+      width: 100%;
+      box-sizing: border-box;
+      padding: rem750(19) rem750(20) 0 rem750(20);
       @include _flex(space-between,flex-start);
       li {
         width: rem750(346);
@@ -247,10 +255,14 @@ export default {
           margin-bottom: rem750(17);
         }
         span {
-          line-height: rem750(34);
+          line-height: rem750(40);
           font-size: $font-26;
           color: $text-black;
-          padding-left: rem750(15)
+          padding-left: rem750(15);
+          width: rem750(320);
+          overflow: hidden;
+          text-overflow:ellipsis;
+          white-space: nowrap;
         }
       }
     }

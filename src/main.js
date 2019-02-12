@@ -6,6 +6,9 @@ import router from './router'
 import MintUI from 'mint-ui'
 // import '../static/flexible.min'
 import './mian.scss'
+// 页面切换效果
+import animate from 'animate.css'
+Vue.use(animate)
 
 Vue.config.productionTip = false
 Vue.use(MintUI)

@@ -1,8 +1,10 @@
 <template>
   <div class="header">
-    <span @click="back" class=" back iconfont icon-jiantou2" ></span>
-    <h1>详情</h1>
-    <i></i>
+    <mt-header title="详情">
+      <div @click="back" class="back" slot="left">
+        <mt-button icon="back"></mt-button>
+      </div>
+    </mt-header>
   </div>
 </template>
 
@@ -18,16 +20,13 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/base/index.scss';
-  .header {
-    padding:0 rem750(27);
-    box-sizing: border-box;
-    @include _flex(space-between,center);
-    .back {
-      font-size: $font-50;
-      color:$text-back;;
-    }
-    h1 {
-      font-size: $font-36
-    }
+  .mint-header {
+    width: 100%;
+    height:100%;
+    background: $text-base;
+    color: $text-black;
+    font-size: $font-head;
+    padding: 0 rem750(27);
+    border-bottom: rem750(1) solid #f0f0f0;
   }
 </style>

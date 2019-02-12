@@ -1,6 +1,8 @@
 <template>
   <div class="header">
-    <span @click="back" class=" back iconfont icon-jiantou2" ></span>
+    <router-link to="/home">
+      <span class="back iconfont icon-jiantou2" ></span>
+    </router-link>
     <div class="headbox">
       <span class="iconfont icon-icon-"></span>
       <input ref="tip" id="txt" type="text" @focus="goFocus" placeholder="搜索">
@@ -20,9 +22,6 @@ export default {
     }
   },
   methods: {
-    back () {
-      this.$router.go(-1)
-    },
     goSearch () {
       let n = this.$refs.tip.value
       this.$router.push({name: 'detail', query: {}})

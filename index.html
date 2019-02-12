@@ -4,8 +4,19 @@
     <meta charset="utf-8">
       <!-- <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"> -->
       <link rel="stylesheet" href="./static/reset.css">
-      <link rel="stylesheet" href="//at.alicdn.com/t/font_989738_s7y3p771pb.css">
+      <link rel="stylesheet" href="//at.alicdn.com/t/font_989738_lw3btwmbeo.css">
       <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.2/??flexible_css.js,flexible.js"></script>
+      <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
+      <script>
+        if ('addEventListener' in document) {
+          document.addEventListener('DOMContentLoaded', function() {
+            FastClick.attach(document.body);
+          }, false);
+        }
+        if(!window.Promise) {
+          document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
+        }
+      </script>
       <title>师问</title>
   </head>
   <body>

@@ -1,16 +1,17 @@
 <template>
-  <div class="content animated fadeInLeftBig">
+  <div class="content">
     <div class="detail">
-      <img src="@/assets/logo.png" alt="#">
-      <div class="audio" @click="gostart">
-        <div id="aaa" v-if="flag">
-          <img src="@/assets/1.png">
-        </div>
-        <ul class="item" v-else>
-          <li ref='tip'><img src="@/assets/3.png"></li>
-          <!-- <li><img src="@/assets/2.png"></li>
-          <li><img src="@/assets/1.png"></li> -->
-        </ul>
+      <mt-swipe :auto="4000">
+        <mt-swipe-item v-for="item of banner" :key="item.banner_id" >
+          <img :src="item"/>
+        </mt-swipe-item>
+      </mt-swipe>
+      <div class="title">
+        <li>
+          <span>教师：{{this.teacher}}<i>{{this.subname}}</i></span>
+          <em class="iconfont icon-yanjing-active">10690</em>
+        </li>
+        <li>星级</li>
       </div>
     </div>
     <div class="general" id="general">
@@ -20,15 +21,31 @@
         </router-link>
       </div>
       <div class="article">
-        <p>在五四文化运动中</p>
+        <p  v-html="this.content"></p>
       </div>
     </div>
-    <div class="book" id="book">
+    <div class="video" id="video">
       <div class="head">
         <h2>
           <b></b>
-          课本章节
+          视频
         </h2>
+        <span>
+          更多
+          <i class="iconfont icon-iconfontjiantou4"></i>
+        </span>
+      </div>
+    </div>
+    <div class="course" id="course">
+      <div class="head">
+        <h2>
+          <b></b>
+          课件
+        </h2>
+        <span>
+          更多
+          <i class="iconfont icon-iconfontjiantou4"></i>
+        </span>
       </div>
     </div>
     <div class="comment" id="comment">
@@ -43,11 +60,11 @@
         </span>
       </div>
     </div>
-    <div class="video" id="video">
+    <div class="teacher" id="teacher">
       <div class="head">
         <h2>
           <b></b>
-          推荐课程
+          推荐讲师
         </h2>
         <span>
           更多
@@ -60,37 +77,52 @@
 
 <script>
 import Vue from 'vue'
-import animate from 'animate.css'
-Vue.use(animate)
+import axios from 'axios'
+import { Swipe, SwipeItem } from 'mint-ui'
+Vue.use(Swipe, SwipeItem)
 export default {
   data () {
     return {
       current: 0,
-      flag: true,
       navlist: [
         {
           name: '概述',
           selector: '#general'
         },
         {
-          name: '章节',
-          selector: '#book'
+          name: '视频',
+          selector: '#video'
+        },
+        {
+          name: '课件',
+          selector: '#course'
         },
         {
           name: '评论',
           selector: '#comment'
         }
-      ]
+      ],
+      banner: [],
+      teacher: '',
+      subname: '',
+      content: ''
     }
   },
   methods: {
     goAnchor (selector, index) {
       document.querySelector(selector).scrollIntoView(true)
       this.current = index
-    },
-    gostart () {
-
     }
+  },
+  mounted () {
+    axios.post(`/shishuiyuan/index/mod/trait/nu/${this.$route.params.id}/p/${this.$route.params.code}`)
+      .then(data => {
+        console.log(data.data)
+        this.banner = data.data.Image
+        this.teacher = data.data.File_Name
+        this.subname = data.data.File_SubName
+        this.content = data.data.Content
+      })
   }
 }
 </script>
@@ -102,51 +134,39 @@ export default {
   .detail {
     width: 100%;
     background: $bg-black;
+    height: rem750(440);
     flex-shrink: 0;
-    height: rem750(500);
-    padding: rem750(27) rem750(30) rem750(36) rem750(20);
-    box-sizing: border-box;
-    @include _flex(space-between,center,column);
-    img {
-      width: rem750(254);
-      // height: 100%;
-    }
-    .audio {
-      position: relative;
-      @include rect(rem750(50), rem750(50));
-      border-radius: 50%;
-      border: rem750(2) solid #1aad19;
-      #aaa {
-        @include rect(rem750(28), rem750(24));
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        margin: auto;
-        border: 0;
-        img{
-          @include rect(100%, 100%)
-       }
+    .mint-swipe {
+      @include rect(100%, rem750(300));
+      img {
+        @include rect(100%, 100%)
       }
-      .item {
-        li{
-          @include rect(rem750(28), rem750(24));
-          list-style: none;
-          position: absolute;
-          left: 0;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          margin: auto;
-          img {
-            @include rect(100%, 100%)
+    }
+    .title {
+      @include rect(100%, rem750(140));
+      box-sizing: border-box;
+      padding-left: rem750(20);
+      padding-right: rem750(40);
+      @include _flex(space-around,space-between,column);
+      li {
+        @include _flex(space-between,center);
+        span {
+          font-size:rem750(25);
+          color: #2e2e2e;
+          i {
+            padding-left: rem750(20);
+            font-style: normal;
+            color: #666666;
+            font-size: rem750(18)
           }
+        }
+        em {
+          font-size: rem750(15)
         }
       }
     }
   }
-  .general, .book, .comment, .video {
+  .general, .course, .video, .teacher, .comment {
     margin-bottom: rem750(12);
     width:100%;
     background: $bg-black;
@@ -155,6 +175,7 @@ export default {
   .general {
     .head {
       width: 100%;
+      box-sizing: border-box;
       height: rem750(80);
       padding-left: rem750(30);
       background: #f2f2f2;
@@ -166,17 +187,16 @@ export default {
           font-size: rem750(25);
           color: #2e2e2e;
           line-height: rem750(47);
-          box-sizing: border-box;
         }
         .active {
           border-bottom: rem750(5) solid #1992cf;
         }
       }
-
     }
     .article {
-      width: rem750(676);
-      min-height: rem750(135);
+      width: 100%;
+      box-sizing: border-box;
+      min-height: rem750(189);
       padding:rem750(27) rem750(37);
       p {
         line-height: rem750(45);
@@ -185,19 +205,17 @@ export default {
       }
     }
   }
-  .book {
-    height: rem750(600);
-  }
   .comment {
     height: rem750(370);
   }
-  .video {
-    height: rem750(357);
+  .course, .video, .teacher {
+    height: rem750(430)
   }
-  .comment, .book, .video{
+  .comment, .course, .video, .teacher{
     .head {
-      margin: rem750(37) rem750(28) 0 rem750(20);
-      width: rem750(702);
+      width: 100%;
+      box-sizing: border-box;
+      padding: rem750(37) rem750(28) 0 rem750(20);
       @include _flex(space-between,center);
       h2 {
         font-size: $font-30;
@@ -220,7 +238,7 @@ export default {
         }
       }
     }
-     .box {
+    .box {
       width: rem750(710);
       margin: rem750(23) 0 0 rem750(20);
     }

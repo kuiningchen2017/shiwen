@@ -1,7 +1,15 @@
 <template>
-  <div class="header">
+  <!-- <div class="header">
     <span @click="back" class=" back iconfont icon-jiantou2" ></span>
     <h1 @click="goRegister">注册</h1>
+  </div> -->
+  <div class="header">
+    <mt-header>
+      <div @click="back" class="back" slot="left">
+        <mt-button icon="back"></mt-button>
+      </div>
+      <mt-button slot="right"><h1 @click="goRegister">注册</h1></mt-button>
+    </mt-header>
   </div>
 </template>
 <script>
@@ -19,17 +27,13 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/base/index.scss';
-  .header {
-    padding:0 rem750(27);
-    box-sizing: border-box;
-    border-bottom: rem750(1) solid #ccc;
-    @include _flex(space-between,center);
-    .back {
-      font-size: $font-50;
-      color:$text-back;;
-    }
-    h1 {
-      font-size: $font-36
-    }
+  .mint-header {
+    width: 100%;
+    height:100%;
+    background: $text-base;
+    color: $text-black;
+    font-size: $font-head;
+    padding: 0 rem750(27);
+    border-bottom: rem750(1) solid #f0f0f0;
   }
 </style>

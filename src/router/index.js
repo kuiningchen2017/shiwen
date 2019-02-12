@@ -158,36 +158,28 @@ export default new Router({
       }
     },
     {
-      path: '/teacherlist/:title',
-      name: 'teacherlist',
+      path: '/list/:title',
+      name: 'list',
       components: {
         header: () => import('@/components/List/header'),
         default: () => import('@/components/List/index')
       }
     },
     {
-      path: '/list/:title',
-      name: 'list',
-      components: {
-        header: () => import('@/components/List/header'),
-        default: () => import('@/components/List/index1')
-      }
-    },
-    {
-      path: '/videodetail',
+      path: '/videodetail/:id/:code',
       name: 'videodetail',
       components: {
         header: () => import('@/components/Detail/header'),
-        default: () => import('@/components/Detail/index'),
+        default: () => import('@/components/Detail/videodetail'),
         footer: () => import('@/components/Detail/footer')
       }
     },
     {
-      path: '/audiodetail',
+      path: '/audiodetail/:id/:code',
       name: 'audiodetail',
       components: {
         header: () => import('@/components/Detail/header'),
-        default: () => import('@/components/Detail/index3'),
+        default: () => import('@/components/Detail/audiodetail'),
         footer: () => import('@/components/Detail/footer')
       }
     },
@@ -196,16 +188,25 @@ export default new Router({
       name: 'booksdetail',
       components: {
         header: () => import('@/components/Detail/header'),
-        default: () => import('@/components/Detail/index1'),
+        default: () => import('@/components/Detail/booksdetail'),
         footer: () => import('@/components/Detail/footer')
       }
     },
     {
-      path: '/teacherdetail',
+      path: '/teacherdetail/:id/:code',
       name: 'teacherdetail',
       components: {
         header: () => import('@/components/Detail/header'),
-        default: () => import('@/components/Detail/index2'),
+        default: () => import('@/components/Detail/teacherdetail'),
+        footer: () => import('@/components/Detail/footer1')
+      }
+    },
+    {
+      path: '/audiodetail',
+      name: 'audiodetail',
+      components: {
+        header: () => import('@/components/Detail/header'),
+        default: () => import('@/components/Detail/audiodetail'),
         footer: () => import('@/components/Detail/footer1')
       }
     }

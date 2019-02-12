@@ -1,6 +1,8 @@
 <template>
   <div class="header">
-    <span @click="back" class=" back iconfont icon-jiantou2" ></span>
+    <router-link to="/home">
+      <span class="back iconfont icon-jiantou2" ></span>
+    </router-link>
     <div class="headbox">
       <span class="iconfont icon-icon-"></span>
       <input ref="tip" id="txt" type="text" @focus="goFocus" placeholder="课件和知识点">
@@ -20,9 +22,6 @@ export default {
     }
   },
   methods: {
-    back () {
-      this.$router.go(-1)
-    },
     goSearch () {
       let n = this.$refs.tip.value
       this.$router.push({name: 'detail', query: {}})
@@ -40,7 +39,7 @@ export default {
 <style lang="scss" scoped>
 @import '@/style/base/index.scss';
   .header {
-    padding:0 rem750(27);
+    padding:0 rem750(27) 0 rem750(10);
     box-sizing: border-box;
     @include _flex(space-between,center);
     .back {

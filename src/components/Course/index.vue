@@ -1,12 +1,52 @@
 <template>
-  <div class="content">
+  <div class="content animated fadeInLeft">
     <div class="choose"></div>
     <div class="list" >
-      <li v-for = "item of list" :key = "item.Teacher_ID">
-        <img :src="item.Attachment_Path" alt="#">
-        <h3>{{item.Teacher_Name}}</h3>
-        <p>{{item.Teacher_showTitle}}</p>
+      <li class="animated zoomIn">
+        <img src = '@/assets/1.png' alt="#">
+        <h3>三年级数学上册</h3>
+        <p>人教版</p>
       </li>
+      <li class="animated zoomIn">
+        <img src= '@/assets/2.png' alt="#">
+        <h3>三年级语文上册</h3>
+        <p>人教版</p>
+      </li>
+      <li class="animated zoomIn">
+        <img src= '@/assets/3.png' alt="#">
+        <h3>三年级语文下册</h3>
+        <p>人教版</p>
+      </li>
+      <li class="animated zoomIn">
+          <img src = '@/assets/1.png' alt="#">
+          <h3>三年级数学上册</h3>
+          <p>人教版</p>
+        </li>
+        <li class="animated zoomIn">
+          <img src= '@/assets/2.png' alt="#">
+          <h3>三年级语文上册</h3>
+          <p>人教版</p>
+        </li>
+        <li class="animated zoomIn">
+          <img src= '@/assets/3.png' alt="#">
+          <h3>三年级语文下册</h3>
+          <p>人教版</p>
+        </li>
+        <li class="animated zoomIn">
+          <img src = '@/assets/1.png' alt="#">
+          <h3>三年级数学上册</h3>
+          <p>人教版</p>
+        </li>
+        <li class="animated zoomIn">
+          <img src= '@/assets/2.png' alt="#">
+          <h3>三年级语文上册</h3>
+          <p>人教版</p>
+        </li>
+        <li class="animated zoomIn">
+          <img src= '@/assets/3.png' alt="#">
+          <h3>三年级语文下册</h3>
+          <p>人教版</p>
+        </li>
     </div>
   </div>
 </template>
@@ -20,11 +60,7 @@ export default {
     }
   },
   mounted () {
-    axios.post('/shishuiyuan/index/zymslist/list')
-      .then(data => {
-        console.log(data.data)
-        this.list = data.data
-      })
+
   }
 }
 </script>
@@ -36,21 +72,20 @@ export default {
     background: $bg-base;
   }
   .list {
-    padding: 0 rem750(20);
+    width: 100%;
+    padding: 0 rem750(25);
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
     li {
-      width: rem750(346);
+      width: rem750(222);
       padding-top: rem750(30);
-      &:nth-child(odd) {
-        padding-right: rem750(9);
-      }
-      &:nth-child(even) {
-        padding-left: rem750(9);
+      padding-right: rem750(17);
+      &:nth-child(3n) {
+        padding-right: 0;
       }
       img {
-        @include rect(100%, rem750(260));
+        @include rect(100%, rem750(278));
         border-radius: rem750(10)
       }
       h3 {

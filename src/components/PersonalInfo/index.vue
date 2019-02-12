@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content animated fadeInLeft">
     <div class="list">
       <li>
         <h3>头像</h3>

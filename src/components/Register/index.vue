@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content animated fadeInLeft">
     <div class="img">
       <img src="@/assets/logo.png" alt="#">
     </div>

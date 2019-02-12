@@ -28,6 +28,16 @@ html, body, .container {
       &.router-link-active {
         color:$bg-side;
       }
+      &:first-child{
+        span {
+          font-size: $font-wode;
+        }
+      }
+      &:last-child{
+        span {
+          font-size: $font-wode;
+        }
+      }
       span {
         font-size: $font-50;
         padding-bottom: rem750(10)
@@ -42,19 +52,46 @@ html, body, .container {
             background-size: 100% 100%;
           }
           .vjs-big-play-button{
-            height: rem750(85) !important ;
+            height: rem750(85) !important;
             width: rem750(85);
             line-height: rem750(85) !important;
             border-radius: 50%;
             background-color: rgba(0,0,0,0.8);
-            border: 0
+            border:0;
+            left:0;
+            right:0;
+            bottom:0;
+            margin:auto;
           }
         }
       }
     }
   }
-  // .content>.detail>.video-player>.vjs_video_417-dimensions.vjs-fluid {
-  //   @include rect(100%, rem750(300));
-  //   padding-top: 40%;
-  // }
+}
+
+.mint-header {
+  .mint-header-button {
+    height: rem750(60);
+    .back {
+      height: 100%;
+      .mint-button {
+        height: 100%;
+        .mint-button-text {
+          h1 {
+            color: $text-black;
+            font-size: $font-head;
+          }
+        }
+        .mint-button-icon {
+          .mintui {
+            color:$text-back;
+            font-size: $font-back;
+          }
+        }
+      }
+    }
+  }
+  .mint-header-title {
+    line-height: rem750(45)
+  }
 }

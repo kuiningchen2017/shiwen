@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content animated fadeInLeft">
     <div class="top">
       <div class="message">
         <img src="@/assets/headimg.png" >
@@ -8,20 +8,6 @@
           <p>大家好！</p>
         </div>
         <span class="iconfont icon-iconfontjiantou4"></span>
-      </div>
-      <div class="nav">
-        <li>
-          <h1>0</h1>
-          <span>关注</span>
-        </li>
-        <li>
-          <h1>2</h1>
-          <span>积分</span>
-        </li>
-        <li>
-          <h1>2</h1>
-          <span>优惠券</span>
-        </li>
       </div>
     </div>
     <div class="list">
@@ -48,8 +34,15 @@
       </li>
       <li>
         <span class="iconfont icon-peixun"></span>
-        <div class="box mark">
+        <div class="box">
           <h3>我的培训</h3>
+          <span class="iconfont icon-iconfontjiantou4"></span>
+        </div>
+      </li>
+      <li>
+        <span class="iconfont icon-zuoye"></span>
+        <div class="box mark">
+          <h3>作业布置</h3>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
       </li>
@@ -64,8 +57,15 @@
       </li>
       <li>
         <span class="iconfont icon-chengguo"></span>
-        <div class="box mark">
+        <div class="box">
           <h3>我的成果</h3>
+          <span class="iconfont icon-iconfontjiantou4"></span>
+        </div>
+      </li>
+      <li>
+        <span class="iconfont icon-shoucang1"></span>
+        <div class="box mark">
+          <h3>我的关注</h3>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
       </li>
@@ -88,14 +88,14 @@ export default {
 .content {
   background: #efefef;
   .top {
-    width: rem750(690);
-    height: rem750(250);
-    padding: rem750(38) rem750(30) 0 rem750(30);
+    width: 100%;
+    box-sizing: border-box;
+    height: rem750(196);
+    padding: rem750(38) rem750(30);
     background: #fff;
     margin-bottom: rem750(12);
     .message {
       height: rem750(120);
-      padding-bottom: rem750(38);
       @include _flex(space-between,center);
       img {
         width: rem750(120);
@@ -121,25 +121,13 @@ export default {
         font-size: rem750(26);
       }
     }
-    .nav {
-      width: 100%;
-      height: rem750(93);
-      @include _flex(space-around,center);
-      h1 {
-        @include _flex(center,center);
-        font-size: rem750(26);
-        padding-bottom: rem750(10);
-      }
-      span {
-        font-size: rem750(24);
-        color: #7d7d7d;
-      }
-    }
   }
   .list {
     margin-bottom: rem750(12)
   }
   .list, .foot {
+    width:100%;
+    box-sizing: border-box;
     padding-left: rem750(36);
     background: #fff;
     li {
@@ -150,7 +138,7 @@ export default {
         color: #9c9c9c;
       }
       .box {
-        width: rem750(614);
+        width: 91%;
         height: rem750(100);
         box-sizing: border-box;
         padding-right: rem750(36);
