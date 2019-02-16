@@ -1,21 +1,21 @@
 <template>
   <div class="header">
-    <mt-header>
+    <mt-header title="学校信息">
       <div @click="back" class="back" slot="left">
         <mt-button icon="back"></mt-button>
       </div>
-      <mt-button slot="right"><h1 @click="goRegister">注册</h1></mt-button>
     </mt-header>
   </div>
 </template>
+
 <script>
+import Vue from 'vue'
+import { Header } from 'mint-ui'
+Vue.use(Header)
 export default {
   methods: {
     back () {
       this.$router.go(-1)
-    },
-    goRegister () {
-      this.$router.push('/register')
     }
   }
 }

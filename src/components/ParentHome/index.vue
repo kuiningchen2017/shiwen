@@ -117,12 +117,12 @@ export default {
         console.log(data.data)
         this.banner = data.data
       })
-    axios.post('/shishuiyuan/index/top/sandglass/id/Vn/num/mq/p/fist')
+    axios.post('/shishuiyuan/index/top/sandglass/id/Vn/num/mq/p/0')
       .then(data => {
         console.log(data.data)
         this.audiolist = data.data
       })
-    axios.post('/shishuiyuan/index/top/sandglass/id/sn/num/mq/p/fist')
+    axios.post('/shishuiyuan/index/top/sandglass/id/sn/num/mq/p/0')
       .then(data => {
         console.log(data.data)
         this.videolist = data.data
@@ -130,9 +130,9 @@ export default {
   },
   methods: {
     see (url, property, id, code) {
-      if (property == 0) {
+      if (property === '0') {
         window.location.href = url
-      } else if (property == 1) {
+      } else if (property === '1') {
         let URL = `http://sw.shishuiyuan999.com/index/picture/del/id/${id}/key/${code}`
         window.location.href = URL
       }
@@ -150,7 +150,7 @@ export default {
         this.$router.push({name: 'videodetail', params: {id: id, code: code}})
       } else if (mark === 'audio') {
         this.$router.push({name: 'audiodetail', params: {id: id, code: code}})
-      }else {
+      } else {
         console.log('mark')
       }
     }

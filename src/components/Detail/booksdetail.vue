@@ -161,12 +161,12 @@ export default {
       h2 {
         font-size: $font-30;
         height: rem750(40);
-        font-weight: 100;
+        // font-weight: 100;
         @include _flex(center,center);
         b {
           width: rem750(6);
           height: rem750(24);
-          background: #1992cf;
+          background: $bg-side;
           border-radius: 30%;
           margin-right: rem750(8);
         }

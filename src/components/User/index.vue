@@ -13,59 +13,59 @@
     <div class="list">
       <li>
         <span class="iconfont icon-xuexiao"></span>
-        <div class="box">
+        <div class="box" @click="goschool">
           <h3>我的学校</h3>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
       </li>
       <li>
         <span class="iconfont icon-banji"></span>
-        <div class="box">
+        <div class="box" @click="goclass">
           <h3>我的班级</h3>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
       </li>
       <li>
         <span class="iconfont icon-tuijian"></span>
-        <div class="box">
+        <div class="box" @click="gotuijian">
           <h3>我的推荐</h3>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
       </li>
       <li>
         <span class="iconfont icon-peixun"></span>
-        <div class="box">
+        <div class="box" @click="gotrain">
           <h3>我的培训</h3>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
       </li>
       <li>
-        <span class="iconfont icon-zuoye"></span>
-        <div class="box mark">
-          <h3>作业布置</h3>
-          <span class="iconfont icon-iconfontjiantou4"></span>
-        </div>
-      </li>
-    </div>
-    <div class="foot">
-      <li>
         <span class="iconfont icon-dingdan"></span>
-        <div class="box">
+        <div class="box" @click="goorder">
           <h3>订单中心</h3>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
       </li>
       <li>
         <span class="iconfont icon-chengguo"></span>
-        <div class="box">
+        <div class="box mark" @click="goresult">
           <h3>我的成果</h3>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
       </li>
+    </div>
+    <div class="foot">
       <li>
         <span class="iconfont icon-shoucang1"></span>
-        <div class="box mark">
+        <div class="box" @click="gofollow">
           <h3>我的关注</h3>
+          <span class="iconfont icon-iconfontjiantou4"></span>
+        </div>
+      </li>
+      <li>
+        <span class="iconfont icon-zuoye"></span>
+        <div class="box mark" @click="gohomework">
+          <h3>作业布置</h3>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
       </li>
@@ -78,6 +78,32 @@ export default {
   data () {
     return {
 
+    }
+  },
+  methods: {
+    goschool () {
+      this.$router.push('/schoolmessage')
+    },
+    goclass () {
+      this.$router.push('/myclass')
+    },
+    gotuijian () {
+      this.$router.push('/recommend')
+    },
+    gotrain () {
+      this.$router.push('/mytrain')
+    },
+    goorder () {
+      this.$router.push('/ordercenter')
+    },
+    goresult () {
+      this.$router.push('/myresult')
+    },
+    gofollow () {
+      this.$router.push('/myfollow')
+    },
+    gohomework () {
+      this.$router.push('/homework')
     }
   }
 }
@@ -130,6 +156,7 @@ export default {
     box-sizing: border-box;
     padding-left: rem750(36);
     background: #fff;
+    margin-bottom: rem750(12);
     li {
       height: rem750(100);
       @include _flex(space-between,center);

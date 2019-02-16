@@ -25,7 +25,7 @@
         </span>
       </div>
       <div class="box">
-        <li v-for = "(item,index) of courselist" :key ="index" @click="godetail(item.File_ID, item.File_Code)">
+        <li v-for = "(item,index) of courselist" :key ="index" @click="godetail(item.File_ID, item.File_Code, 'video')">
           <img :src="item.Attachment_Path" alt="#">
           <span>{{item.File_Name}}</span>
           <span>{{item.File_SubName}}</span>
@@ -44,7 +44,7 @@
         </span>
       </div>
       <div class="box">
-        <li v-for = "(item,index) of trainlist" :key ="index" @click="godetail(item.File_ID, item.File_Code)">
+        <li v-for = "(item,index) of trainlist" :key ="index" @click="godetail(item.File_ID, item.File_Code, 'video')">
           <img :src="item.Attachment_Path" alt="#">
           <span>{{item.File_Name}}</span>
           <span>{{item.File_SubName}}</span>
@@ -63,7 +63,7 @@
         </span>
       </div>
       <div class="box">
-        <li v-for = "(item,index) of teacherlist" :key ="index">
+        <li v-for = "(item,index) of teacherlist" :key ="index" @click="godetail(item.File_ID, item.File_Code, 'teacher')">
           <img :src="item.Attachment_Path" alt="#">
           <span>{{item.File_Name}}</span>
           <span>{{item.File_SubName}}</span>
@@ -118,17 +118,17 @@ export default {
         console.log(data.data)
         this.banner = data.data
       })
-    axios.post('/shishuiyuan/index/top/sandglass/id/AB/num/mq/p/fist')
+    axios.post('/shishuiyuan/index/top/sandglass/id/AB/num/mq/p/0')
       .then(data => {
         console.log(data.data)
         this.courselist = data.data
       })
-    axios.post('/shishuiyuan/index/top/sandglass/id/zy/num/mq/p/fist')
+    axios.post('/shishuiyuan/index/top/sandglass/id/zy/num/mq/p/0')
       .then(data => {
         console.log(data.data)
         this.trainlist = data.data
       })
-    axios.post('/shishuiyuan/index/mod/gaste/key/pm/del/mt/c/f')
+    axios.post('/shishuiyuan/index/mod/gaste/key/pm/del/mt/c/0')
       .then(data => {
         console.log(data.data)
         this.teacherlist = data.data
@@ -136,9 +136,9 @@ export default {
   },
   methods: {
     see (url, property, id, code) {
-      if (property == 0) {
+      if (property === '0') {
         window.location.href = url
-      } else if (property == 1) {
+      } else if (property === '1') {
         let URL = `http://sw.shishuiyuan999.com/index/picture/del/id/${id}/key/${code}`
         window.location.href = URL
       }
@@ -155,8 +155,12 @@ export default {
       let title = 'zyms'
       this.$router.push({name: 'list', params: {title: title}})
     },
-    godetail (id, code) {
-      this.$router.push({name: 'videodetail', params: {id: id, code: code}})
+    godetail (id, code, mark) {
+      if (mark === 'video') {
+        this.$router.push({name: 'videodetail', params: {id: id, code: code}})
+      } else {
+        this.$router.push({name: 'teacherdetail', params: {id: id, code: code}})
+      }
     }
   }
 }

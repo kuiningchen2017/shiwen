@@ -2,6 +2,30 @@
   <div class="content" ref="content">
     <div class="detail">
       <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true" :options="playerOptions" @play="onPlayerPlay($event)" @pause="onPlayerPause($event)"></video-player>
+      <div class="info">
+        <li class="title">
+          <h2>{{this.name}}</h2>
+          <em class="iconfont icon-yanjing-active">10690</em>
+        </li>
+        <li class="xingji">
+          <h2>星级</h2>
+          <p>￥<span>{{this.price}}</span></p>
+        </li>
+        <li class="speaker">
+          <h2>主讲人：王志宏</h2>
+          <h2>省级高级教师</h2>
+        </li>
+        <li class="ziyuan" v-if="flag">
+          <div class="left">
+            <span>尊享</span>
+            <p>课件资源</p>
+          </div>
+          <div class="right">
+            <p>查看详情</p>
+            <i class="iconfont icon-iconfontjiantou4"></i>
+          </div>
+        </li>
+      </div>
     </div>
     <div class="general" id="general">
       <div class="head">
@@ -52,6 +76,9 @@ export default {
     return {
       current: 0,
       content: '',
+      name: '',
+      price: '',
+      flag: true,
       navlist: [
         {
           name: '概述',
@@ -116,6 +143,11 @@ export default {
         this.playerOptions.sources[0].type = `video/${data.data.type}`
         this.playerOptions.sources[0].src = data.data.Charge
         this.content = data.data.Content
+        this.name = data.data.File_Name
+        this.price = data.data.Price
+        if (data.data.isAttachment === '0') {
+          this.flag = false
+        }
       })
   }
 }
@@ -129,7 +161,76 @@ export default {
     width: 100%;
     background: $bg-black;
     flex-shrink: 0;
-    height: rem750(560);
+    // height: rem750(560);
+    .info {
+      padding: 0 rem750(20);
+      margin-bottom: rem750(14);
+      li {
+        @include _flex(space-between,center);
+      }
+      .title {
+        padding-top: rem750(25);
+        h2 {
+          font-size: rem750(27);
+          line-height: rem750(47);
+        }
+        em {
+          font-size: rem750(20);
+          padding-right: rem750(12);
+          color: #676767;
+        }
+      }
+      .xingji {
+        height: rem750(49);
+        p {
+          color: #f00000;
+          padding-right: rem750(12);
+          font-weight: 600;
+          span {
+            font-size: rem750(27)
+          }
+        }
+      }
+      .speaker {
+        height: rem750(66);
+        @include _flex(flex-start,center);
+        h2 {
+          font-size: rem750(26);
+          padding-right: rem750(30)
+        }
+      }
+      .ziyuan {
+        height: rem750(56);
+        .left {
+          display: flex;
+          span {
+            @include rect(rem750(56),rem750(36));
+            display: block;
+            text-align: center;
+            line-height: rem750(36);
+            border-radius: rem750(5);
+            background: #ff0000;
+            font-size: rem750(24);
+            color: #fff;
+          }
+          p {
+            font-size: rem750(25);
+            line-height: rem750(36);
+            padding-left: rem750(30);
+          }
+        }
+        .right {
+          display: flex;
+          p {
+            color: #999999;
+          }
+          i {
+            font-size: rem750(28);
+            color: #999999;
+          }
+        }
+      }
+    }
   }
   .general, .comment, .video {
     margin-bottom: rem750(12);
@@ -190,12 +291,12 @@ export default {
       h2 {
         font-size: $font-30;
         height: rem750(40);
-        font-weight: 100;
+        // font-weight: 100;
         @include _flex(center,center);
         b {
           width: rem750(6);
           height: rem750(24);
-          background: #1992cf;
+          background: $bg-side;
           border-radius: 30%;
           margin-right: rem750(8);
         }

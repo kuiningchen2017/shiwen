@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <router-link to="/home">
+    <router-link tag="li" to="/home">
       <span class="back iconfont icon-jiantou2" ></span>
     </router-link>
     <div class="headbox">
@@ -23,8 +23,8 @@ export default {
   },
   methods: {
     goSearch () {
-      let n = this.$refs.tip.value
-      this.$router.push({name: 'detail', query: {}})
+      // let n = this.$refs.tip.value
+      // this.$router.push({name: 'detail', query: {}})
     },
     goclear () {
       this.$refs.tip.value = ''

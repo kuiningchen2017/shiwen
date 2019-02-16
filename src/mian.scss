@@ -68,7 +68,6 @@ html, body, .container {
     }
   }
 }
-
 .mint-header {
   .mint-header-button {
     height: rem750(60);
@@ -89,6 +88,11 @@ html, body, .container {
           }
         }
       }
+    }
+  }
+  .is-right {
+    .mint-button {
+      height: rem750(60)
     }
   }
   .mint-header-title {

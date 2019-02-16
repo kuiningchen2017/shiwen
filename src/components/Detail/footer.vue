@@ -48,13 +48,13 @@ export default {
     }
     span {
       color: #000;
-      font-size: $font-30
+      font-size: $font-34
     }
     p {
       width:rem750(90);
-      line-height:rem750(16);
+      line-height:rem750(40);
       color: #2e2e2e;
-      font-size: rem750(24);
+      font-size: rem750(30);
     }
   }
   .buy {

@@ -1,21 +1,25 @@
 <template>
   <div class="header">
-    <mt-header>
+    <mt-header title="我的班级">
       <div @click="back" class="back" slot="left">
         <mt-button icon="back"></mt-button>
       </div>
-      <mt-button slot="right"><h1 @click="goRegister">注册</h1></mt-button>
+      <mt-button slot="right"><span class="iconfont icon-hao" @click="add"></span></mt-button>
     </mt-header>
   </div>
 </template>
+
 <script>
+import Vue from 'vue'
+import { Header } from 'mint-ui'
+Vue.use(Header)
 export default {
   methods: {
     back () {
-      this.$router.go(-1)
+      this.$router.push('/user')
     },
-    goRegister () {
-      this.$router.push('/register')
+    add () {
+
     }
   }
 }
@@ -31,5 +35,11 @@ export default {
     font-size: $font-head;
     padding: 0 rem750(27);
     border-bottom: rem750(1) solid #f0f0f0;
+    .mint-button {
+      span {
+        font-size: $font-head;
+        color: #515151;
+      }
+    }
   }
 </style>

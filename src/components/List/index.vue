@@ -4,56 +4,63 @@
       <div class="grade">
         <h3 @click="getgrade">{{this.title}}</h3>
         <ul v-show="grade" class="switch animated fadeInLeft" ref="grade">
-          <li v-for="(item, index) of nianji" :key="index" :class="{'bor':clicked==index}" @click="changeTab(index,item.CD_Name)">
+          <li v-for="(item, index) of nianji" :key="index" :class="{'bor':clicked===index}" @click="changeTab(index,item.CD_Name)">
             {{item.CD_Name}}</li>
         </ul>
       </div>
       <div class="subject">
         <h3 @click="getsubject">{{this.title1}}</h3>
         <ul v-show="subject" class="switchA animated fadeInLeft">
-          <li v-for="(item, index) of xueke" :key="index" :class="{'bor':clicked1==index}" @click="changeTab1(index,item.CD_Name)">
+          <li v-for="(item, index) of xueke" :key="index" :class="{'bor':clicked1===index}" @click="changeTab1(index,item.CD_Name)">
             {{item.CD_Name}}</li>
         </ul>
       </div>
       <div class="press">
         <h3 @click="getpress">{{this.title2}}</h3>
         <ul v-show="press" class="switchB animated fadeInLeft">
-          <li v-for="(item, index) of chubanshe" :key="index" :class="{'bor':clicked2==index}" @click="changeTab2(index,item.CD_Name)">{{item.CD_Name}}</li>
+          <li v-for="(item, index) of chubanshe" :key="index" :class="{'bor':clicked2===index}" @click="changeTab2(index,item.CD_Name)">{{item.CD_Name}}</li>
         </ul>
       </div>
     </div>
-    <div class="list" v-if="flag" @click="getclear">
-      <li class="animated zoomIn" v-for="item of list" :key="item.Resource_ID" @click="godetail(item.File_ID, item.File_Code)">
-        <img :src="item.Attachment_Path" alt="#">
-        <h3>{{item.File_Name}}</h3>
-        <p>{{item.File_SubName}}</p>
-      </li>
-    </div>
-    <div class="list1" v-else @click="getclear">
-      <li class="animated zoomIn" v-for="item of list" :key="item.Resource_ID" @click="godetail(item.File_ID, item.File_Code)">
-        <div>
+    <!-- <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore"> -->
+      <div class="list" v-if="flag" @click="getclear">
+        <li class="animated zoomIn" v-for="item of list" :key="item.Resource_ID" @click="godetail(item.File_ID, item.File_Code)">
+          <img :src="item.Attachment_Path" alt="#">
           <h3>{{item.File_Name}}</h3>
-          <p>{{item.File_CreateDate}}</p>
-        </div>
-        <img :src="item.Attachment_Path" alt="#">
-      </li>
-    </div>
+          <p>{{item.File_SubName}}</p>
+        </li>
+      </div>
+      <div class="list1" v-else @click="getclear">
+        <li class="animated zoomIn" v-for="item of list" :key="item.Resource_ID" @click="godetail(item.File_ID, item.File_Code)">
+          <div>
+            <h3>{{item.File_Name}}</h3>
+            <p>{{item.File_CreateDate}}</p>
+          </div>
+          <img :src="item.Attachment_Path" alt="#">
+        </li>
+      </div>
+    <!-- </mt-loadmore> -->
   </div>
 </template>
 
 <script>
+// import Vue from 'vue'
+// import { Indicator, Loadmore, Toast } from 'mint-ui'
+// Vue.use(Loadmore)
 import axios from 'axios'
 export default {
   data () {
     return {
       flag: true,
-      clicked: false,
-      clicked1: 0,
-      clicked2: 0,
+      clicked: '',
+      clicked1: '',
+      clicked2: '',
       grade: false,
       subject: false,
       press: false,
       list: [],
+      allLoaded: false,
+      pageNum: 1,
       nianji: [],
       xueke: [],
       chubanshe: [],
@@ -111,7 +118,6 @@ export default {
       close.setAttribute('class', 'switchB animated fadeOutLeft')
     },
     godetail (id, code) {
-      console.log(typeof (this.$route.params.title))
       if (this.$route.params.title === 'jpkc' || this.$route.params.title === 'msld' || this.$route.params.title === 'jzpx' || this.$route.params.title === 'ksjx' || this.$route.params.title === 'kjzy' || this.$route.params.title === 'ynjx' || this.$route.params.title === 'video') {
         console.log('1111')
         this.$router.push({name: 'videodetail', params: {id: id, code: code}})
@@ -122,7 +128,42 @@ export default {
         console.log('333')
         this.$router.push({name: 'teacherdetail', params: {id: id, code: code}})
       }
-    }
+    },
+    // loadTop () {
+    //   Indicator.open({
+    //     text: '加载中...',
+    //     spinnerType: 'fading-circle'
+    //   })
+    //   axios.post('/shishuiyuan/index/mod/gaste/key/pm/del/fd/c/0')
+    //     .then(data => {
+    //       this.list = data.data
+    //       this.pageNum = 1
+    //       this.allLoaded = false
+    //       this.$refs.loadmore.onTopLoaded()
+    //       Indicator.close()
+    //     })
+    // },
+    // loadBottom () {
+    //   Indicator.open({
+    //     text: '加载中...',
+    //     spinnerType: 'fading-circle'
+    //   })
+    //   axios.post('/shishuiyuan/index/mod/gaste/key/pm/del/fd/c/' + this.pageNum*10)
+    //     .then(data => {
+    //       console.log(data.data)
+    //       if (data.data.length === 0) {
+    //         this.allLoaded = true
+    //         Toast('已无更多数据')
+    //       } else {
+    //         this.pageNum++
+    //         console.log(this.list)
+    //         this.list = [...this.list, ...data.data]
+    //       }
+    //       console.log(this.list)
+    //       this.$refs.loadmore.onBottomLoaded()
+    //       Indicator.close()
+    //     })
+    // }
   },
   created () {
     axios.post('/shishuiyuan/index/peri/top/id/hk')
@@ -238,6 +279,9 @@ export default {
     @include rect(100%,rem750(72));
     flex-shrink: 0;
     background: $bg-base;
+    position: absolute;
+    top:0;
+    z-index: 1001;
     @include _flex(flex-start,flex-start);
     .grade, .subject, .press {
       z-index: 100;
@@ -263,8 +307,10 @@ export default {
     }
   }
   .list {
+    margin-top: rem750(72);
     padding: rem750(30) rem750(20) 0 rem750(20);
-    width: 100%;
+    @include rect(100%, 100%);
+    overflow: scroll;
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
@@ -302,6 +348,9 @@ export default {
     }
   }
   .list1 {
+    @include rect(100%, 100%);
+    margin-top: rem750(72);
+    overflow: scroll;
     li {
       @include rect(100%, rem750(210));
       box-sizing: border-box;

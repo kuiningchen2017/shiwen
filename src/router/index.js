@@ -184,7 +184,7 @@ export default new Router({
       }
     },
     {
-      path: '/booksdetail',
+      path: '/booksdetail/:id/:code',
       name: 'booksdetail',
       components: {
         header: () => import('@/components/Detail/header'),
@@ -202,12 +202,135 @@ export default new Router({
       }
     },
     {
-      path: '/audiodetail',
-      name: 'audiodetail',
+      path: '/schoolmessage',
+      name: 'schoolmessage',
       components: {
-        header: () => import('@/components/Detail/header'),
-        default: () => import('@/components/Detail/audiodetail'),
-        footer: () => import('@/components/Detail/footer1')
+        header: () => import('@/components/SchoolMessage/header'),
+        default: () => import('@/components/SchoolMessage/index')
+      }
+    },
+    {
+      path: '/schoolset',
+      name: 'schoolset',
+      components: {
+        header: () => import('@/components/Schoolset/header'),
+        default: () => import('@/components/Schoolset/index')
+      }
+    },
+    {
+      path: '/guanzhuxueke',
+      name: 'guanzhuxueke',
+      components: {
+        header: () => import('@/components/GuanzhuSubject/header'),
+        default: () => import('@/components/GuanzhuSubject/index')
+      }
+    },
+    {
+      path: '/myclass',
+      name: 'myclass',
+      components: {
+        header: () => import('@/components/myclass/header'),
+        default: () => import('@/components/myclass/index')
+      }
+    },
+    {
+      path: '/recommend',
+      name: 'recommend',
+      redirect: '/recommend/code',
+      components: {
+        header: () => import('@/components/Recommend/header'),
+        default: () => import('@/components/Recommend/index')
+      },
+      children: [
+        {
+          path: 'code',
+          component: () => import('@/components/Recommend/code')
+        },
+        {
+          path: 'list',
+          component: () => import('@/components/Recommend/list')
+        }
+      ]
+    },
+    {
+      path: '/mytrain',
+      name: 'mytrain',
+      redirect: '/mytrain/all',
+      components: {
+        header: () => import('@/components/MyTrain/header'),
+        default: () => import('@/components/MyTrain/index')
+      },
+      children: [
+        {
+          path: 'all',
+          component: () => import('@/components/MyTrain/all')
+        },
+        {
+          path: 'study',
+          component: () => import('@/components/MyTrain/study')
+        },
+        {
+          path: 'over',
+          component: () => import('@/components/MyTrain/over')
+        }
+      ]
+    },
+    {
+      path: '/ordercenter',
+      name: 'ordercenter',
+      redirect: '/ordercenter/all',
+      components: {
+        header: () => import('@/components/ordercenter/header'),
+        default: () => import('@/components/ordercenter/index')
+      },
+      children: [
+        {
+          path: 'all',
+          component: () => import('@/components/ordercenter/all')
+        },
+        {
+          path: 'pay',
+          component: () => import('@/components/ordercenter/pay')
+        },
+        {
+          path: 'comment',
+          component: () => import('@/components/ordercenter/comment')
+        }
+      ]
+    },
+    {
+      path: '/myresult',
+      name: 'myresult',
+      redirect: '/myresult/video',
+      components: {
+        header: () => import('@/components/myresult/header'),
+        default: () => import('@/components/myresult/index')
+      },
+      children: [
+        {
+          path: 'video',
+          component: () => import('@/components/myresult/video')
+        },
+        {
+          path: 'kejian',
+          component: () => import('@/components/myresult/kejian')
+        }
+      ]
+    },
+    {
+      path: '/myfollow',
+      name: 'myfollow',
+      components: {
+        header: () => import('@/components/myfollow/header'),
+        default: () => import('@/components/myfollow/index')
+      }
+    },
+    {
+      path: '/homework',
+      name: 'homework',
+      components: {
+        header: () => import('@/components/homework/header'),
+        default: () => import('@/components/homework/index')
       }
     }
   ]

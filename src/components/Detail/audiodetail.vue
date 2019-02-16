@@ -155,10 +155,10 @@ export default {
             var s = value.split(':')
             var i = 0
             for (; i < s.length - 1; i++) {
-              time += s[i].length == 1 ? ('0' + s[i]) : s[i]
+              time += s[i].length === 1 ? ('0' + s[i]) : s[i]
               time += ':'
             }
-            time += s[i].length == 1 ? ('0' + s[i]) : s[i]
+            time += s[i].length === 1 ? ('0' + s[i]) : s[i]
             return time
           }
           /**
@@ -279,14 +279,14 @@ export default {
     height: rem750(500);
     padding: rem750(27) rem750(30) rem750(36) rem750(20);
     box-sizing: border-box;
-    @include _flex(space-around,center,column);
+    @include _flex(space-between,center,column);
     img {
       @include rect(rem750(300),rem750(300));
     }
     .audio-wrapper {
       background-color: #fcfcfc;
       margin: rem750(10) auto;
-      @include rect(rem750(500), rem750(70));
+      @include rect(rem750(600), rem750(120));
       border: rem750(1) solid #e0e0e0;
       @include _flex(space-between,center);
       .audio-left {
@@ -294,7 +294,7 @@ export default {
         height: 100%;
         @include _flex(center,center);
         img {
-          @include rect(rem750(40), rem750(40));
+          @include rect(rem750(70), rem750(70));
         }
       }
       .audio-right {
@@ -302,8 +302,9 @@ export default {
         height: 100%;
         margin-right: 2%;
         p {
-          font-size: rem750(20);
+          font-size: rem750(28);
           height: 35%;
+          line-height: 144%;
           margin: rem750(8) 0;
           padding-left: rem750(10);
           overflow: hidden;
@@ -314,11 +315,10 @@ export default {
         .progress-bar-bg {
           background-color: #d9d9d9;
           position: relative;
-          height: rem750(2);
-          cursor: pointer;
+          height: rem750(5);
           span {
             content: " ";
-            @include rect(rem750(10), rem750(10));
+            @include rect(rem750(15), rem750(15));
             border-radius: 50%;
             -moz-border-radius: 50%;
             -webkit-border-radius: 50%;
@@ -326,23 +326,22 @@ export default {
             position: absolute;
             left: 0;
             top: 50%;
-            margin-top: rem750(-5);
+            margin-top: rem750(-8);
             margin-left: rem750(-5);
-            cursor: pointer;
           }
           .progress-bar {
             background-color: #09bb07;
             width: 0;
-            height: rem750(2);
+            height: rem750(5);
           }
         }
         .audio-time {
           overflow: hidden;
-          margin-top: rem750(-2);
+          margin-top: rem750(5);
           height: rem750(30);
           @include _flex(space-between, center);
           span {
-            font-size: rem750(15);
+            font-size: rem750(24);
           }
         }
       }
@@ -407,12 +406,12 @@ export default {
       h2 {
         font-size: $font-30;
         height: rem750(40);
-        font-weight: 100;
+        // font-weight: 100;
         @include _flex(center,center);
         b {
           width: rem750(6);
           height: rem750(24);
-          background: #1992cf;
+          background: $bg-side;
           border-radius: 30%;
           margin-right: rem750(8);
         }
