@@ -135,6 +135,9 @@ export default {
       } else if (this.$route.params.title === 'zyms') {
         console.log('333')
         this.$router.push({name: 'teacherdetail', params: {id: id, code: code}})
+      } else if (this.$route.params.title === 'tbkt') {
+        console.log('444')
+        this.$router.push({name: 'booksdetail', params: {id: id, code: code}})
       }
     },
     godetails (id, code, property, url) {
@@ -235,12 +238,14 @@ export default {
         })
     } else if (this.$route.params.title === 'jxgj') { // 家校共建
       this.flag = false
+      this.active = true
       axios.post('/shishuiyuan/index/asked/view/id/gk/num/fd/p/f')
         .then(data => {
           console.log(data.data)
           this.list = data.data
         })
     } else if (this.$route.params.title === 'drkt') { // 第二课堂
+      this.flag = false
       this.active = true
       axios.post('/shishuiyuan/index/asked/view/id/doc/num/fd/p/f')
         .then(data => {
@@ -278,6 +283,7 @@ export default {
           this.list = data.data
         })
     } else if (this.$route.params.title === 'zxxx') { // 资讯信息
+      this.flag = false
       this.active = true
       axios.post('/shishuiyuan/index/asked/view/id/jb/num/fd/p/f')
         .then(data => {

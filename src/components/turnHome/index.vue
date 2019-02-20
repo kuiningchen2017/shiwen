@@ -2,7 +2,7 @@
   <div class="content animated fadeInLeft">
     <mt-swipe :auto="4000">
       <mt-swipe-item v-for="(item, index) of banner" :key="index">
-        <li @click="see(item.News_URL,item.News_Property,item.File_ID,item.File_Code)">
+        <li @click="godetails(item.News_URL,item.News_Property,item.File_ID,item.File_Code)">
           <img :src="item.Attachment_Path"/>
         </li>
       </mt-swipe-item>
@@ -44,10 +44,9 @@
         </span>
       </div>
       <div class="box">
-        <li v-for = "(item,index) of commonlist" :key ="index">
+        <li v-for = "(item,index) of commonlist" :key ="index" @click="godetails(item.News_URL,item.News_Property,item.File_ID,item.File_Code)">
           <img :src="item.Attachment_Path" alt="#">
           <span>{{item.File_Name}}</span>
-          <!-- <span>{{item.File_SubName}}</span> -->
         </li>
       </div>
     </div>
@@ -63,7 +62,7 @@
         </span>
       </div>
       <div class="box">
-        <li v-for = "(item,index) of classroomlist" :key ="index">
+        <li v-for = "(item,index) of classroomlist" :key ="index" @click="godetails(item.News_URL,item.News_Property,item.File_ID,item.File_Code)">
           <img :src="item.Attachment_Path" alt="#">
           <span>{{item.File_Name}}</span>
           <span>{{item.File_SubName}}</span>
@@ -135,7 +134,8 @@ export default {
       })
   },
   methods: {
-    see (url, property, id, code) {
+    godetails (url, property, id, code) {
+      console.log(url, property, id, code)
       if (property === '0') {
         window.location.href = url
       } else if (property === '1') {

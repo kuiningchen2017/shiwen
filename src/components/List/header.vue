@@ -24,7 +24,7 @@ export default {
       this.title = '名师论道'
     } else if (this.$route.params.title === 'jxgj') {
       this.title = '家校共建'
-    } else if (this.$route.params.title === 'ndclass') {
+    } else if (this.$route.params.title === 'drkt') {
       this.title = '第二课堂'
     } else if (this.$route.params.title === 'ynjx') {
       this.title = '疑难解析'
