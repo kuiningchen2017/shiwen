@@ -1,9 +1,27 @@
 <template>
   <div class="content" ref="content">
     <div class="detail">
-      <img src="@/assets/logo.png" alt="#">
+      <img :src="this.img" alt="#">
       <div class="right">
-
+        <li>
+          <h2>{{this.name}}</h2>
+          <div>星级</div>
+        </li>
+        <li>
+          <h2>{{this.grade}}</h2>
+        </li>
+        <li>
+          <h2>{{this.press}}</h2>
+        </li>
+        <li>
+          <h2>主讲人:{{this.teacher}}</h2>
+        </li>
+        <li>
+          <h2>
+            <span>￥</span>
+            <b>{{this.price}}</b>
+          </h2>
+        </li>
       </div>
     </div>
     <div class="general" id="general">
@@ -13,7 +31,7 @@
         </router-link>
       </div>
       <div class="article">
-        <p>在五四文化运动中</p>
+        <p v-html="this.content"></p>
       </div>
     </div>
     <div class="book" id="book">
@@ -52,10 +70,18 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
       current: 0,
+      img: '',
+      content: '',
+      name: '',
+      press: '人民教育出版社',
+      grade: '',
+      teacher: '',
+      price: '',
       navlist: [
         {
           name: '概述',
@@ -77,6 +103,19 @@ export default {
       document.querySelector(selector).scrollIntoView(true)
       this.current = index
     }
+  },
+  mounted () {
+    axios.post(`/shishuiyuan/index/paper/listing/keys/${this.$route.params.code}/pid/${this.$route.params.id}`)
+      .then(data => {
+        console.log(data.data)
+        this.title = data.data.File_Name
+        this.content = data.data.Content
+        this.img = data.data.Attachment_Path
+        this.name = data.data.File_Name
+        this.grade = data.data.CD_Name
+        this.teacher = data.data.File_SubName
+        this.price = data.data.Resource_Price
+      })
   }
 }
 </script>
@@ -100,6 +139,30 @@ export default {
     .right {
       width: rem750(423);
       height: 100%;
+      box-sizing: border-box;
+      padding-top: rem750(14);
+      li {
+        @include rect(100%, rem750(72));
+        @include _flex(space-between,center);
+        &:last-child {
+          @include rect(100%, rem750(52));
+          @include _flex(flex-end,center);
+          h2 {
+            span {
+              color: #f00000;
+              font-size: rem750(24);
+            }
+            b {
+              color: #f00000;
+              font-size: rem750(30);
+            }
+          }
+        }
+        h2 {
+          font-size: rem750(27);
+          line-height: rem750(72);
+        }
+      }
     }
   }
   .general, .book, .comment, .video {

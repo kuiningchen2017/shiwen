@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     godetail (id, code) {
-      console.log(id, code)
+      this.$router.push({name: 'booksdetail', params: {id: id, code: code}})
     }
   }
 }

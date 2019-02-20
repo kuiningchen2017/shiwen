@@ -34,7 +34,7 @@
         </router-link>
       </div>
       <div class="article">
-        <p  v-html="this.content"></p>
+        <p v-html="this.content"></p>
       </div>
     </div>
     <div class="comment" id="comment">
@@ -116,14 +116,10 @@ export default {
   },
   methods: {
     onPlayerPlay (player) {
-      // console.log(player)
-      // console.log(this.playerOptions.poster)
-      // console.log(this.playerOptions.sources)
-      // alert('play')
+      console.log(player)
     },
     onPlayerPause (player) {
-      // alert('pause')
-      // console.log(player.controlBar.currentTimeDisplay.formattedTime_)
+      console.log(player.controlBar.currentTimeDisplay.formattedTime_)
     },
     goAnchor (selector, index) {
       document.querySelector(selector).scrollIntoView(true)

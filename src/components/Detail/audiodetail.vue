@@ -28,7 +28,7 @@
         </router-link>
       </div>
       <div class="article">
-        <p  v-html="this.content"></p>
+        <p v-html="this.content"></p>
       </div>
     </div>
     <div class="comment" id="comment">
