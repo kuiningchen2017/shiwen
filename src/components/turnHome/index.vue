@@ -92,7 +92,7 @@ export default {
         {
           imgUrl: require('@/assets/icon_08.png'),
           name: '同步课堂',
-          path: '123'
+          path: '/list/tbkt'
         },
         {
           imgUrl: require('@/assets/icon_09.png'),

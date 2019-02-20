@@ -2,51 +2,11 @@
   <div class="content animated fadeInLeft">
     <div class="choose"></div>
     <div class="list" >
-      <li class="animated zoomIn">
-        <img src = '@/assets/1.png' alt="#">
-        <h3>三年级数学上册</h3>
-        <p>人教版</p>
+      <li class="animated zoomIn" v-for="item of list" :key="item.Resource_ID" @click="godetail(item.File_ID, item.File_Code)">
+        <img :src = 'item.Attachment_Path' alt="#">
+          <h3>{{item.File_Name}}</h3>
+          <p>{{item.File_SubName}}</p>
       </li>
-      <li class="animated zoomIn">
-        <img src= '@/assets/2.png' alt="#">
-        <h3>三年级语文上册</h3>
-        <p>人教版</p>
-      </li>
-      <li class="animated zoomIn">
-        <img src= '@/assets/3.png' alt="#">
-        <h3>三年级语文下册</h3>
-        <p>人教版</p>
-      </li>
-      <li class="animated zoomIn">
-          <img src = '@/assets/1.png' alt="#">
-          <h3>三年级数学上册</h3>
-          <p>人教版</p>
-        </li>
-        <li class="animated zoomIn">
-          <img src= '@/assets/2.png' alt="#">
-          <h3>三年级语文上册</h3>
-          <p>人教版</p>
-        </li>
-        <li class="animated zoomIn">
-          <img src= '@/assets/3.png' alt="#">
-          <h3>三年级语文下册</h3>
-          <p>人教版</p>
-        </li>
-        <li class="animated zoomIn">
-          <img src = '@/assets/1.png' alt="#">
-          <h3>三年级数学上册</h3>
-          <p>人教版</p>
-        </li>
-        <li class="animated zoomIn">
-          <img src= '@/assets/2.png' alt="#">
-          <h3>三年级语文上册</h3>
-          <p>人教版</p>
-        </li>
-        <li class="animated zoomIn">
-          <img src= '@/assets/3.png' alt="#">
-          <h3>三年级语文下册</h3>
-          <p>人教版</p>
-        </li>
     </div>
   </div>
 </template>
@@ -60,7 +20,16 @@ export default {
     }
   },
   mounted () {
-
+    axios.post('/shishuiyuan/index/paper/list/key/fx/num/uh/p/0')
+      .then(data => {
+        console.log(data.data)
+        this.list = data.data
+      })
+  },
+  methods: {
+    godetail (id, code) {
+      console.log(id, code)
+    }
   }
 }
 </script>

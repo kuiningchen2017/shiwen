@@ -38,6 +38,8 @@ export default {
       this.title = '视频资源'
     } else if (this.$route.params.title === 'zxxx') {
       this.title = '资讯信息'
+    } else if (this.$route.params.title === 'tbkt') {
+      this.title = '同步课堂'
     }
     console.log(this.$route.params)
   },

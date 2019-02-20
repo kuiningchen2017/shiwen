@@ -30,13 +30,20 @@
           <p>{{item.File_SubName}}</p>
         </li>
       </div>
-      <div class="list1" v-else @click="getclear">
+      <div class="list1" v-else-if="active" @click="getclear">
         <li class="animated zoomIn" v-for="item of list" :key="item.Resource_ID" @click="godetails(item.File_ID, item.File_Code, item.News_Property, item.News_URL)">
           <div>
             <h3>{{item.File_Name}}</h3>
             <p>{{item.File_CreateDate}}</p>
           </div>
           <img :src="item.Attachment_Path" alt="#">
+        </li>
+      </div>
+      <div class="list2" @click="getclear" v-else>
+        <li class="animated zoomIn" v-for="item of list" :key="item.Resource_ID" @click="godetail(item.File_ID, item.File_Code)">
+          <img :src = 'item.Attachment_Path' alt="#">
+            <h3>{{item.File_Name}}</h3>
+            <p>{{item.File_SubName}}</p>
         </li>
       </div>
     <!-- </mt-loadmore> -->
@@ -52,6 +59,7 @@ export default {
   data () {
     return {
       flag: true,
+      active: false,
       clicked: '',
       clicked1: '',
       clicked2: '',
@@ -233,7 +241,7 @@ export default {
           this.list = data.data
         })
     } else if (this.$route.params.title === 'drkt') { // 第二课堂
-      this.flag = false
+      this.active = true
       axios.post('/shishuiyuan/index/asked/view/id/doc/num/fd/p/f')
         .then(data => {
           console.log(data.data)
@@ -270,8 +278,16 @@ export default {
           this.list = data.data
         })
     } else if (this.$route.params.title === 'zxxx') { // 资讯信息
-      this.flag = false
+      this.active = true
       axios.post('/shishuiyuan/index/asked/view/id/jb/num/fd/p/f')
+        .then(data => {
+          console.log(data.data)
+          this.list = data.data
+        })
+    } else if (this.$route.params.title === 'tbkt') { // 同步课堂
+      this.flag = false
+      this.active = false
+      axios.post('/shishuiyuan/index/paper/list/key/fx/num/uh/p/0')
         .then(data => {
           console.log(data.data)
           this.list = data.data
@@ -381,6 +397,41 @@ export default {
       img {
         @include rect(rem750(218),rem750(142));
         padding-left: rem750(36)
+      }
+    }
+  }
+  .list2 {
+    width: 100%;
+    margin-top: rem750(72);
+    padding: 0 rem750(25);
+    overflow: scroll;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    li {
+      width: rem750(222);
+      padding-top: rem750(30);
+      padding-right: rem750(17);
+      &:nth-child(3n) {
+        padding-right: 0;
+      }
+      img {
+        @include rect(100%, rem750(278));
+        border-radius: rem750(10)
+      }
+      h3 {
+        line-height: rem750(36);
+        font-size: $font-26;
+        color: $text-black;
+        font-weight: normal;
+        padding-left: rem750(10);
+        padding-top: rem750(9)
+      }
+      p {
+        line-height: rem750(36);
+        font-size: $font-26;
+        color: #595959;
+        padding-left: rem750(10);
       }
     }
   }

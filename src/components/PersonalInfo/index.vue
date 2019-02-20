@@ -49,7 +49,7 @@
     <div class="sex" v-if="active">
       <mt-popup v-model="active" position="bottom" class="mint-popup">
         <mt-picker :slots="slots" :show-toolbar="true"  ref="picker">
-          <mt-button @click="handleConfirm" class="sure">确认</mt-button>
+          <mt-button @click="sure" class="sure">确认</mt-button>
         </mt-picker>
       </mt-popup>
     </div>
@@ -58,7 +58,7 @@
 
 <script>
 import Vue from 'vue'
-import { MessageBox, DatetimePicker, Picker} from 'mint-ui'
+import { MessageBox, DatetimePicker, Picker } from 'mint-ui'
 Vue.component(DatetimePicker.name, DatetimePicker, Picker.name, Picker)
 export default {
   data () {
@@ -99,7 +99,7 @@ export default {
     setsex () {
       this.active = true
     },
-    handleConfirm () {
+    sure () {
       this.sex = this.$refs.picker.getValues()[0]
       this.active = false
     }
