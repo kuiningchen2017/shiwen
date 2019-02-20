@@ -91,22 +91,22 @@ export default {
       navList: [
         {
           imgUrl: require('@/assets/icon_04.png'),
-          name: '单元教学',
+          name: '我的单元设计',
           path: '123'
         },
         {
           imgUrl: require('@/assets/icon_05.png'),
-          name: '课时教学',
+          name: '我的课时设计',
           path: '/list/ksjx'
         },
         {
           imgUrl: require('@/assets/icon_06.png'),
-          name: '课件资源',
+          name: '我的课件资源',
           path: '/list/kjzy'
         },
         {
           imgUrl: require('@/assets/icon_07.png'),
-          name: '家校共建 ',
+          name: '我的家校共建 ',
           path: '/list/jxgj'
         }
       ]

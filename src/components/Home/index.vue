@@ -91,17 +91,17 @@ export default {
       navList: [
         {
           imgUrl: require('@/assets/icon_01.png'),
-          name: '教师学院',
+          name: '我要上课',
           path: '/teacherhome'
         },
         {
           imgUrl: require('@/assets/icon_02.png'),
-          name: '翻转课堂',
+          name: '我要学习',
           path: '/turnhome'
         },
         {
           imgUrl: require('@/assets/icon_03.png'),
-          name: '家庭学院',
+          name: '我要教子',
           path: '/parenthome'
         }
       ]

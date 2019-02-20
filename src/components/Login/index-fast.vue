@@ -119,8 +119,8 @@ export default {
     @include _flex(center,center);
     padding-bottom: rem750(37);
     img {
-      width: rem750(155);
-      height: rem750(146);
+      width: rem750(128);
+      height: rem750(180);
     }
   }
   .box {
@@ -156,10 +156,10 @@ export default {
       .getNumber {
         width: rem750(160);
         height: rem750(52);
-        border: 1px solid #4768f3;
+        border: 1px solid #0a7998;
         border-radius: rem750(10);
         padding-left: 0;
-        color: #4768f3;
+        color: $bg-side;
         font-size: $font-18;
       }
     }
@@ -167,7 +167,7 @@ export default {
       width:100%;
       height: rem750(90);
       border-radius: rem750(45);
-      background: #4768f3;
+      background: $bg-side;
       color: #fff;
       font-size: $font-30;
       margin-bottom: rem750(36);
