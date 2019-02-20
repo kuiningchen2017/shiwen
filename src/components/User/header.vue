@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <mt-header title="个人中心">
-      <mt-button @click="goSet" slot="right" class="iconfont icon-shezhi"></mt-button>
+      <!-- <mt-button @click="goSet" slot="right" class="iconfont icon-shezhi"></mt-button> -->
     </mt-header>
   </div>
 </template>
@@ -9,9 +9,9 @@
 <script>
 export default {
   methods: {
-    goSet () {
-      this.$router.push('/personalinfo')
-    }
+    // goSet () {
+    //   this.$router.push('/personalinfo')
+    // }
   }
 }
 </script>

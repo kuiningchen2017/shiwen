@@ -31,7 +31,7 @@
         </li>
       </div>
       <div class="list1" v-else @click="getclear">
-        <li class="animated zoomIn" v-for="item of list" :key="item.Resource_ID" @click="godetail(item.File_ID, item.File_Code)">
+        <li class="animated zoomIn" v-for="item of list" :key="item.Resource_ID" @click="godetails(item.File_ID, item.File_Code, item.News_Property, item.News_URL)">
           <div>
             <h3>{{item.File_Name}}</h3>
             <p>{{item.File_CreateDate}}</p>
@@ -127,6 +127,14 @@ export default {
       } else if (this.$route.params.title === 'zyms') {
         console.log('333')
         this.$router.push({name: 'teacherdetail', params: {id: id, code: code}})
+      }
+    },
+    godetails (id, code, property, url) {
+      if (property === '0') {
+        window.location.href = url
+      } else if (property === '1') {
+        let URL = `http://sw.shishuiyuan999.com/index/picture/del/id/${id}/key/${code}`
+        window.location.href = URL
       }
     },
     // loadTop () {
@@ -284,7 +292,6 @@ export default {
     z-index: 1001;
     @include _flex(flex-start,flex-start);
     .grade, .subject, .press {
-      z-index: 100;
       h3 {
         @include rect(rem750(120),rem750(72));
         line-height: rem750(72);

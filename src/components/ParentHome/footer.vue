@@ -25,7 +25,7 @@ export default {
         {
           icon: 'iconfont icon-talk',
           name: '在线',
-          path: '/course'
+          path: '/online'
         },
         {
           icon: 'iconfont icon-geren',

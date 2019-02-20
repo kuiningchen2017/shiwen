@@ -68,12 +68,17 @@ export default {
 <style lang="scss" scoped>
 @import '@/style/base/index.scss';
   .choose {
-    @include rect(100%, rem750(100));
+    @include rect(100%, rem750(72));
     background: $bg-base;
+    position: absolute;
+    top:0;
+    z-index: 1001;
   }
   .list {
     width: 100%;
+    margin-top: rem750(72);
     padding: 0 rem750(25);
+    overflow: scroll;
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;

@@ -1,10 +1,10 @@
 <template>
   <div class="footer">
-    <div v-if="flag"  @click="remove">
+    <div v-if="flag" @click="remove">
       <span class="iconfont icon-xing"></span>
       <p>已关注</p>
     </div>
-    <div v-else  @click="guanzhu">
+    <div v-else @click="guanzhu">
       <span class="iconfont icon-shoucang"></span>
       <p >关注</p>
     </div>
@@ -37,6 +37,8 @@ export default {
 <style lang='scss' scoped>
 @import '@/style/base/index.scss';
 .footer {
+  border-top: rem750(1) soild #f0f0f0;
+  padding: 0 rem750(40);
   div {
     width:rem750(150);
     @include _flex(space-around , center);
@@ -48,7 +50,7 @@ export default {
       font-size: $font-34;
     }
     p {
-      width:rem750(100);
+      width:rem750(90);
       line-height:rem750(40);
       color: #2e2e2e;
       font-size: rem750(30);

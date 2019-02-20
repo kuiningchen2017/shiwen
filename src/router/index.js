@@ -86,16 +86,26 @@ export default new Router({
       name: 'user',
       components: {
         header: () => import('@/components/User/header'),
-        default: () => import('@/components/User/index'),
+        default: () => import('@/components/User/parent'),
         footer: () => import('@/components/Home/footer')
       }
+      // children: [
+      //   {
+      //     path: 'teacher',
+      //     component: () => import('@/components/User/teacher')
+      //   },
+      //   {
+      //     path: 'parent',
+      //     component: () => import('@/components/User/parent')
+      //   }
+      // ]
     },
     {
       path: '/turnuser',
       name: 'turnuser',
       components: {
         header: () => import('@/components/User/header'),
-        default: () => import('@/components/User/index'),
+        default: () => import('@/components/User/teacher'),
         footer: () => import('@/components/TurnHome/footer')
       }
     },
@@ -104,7 +114,7 @@ export default new Router({
       name: 'teacheruser',
       components: {
         header: () => import('@/components/User/header'),
-        default: () => import('@/components/User/index'),
+        default: () => import('@/components/User/teacher'),
         footer: () => import('@/components/TeacherHome/footer')
       }
     },
@@ -113,7 +123,7 @@ export default new Router({
       name: 'parenutser',
       components: {
         header: () => import('@/components/User/header'),
-        default: () => import('@/components/User/index'),
+        default: () => import('@/components/User/teacher'),
         footer: () => import('@/components/ParentHome/footer')
       }
     },
@@ -272,6 +282,52 @@ export default new Router({
         {
           path: 'over',
           component: () => import('@/components/MyTrain/over')
+        }
+      ]
+    },
+    {
+      path: '/mystudy',
+      name: 'mystudy',
+      redirect: '/mystudy/all',
+      components: {
+        header: () => import('@/components/MyStudy/header'),
+        default: () => import('@/components/MyStudy/index')
+      },
+      children: [
+        {
+          path: 'all',
+          component: () => import('@/components/MyStudy/all')
+        },
+        {
+          path: 'study',
+          component: () => import('@/components/MyStudy/study')
+        },
+        {
+          path: 'over',
+          component: () => import('@/components/MyStudy/over')
+        }
+      ]
+    },
+    {
+      path: '/mywork',
+      name: 'mywork',
+      redirect: '/mywork/all',
+      components: {
+        header: () => import('@/components/MyWork/header'),
+        default: () => import('@/components/MyWork/index')
+      },
+      children: [
+        {
+          path: 'all',
+          component: () => import('@/components/MyWork/all')
+        },
+        {
+          path: 'study',
+          component: () => import('@/components/MyWork/study')
+        },
+        {
+          path: 'over',
+          component: () => import('@/components/MyWork/over')
         }
       ]
     },

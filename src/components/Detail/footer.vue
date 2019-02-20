@@ -40,9 +40,11 @@ export default {
 <style lang='scss' scoped>
 @import '@/style/base/index.scss';
 .footer {
+  border-top: rem750(1) solid #f0f0f0;
+  padding: 0 rem750(40);
   div {
-    width:rem750(140);
-    @include _flex(space-around , center);
+    width:rem750(180);
+    @include _flex(center , center);
     .icon-xing {
       color: #d81e06
     }
@@ -58,9 +60,9 @@ export default {
     }
   }
   .buy {
-    width: rem750(360);
+    width: rem750(300);
     height: rem750(76);
-    background: #ff5c00;
+    background: #b3b3b3;
     border-radius: rem750(38);
     color: #fff;
     font-size: $font-30;
