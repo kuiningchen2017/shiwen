@@ -86,7 +86,7 @@ export default {
       @include rect (100%, rem750(303));
     }
     li {
-      @include rect (100%, rem750(230));
+      @include rect (100%, rem750(254));
       padding: 0 rem750(77) 0 rem750(71);
       box-sizing: border-box;
       display: flex;
@@ -95,9 +95,9 @@ export default {
         @include rect(rem750(137), 100%);
         dt {
           @include rect(rem750(137), rem750(137));
-          margin-top: rem750(8);
+          margin-top: rem750(30);
           border-radius: 40%;
-          background: #f2f2f2;
+          background: #f7f7f7;
           @include _flex(center, center);
           img {
             @include rect(rem750(68), rem750(68))
@@ -120,11 +120,11 @@ export default {
     }
     .frist {
       @include rect (100%, rem750(268));
-      margin-top: rem750(11);
+      margin-top: rem750(30);
     }
     li {
-      @include rect (100%, rem750(320));
-      padding: 0 rem750(77) 0 rem750(71);
+      @include rect (100%, rem750(280));
+      padding: 0 rem750(37) 0 rem750(31);
       margin-top: rem750(52);
       box-sizing: border-box;
       display: flex;
@@ -135,7 +135,7 @@ export default {
         dt {
           @include rect(rem750(137), rem750(137));
           border-radius: 40%;
-          background: #f2f2f2;
+          background: #f7f7f7;
           @include _flex(center, center);
           img {
             @include rect(rem750(68), rem750(68))

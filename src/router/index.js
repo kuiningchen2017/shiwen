@@ -239,8 +239,16 @@ export default new Router({
       path: '/myclass',
       name: 'myclass',
       components: {
-        header: () => import('@/components/myclass/header'),
-        default: () => import('@/components/myclass/index')
+        header: () => import('@/components/MyClass/header'),
+        default: () => import('@/components/MyClass/index')
+      }
+    },
+    {
+      path: '/addclass',
+      name: 'addclass',
+      components: {
+        header: () => import('@/components/AddClass/header'),
+        default: () => import('@/components/AddClass/index')
       }
     },
     {

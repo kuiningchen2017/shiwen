@@ -80,6 +80,7 @@ export default {
       name: '',
       price: '',
       flag: true,
+      timer: null,
       navlist: [
         {
           name: '概述',
@@ -117,9 +118,15 @@ export default {
   },
   methods: {
     onPlayerPlay (player) {
-      console.log(player)
+      if (!this.timer) {
+        this.timer = setInterval(() => {
+          console.log(player.controlBar.currentTimeDisplay.formattedTime_)
+        }, 10000)
+      }
     },
     onPlayerPause (player) {
+      clearInterval(this.timer)
+      this.timer = null
       console.log(player.controlBar.currentTimeDisplay.formattedTime_)
     },
     goAnchor (selector, index) {
@@ -128,11 +135,6 @@ export default {
     },
     goziyuan () {
       this.$router.push('/kejian')
-    }
-  },
-  computed: {
-    player () {
-      return this.$refs.videoPlayer.player
     }
   },
   mounted () {

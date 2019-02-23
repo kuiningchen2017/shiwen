@@ -53,7 +53,7 @@ export default {
         this.$router.push({name: 'audiodetail', params: {id: id, code: code}})
       } else if (this.$route.params.title === 'zyms') {
         this.$router.push({name: 'teacherdetail', params: {id: id, code: code}})
-      } else if (this.$route.params.title === 'kssj') {
+      } else if (this.$route.params.title === 'kssj' || this.$route.params.title === 'tbkt') {
         this.$router.push({name: 'booksdetail', params: {id: id, code: code}})
       }
     },

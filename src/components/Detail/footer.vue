@@ -40,7 +40,7 @@ export default {
 <style lang='scss' scoped>
 @import '@/style/base/index.scss';
 .footer {
-  border-top: rem750(1) solid #555353;
+  border-top: rem750(1) solid #999;
   padding: 0 rem750(40);
   box-sizing: border-box;
   div {

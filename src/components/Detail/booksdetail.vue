@@ -44,7 +44,7 @@
       <div class="box">
         <div class="section">
           <ul class="title" v-for="item of catalog" :key="item.Relation_TableID2">
-            <li>{{item.CD_Name}}&nbsp;{{item.Relation_text}}</li>
+            <li v-if="order">{{item.CD_Name}}&nbsp;{{item.Relation_text}}</li>
             <ul class="jie">
               <li v-for="(items, index) of item.list" :key="index" @click="godetail(item.islist,items.File_ID,items.File_Code)">{{items.File_Name}}</li>
             </ul>
@@ -94,6 +94,7 @@ export default {
       teacher: '',
       price: '',
       catalog: [],
+      order: true,
       navlist: [
         {
           name: '概述',
@@ -138,6 +139,10 @@ export default {
         this.teacher = data.data.File_SubName
         this.price = data.data.Resource_Price
         this.catalog = data.data.catalog
+        console.log(this.catalog[0].CD_Order)
+        if (this.catalog[0].CD_Order === 0) {
+          this.order = false
+        }
         Indicator.close()
       })
   }
