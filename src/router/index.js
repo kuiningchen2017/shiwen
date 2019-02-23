@@ -17,6 +17,393 @@ export default new Router({
         default: () => import('@/components/Home/index'),
         footer: () => import('@/components/Home/footer')
       }
+    },
+    {
+      path: '/teacherhome',
+      name: 'teacherhome',
+      components: {
+        header: () => import('@/components/TeacherHome/header'),
+        default: () => import('@/components/TeacherHome/index'),
+        footer: () => import('@/components/TeacherHome/footer')
+      }
+    },
+    {
+      path: '/turnhome',
+      name: 'turnhome',
+      components: {
+        header: () => import('@/components/TeacherHome/header'),
+        default: () => import('@/components/TurnHome/index'),
+        footer: () => import('@/components/TurnHome/footer')
+      }
+    },
+    {
+      path: '/parenthome',
+      name: 'parenthome',
+      components: {
+        header: () => import('@/components/TeacherHome/header'),
+        default: () => import('@/components/ParentHome/index'),
+        footer: () => import('@/components/ParentHome/footer')
+      }
+    },
+    {
+      path: '/course',
+      name: 'course',
+      components: {
+        header: () => import('@/components/Course/header'),
+        default: () => import('@/components/Course/index'),
+        footer: () => import('@/components/Home/footer')
+      }
+    },
+    {
+      path: '/teachercourse',
+      name: 'teachercourse',
+      components: {
+        header: () => import('@/components/Course/header'),
+        default: () => import('@/components/Course/index'),
+        footer: () => import('@/components/TeacherHome/footer')
+      }
+    },
+    {
+      path: '/turncourse',
+      name: 'turncourse',
+      components: {
+        header: () => import('@/components/Course/header'),
+        default: () => import('@/components/Course/index'),
+        footer: () => import('@/components/TurnHome/footer')
+      }
+    },
+    {
+      path: '/parentcourse',
+      name: 'parentcourse',
+      components: {
+        header: () => import('@/components/Course/header'),
+        default: () => import('@/components/Course/index'),
+        footer: () => import('@/components/ParentHome/footer')
+      }
+    },
+    {
+      path: '/user',
+      name: 'user',
+      components: {
+        header: () => import('@/components/User/header'),
+        default: () => import('@/components/User/teacher'),
+        footer: () => import('@/components/Home/footer')
+      }
+      // children: [
+      //   {
+      //     path: 'teacher',
+      //     component: () => import('@/components/User/teacher')
+      //   },
+      //   {
+      //     path: 'parent',
+      //     component: () => import('@/components/User/parent')
+      //   }
+      // ]
+    },
+    {
+      path: '/turnuser',
+      name: 'turnuser',
+      components: {
+        header: () => import('@/components/User/header'),
+        default: () => import('@/components/User/parent'),
+        footer: () => import('@/components/TurnHome/footer')
+      }
+    },
+    {
+      path: '/teacheruser/:router',
+      name: 'teacheruser',
+      components: {
+        header: () => import('@/components/User/header'),
+        default: () => import('@/components/User/teacher'),
+        footer: () => import('@/components/TeacherHome/footer')
+      }
+    },
+    {
+      path: '/parentuser',
+      name: 'parenutser',
+      components: {
+        header: () => import('@/components/User/header'),
+        default: () => import('@/components/User/parent'),
+        footer: () => import('@/components/ParentHome/footer')
+      }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      components: {
+        header: () => import('@/components/Login/header'),
+        default: () => import('@/components/Login/index')
+      }
+    },
+    {
+      path: '/fastlogin',
+      name: 'fastlogin',
+      components: {
+        header: () => import('@/components/Login/header'),
+        default: () => import('@/components/Login/index-fast')
+      }
+    },
+    {
+      path: '/getback',
+      name: 'getback',
+      components: {
+        header: () => import('@/components/GetBack/header'),
+        default: () => import('@/components/GetBack/index')
+      }
+    },
+    {
+      path: '/register',
+      name: 'register',
+      components: {
+        header: () => import('@/components/Register/header'),
+        default: () => import('@/components/Register/index')
+      }
+    },
+    {
+      path: '/personalinfo',
+      name: 'personalinfo',
+      components: {
+        header: () => import('@/components/PersonalInfo/header'),
+        default: () => import('@/components/PersonalInfo/index')
+      }
+    },
+    {
+      path: '/list/:title',
+      name: 'list',
+      components: {
+        header: () => import('@/components/List/header'),
+        default: () => import('@/components/List/index')
+      }
+    },
+    {
+      path: '/videodetail/:id/:code',
+      name: 'videodetail',
+      components: {
+        header: () => import('@/components/Detail/header'),
+        default: () => import('@/components/Detail/videodetail'),
+        footer: () => import('@/components/Detail/footer')
+      }
+    },
+    {
+      path: '/audiodetail/:id/:code',
+      name: 'audiodetail',
+      components: {
+        header: () => import('@/components/Detail/header'),
+        default: () => import('@/components/Detail/audiodetail'),
+        footer: () => import('@/components/Detail/footer')
+      }
+    },
+    {
+      path: '/booksdetail/:id/:code',
+      name: 'booksdetail',
+      components: {
+        header: () => import('@/components/Detail/header'),
+        default: () => import('@/components/Detail/booksdetail'),
+        footer: () => import('@/components/Detail/footer')
+      }
+    },
+    {
+      path: '/teacherdetail/:id/:code',
+      name: 'teacherdetail',
+      components: {
+        header: () => import('@/components/Detail/header'),
+        default: () => import('@/components/Detail/teacherdetail'),
+        footer: () => import('@/components/Detail/footer1')
+      }
+    },
+    {
+      path: '/schoolmessage',
+      name: 'schoolmessage',
+      components: {
+        header: () => import('@/components/SchoolMessage/header'),
+        default: () => import('@/components/SchoolMessage/index')
+      }
+    },
+    {
+      path: '/schoolset',
+      name: 'schoolset',
+      components: {
+        header: () => import('@/components/Schoolset/header'),
+        default: () => import('@/components/Schoolset/index')
+      }
+    },
+    {
+      path: '/guanzhuxueke',
+      name: 'guanzhuxueke',
+      components: {
+        header: () => import('@/components/GuanzhuSubject/header'),
+        default: () => import('@/components/GuanzhuSubject/index')
+      }
+    },
+    {
+      path: '/myclass',
+      name: 'myclass',
+      components: {
+        header: () => import('@/components/myclass/header'),
+        default: () => import('@/components/myclass/index')
+      }
+    },
+    {
+      path: '/recommend',
+      name: 'recommend',
+      redirect: '/recommend/code',
+      components: {
+        header: () => import('@/components/Recommend/header'),
+        default: () => import('@/components/Recommend/index')
+      },
+      children: [
+        {
+          path: 'code',
+          component: () => import('@/components/Recommend/code')
+        },
+        {
+          path: 'list',
+          component: () => import('@/components/Recommend/list')
+        }
+      ]
+    },
+    {
+      path: '/mytrain',
+      name: 'mytrain',
+      redirect: '/mytrain/all',
+      components: {
+        header: () => import('@/components/MyTrain/header'),
+        default: () => import('@/components/MyTrain/index')
+      },
+      children: [
+        {
+          path: 'all',
+          component: () => import('@/components/MyTrain/all')
+        },
+        {
+          path: 'study',
+          component: () => import('@/components/MyTrain/study')
+        },
+        {
+          path: 'over',
+          component: () => import('@/components/MyTrain/over')
+        }
+      ]
+    },
+    {
+      path: '/mystudy',
+      name: 'mystudy',
+      redirect: '/mystudy/all',
+      components: {
+        header: () => import('@/components/MyStudy/header'),
+        default: () => import('@/components/MyStudy/index')
+      },
+      children: [
+        {
+          path: 'all',
+          component: () => import('@/components/MyStudy/all')
+        },
+        {
+          path: 'study',
+          component: () => import('@/components/MyStudy/study')
+        },
+        {
+          path: 'over',
+          component: () => import('@/components/MyStudy/over')
+        }
+      ]
+    },
+    {
+      path: '/mywork',
+      name: 'mywork',
+      redirect: '/mywork/all',
+      components: {
+        header: () => import('@/components/MyWork/header'),
+        default: () => import('@/components/MyWork/index')
+      },
+      children: [
+        {
+          path: 'all',
+          component: () => import('@/components/MyWork/all')
+        },
+        {
+          path: 'study',
+          component: () => import('@/components/MyWork/study')
+        },
+        {
+          path: 'over',
+          component: () => import('@/components/MyWork/over')
+        }
+      ]
+    },
+    {
+      path: '/ordercenter',
+      name: 'ordercenter',
+      redirect: '/ordercenter/all',
+      components: {
+        header: () => import('@/components/OrderCenter/header'),
+        default: () => import('@/components/OrderCenter/index')
+      },
+      children: [
+        {
+          path: 'all',
+          component: () => import('@/components/OrderCenter/all')
+        },
+        {
+          path: 'pay',
+          component: () => import('@/components/OrderCenter/pay')
+        },
+        {
+          path: 'comment',
+          component: () => import('@/components/OrderCenter/comment')
+        }
+      ]
+    },
+    {
+      path: '/myresult',
+      name: 'myresult',
+      redirect: '/myresult/video',
+      components: {
+        header: () => import('@/components/MyResult/header'),
+        default: () => import('@/components/MyResult/index')
+      },
+      children: [
+        {
+          path: 'video',
+          component: () => import('@/components/MyResult/video')
+        },
+        {
+          path: 'kejian',
+          component: () => import('@/components/MyResult/kejian')
+        }
+      ]
+    },
+    {
+      path: '/myfollow',
+      name: 'myfollow',
+      components: {
+        header: () => import('@/components/MyFollow/header'),
+        default: () => import('@/components/MyFollow/index')
+      }
+    },
+    {
+      path: '/homework',
+      name: 'homework',
+      components: {
+        header: () => import('@/components/Homework/header'),
+        default: () => import('@/components/Homework/index')
+      }
+    },
+    {
+      path: '/live',
+      name: 'live',
+      components: {
+        header: () => import('@/components/Live/header'),
+        default: () => import('@/components/Live/index')
+      }
+    },
+    {
+      path: '/kejian',
+      name: 'kejian',
+      components: {
+        header: () => import('@/components/Kejian/header'),
+        default: () => import('@/components/Kejian/index')
+      }
     }
   ]
 })

@@ -13,7 +13,7 @@ export default {
     return {
       list: [
         {
-          icon: 'iconfont icon-home',
+          icon: 'iconfont icon-shouye',
           name: '首页',
           path: '/home'
         },
@@ -36,14 +36,6 @@ export default {
 <style lang='scss' scoped>
 @import '@/style/base/index.scss';
 .footer {
-  li {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: column;
-    align-items: center;
-    &.router-link-active {
-      color:#1296db;
-    }
-  }
+  padding:0 rem750(20);
 }
 </style>

@@ -47,7 +47,6 @@ table {
 
 /* custom */
 a {
-    color: #7e8c8d;
     text-decoration: none;
     -webkit-backface-visibility: hidden;
 }
@@ -57,11 +56,12 @@ li {
 }
 
 ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+    /* width: 5px;
+    height: 5px; */
+    display: none;
 }
 
-::-webkit-scrollbar-track-piece {
+/* ::-webkit-scrollbar-track-piece {
     background-color: rgba(0, 0, 0, 0.2);
     -webkit-border-radius: 6px;
 }
@@ -76,7 +76,7 @@ li {
     width: 5px;
     background-color: rgba(125, 125, 125, 0.7);
     -webkit-border-radius: 6px;
-}
+} */
 
 html, body {
     width: 100%;
@@ -86,3 +86,12 @@ body {
     -webkit-text-size-adjust: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
+img {
+    display: block;
+}
+
+
+
+
+

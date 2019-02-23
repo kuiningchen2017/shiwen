@@ -10,7 +10,15 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/shishuiyuan': {
+        target: 'http://sw.shishuiyuan999.com',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/shishuiyuan': ''
+        }
+      },
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

@@ -10,12 +10,7 @@ html, body, .container {
   .header {
     width: 100%;
     height: rem750(86);
-    font-size: rem750(32);
-    display: flex;
-    justify-content: center;
     flex-shrink: 0;
-    align-items: center;
-    font-weight: bolder;
   }
   .content {
     display: flex;
@@ -25,10 +20,173 @@ html, body, .container {
     flex-grow: 1;
   }
   .footer {
-    display: flex;
-    height: rem750(90);
+    height: rem750(100);
+    box-sizing: border-box;
     flex-shrink: 0;
-    justify-content : space-around;
-    align-items: center;
+    @include _flex(space-around,center);
+    li {
+      @include _flex(space-around, center, column);
+      &.router-link-active {
+        color:$bg-side;
+      }
+      &:first-child{
+        span {
+          font-size: $font-wode;
+        }
+      }
+      &:last-child{
+        span {
+          font-size: $font-wode;
+        }
+      }
+      span {
+        font-size: $font-50;
+        padding-bottom: rem750(10)
+      }
+    }
+  }
+  .content {
+    .detail {
+      .video-player {
+        .video-js {
+          .vjs-poster {
+            background-size: 100% 100%;
+          }
+          .vjs-big-play-button{
+            height: rem750(85) !important;
+            width: rem750(85);
+            line-height: rem750(85) !important;
+            border-radius: 50%;
+            background-color: rgba(0,0,0,0.8);
+            border:0;
+            left:0;
+            right:0;
+            bottom:0;
+            margin:auto;
+          }
+        }
+      }
+    }
+  }
+}
+.mint-header {
+  .mint-header-button {
+    height: rem750(60);
+    .back {
+      height: 100%;
+      .mint-button {
+        height: 100%;
+        .mint-button-text {
+          h1 {
+            color: $text-black;
+            font-size: $font-head;
+          }
+        }
+        .mint-button-icon {
+          .mintui {
+            color:$text-back;
+            font-size: $font-back;
+          }
+        }
+      }
+    }
+  }
+  .is-right {
+    .mint-button {
+      height: rem750(60)
+    }
+  }
+  .mint-header-title {
+    line-height: rem750(45)
+  }
+}
+#imgcode {
+  #verifyCanvas {
+    width: rem750(100);
+    height: rem750(50)
+  }
+}
+.mint-msgbox {
+  height: rem750(207);
+  .mint-msgbox-header {
+    padding-top: rem750(15);
+    .mint-msgbox-title {
+      font-size: rem750(30)
+    }
+  }
+  .mint-msgbox-content {
+    height: rem750(126);
+    padding: rem750(10) rem750(20) rem750(15) rem750(20);
+    .mint-msgbox-message {
+      font-size: rem750(30);
+      height: rem750(36);
+      line-height: rem750(36)
+    }
+    .mint-msgbox-input {
+      padding-top: rem750(15);
+      input {
+        height: rem750(45);
+        font-size: rem750(28)
+      }
+    }
+  }
+  .mint-msgbox-btns {
+    height: rem750(55);
+    .mint-msgbox-btn {
+      height: 100%;
+      line-height: rem750(55);
+      font-size: rem750(30)
+    }
+  }
+}
+ .mint-datetime-picker {
+   height: rem750(293);
+  .picker-toolbar {
+    height: rem750(40);
+    border-bottom: rem750(1) solid #eaeaea;
+    .mint-datetime-action {
+      line-height: rem750(40);
+      font-size: rem750(28)
+    }
+  }
+  .picker-items {
+    height: rem750(252);
+    .picker-slot-wrapper {
+      height: rem750(252)!important;
+      .picker-item {
+        height: rem750(36)!important;
+        line-height: rem750(36)!important;
+        font-size: rem750(28)
+      }
+    }
+  }
+}
+.sex {
+  position: absolute;
+  bottom: 0;
+  background: rgba(0, 0, 0, .1);
+  width: 100%;
+  height: 100%;
+  .picker{
+    @include rect(rem750(750), rem750(220));
+    .picker-items {
+      @include rect(100%, 100%);
+      .picker-item {
+        height: rem750(40)!important;
+        line-height: rem750(40)!important;
+        font-size: rem750(28)
+      }
+      .picker-center-highlight {
+        height: rem750(40)!important;
+      }
+    }
+    .picker-toolbar {
+      @include rect(100%, rem750(40));
+      .mint-button {
+        @include rect(100%, 100%);
+        color: #26a2ff;
+        font-size: rem750(30)
+      }
+    }
   }
 }
