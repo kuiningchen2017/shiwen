@@ -112,7 +112,7 @@ export default {
         {
           imgUrl: require('@/assets/icon_04.png'),
           name: '单元设计',
-          path: '123'
+          path: '/list/dysj'
         },
         {
           imgUrl: require('@/assets/icon_05.png'),

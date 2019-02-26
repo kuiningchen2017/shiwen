@@ -59,6 +59,7 @@ export default {
     getCode () {
       // 验证码60秒倒计时
       if (!this.timer) {
+        console.log('111')
         this.timer = setInterval(() => {
           if (this.countdown > 0 && this.countdown <= 60) {
             this.countdown--

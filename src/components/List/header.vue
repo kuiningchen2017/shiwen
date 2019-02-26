@@ -81,6 +81,8 @@ export default {
       this.headtitle = '资讯信息'
     } else if (this.$route.params.title === 'tbkt') {
       this.headtitle = '同步课堂'
+    } else if (this.$route.params.title === 'dysj') {
+      this.headtitle = '单元设计'
     }
     console.log(this.$route.params)
   },

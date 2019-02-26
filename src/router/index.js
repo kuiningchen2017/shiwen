@@ -244,6 +244,29 @@ export default new Router({
       }
     },
     {
+      path: '/classmessage',
+      name: 'classmessage',
+      redirect: '/classmessage/code',
+      components: {
+        header: () => import('@/components/ClassMessage/header'),
+        default: () => import('@/components/ClassMessage/index')
+      },
+      children: [
+        {
+          path: 'code',
+          component: () => import('@/components/ClassMessage/code')
+        },
+        {
+          path: 'teacher',
+          component: () => import('@/components/ClassMessage/teacher')
+        },
+        {
+          path: 'students',
+          component: () => import('@/components/ClassMessage/students')
+        }
+      ]
+    },
+    {
       path: '/addclass',
       name: 'addclass',
       components: {
@@ -395,6 +418,30 @@ export default new Router({
       components: {
         header: () => import('@/components/Homework/header'),
         default: () => import('@/components/Homework/index')
+      }
+    },
+    {
+      path: '/newwork',
+      name: 'newwork',
+      components: {
+        header: () => import('@/components/NewWork/header'),
+        default: () => import('@/components/NewWork/index')
+      }
+    },
+    {
+      path: '/chooseclass',
+      name: 'chooseclass',
+      components: {
+        header: () => import('@/components/NewWork/header'),
+        default: () => import('@/components/NewWork/index2')
+      }
+    },
+    {
+      path: '/success',
+      name: 'success',
+      components: {
+        header: () => import('@/components/NewWork/header'),
+        default: () => import('@/components/NewWork/index3')
       }
     },
     {

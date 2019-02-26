@@ -49,7 +49,7 @@ export default {
     @include rect(rem750(580), rem750(76));
     margin: rem750(53) rem750(85) 0 rem750(85);
     border-radius: rem750(38);
-    background: #4379f5;
+    background: $bg-side;
     line-height: rem750(76);
     color: #fff;
     font-size: rem750(30)

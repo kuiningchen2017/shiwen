@@ -10,18 +10,21 @@
         <span class="iconfont icon-iconfontjiantou4" @click="goset"></span>
       </div>
     </div>
+    <div class="center">
+      <li  @click="goclass">
+        <img src="@/assets/geren_01.png" alt="#">
+        <h2>我的班级</h2>
+      </li>
+      <li  @click="gohomework">
+        <img src="@/assets/geren_02.png" alt="#">
+        <h2>作业布置</h2>
+      </li>
+    </div>
     <div class="list">
       <li>
         <span class="iconfont icon-xuexiao" style="color:#55b782"></span>
         <div class="box" @click="goschool">
           <h3>我的学校</h3>
-          <span class="iconfont icon-iconfontjiantou4"></span>
-        </div>
-      </li>
-      <li>
-        <span class="iconfont icon-banji" style="color:#4276e4"></span>
-        <div class="box" @click="goclass">
-          <h3>我的班级</h3>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
       </li>
@@ -55,20 +58,13 @@
       </li>
     </div>
     <div class="foot">
-      <li>
+      <!-- <li>
         <span class="iconfont icon-shoucang1" style="color:#f9c148"></span>
         <div class="box" @click="gofollow">
           <h3>我的关注</h3>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
-      </li>
-      <li>
-        <span class="iconfont icon-zuoye" style="color:#55b782"></span>
-        <div class="box mark" @click="gohomework">
-          <h3>作业布置</h3>
-          <span class="iconfont icon-iconfontjiantou4"></span>
-        </div>
-      </li>
+      </li> -->
     </div>
   </div>
 </template>
@@ -156,6 +152,24 @@ export default {
       }
     }
   }
+  .center {
+    @include rect(100%, rem750(200));
+    @include _flex(space-around, center);
+    background: #fff;
+    margin-bottom: rem750(12);
+    li {
+      width: rem750(120);
+      height: rem750(110);
+      @include _flex(space-between, center, column);
+      img {
+        @include rect(rem750(80), rem750(60));
+      }
+      h2 {
+        line-height: rem750(40);
+        font-size: rem750(30);
+      }
+    }
+  }
   .list {
     margin-bottom: rem750(12)
   }
@@ -170,7 +184,6 @@ export default {
       @include _flex(space-between,center);
       span {
         font-size: $font-40;
-        color: #9c9c9c;
       }
       .box {
         width: 91%;

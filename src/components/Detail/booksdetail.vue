@@ -139,11 +139,14 @@ export default {
         this.teacher = data.data.File_SubName
         this.price = data.data.Resource_Price
         this.catalog = data.data.catalog
-        console.log(this.catalog[0].CD_Order)
-        if (this.catalog[0].CD_Order === 0) {
-          this.order = false
+        if (this.catalog.length === 0) {
+          Indicator.close()
+        } else {
+          if (this.catalog[0].CD_Order === 0) {
+            this.order = false
+          }
+          Indicator.close()
         }
-        Indicator.close()
       })
   }
 }
@@ -275,7 +278,6 @@ export default {
       @include rect(100%, rem750(533));
       padding: rem750(39) rem750(32) 0;
       box-sizing: border-box;
-      overflow: hidden;
       overflow: scroll;
       .section {
         height: auto;

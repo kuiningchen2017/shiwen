@@ -53,7 +53,7 @@ export default {
         this.$router.push({name: 'audiodetail', params: {id: id, code: code}})
       } else if (this.$route.params.title === 'zyms') {
         this.$router.push({name: 'teacherdetail', params: {id: id, code: code}})
-      } else if (this.$route.params.title === 'kssj' || this.$route.params.title === 'tbkt') {
+      } else if (this.$route.params.title === 'kssj' || this.$route.params.title === 'tbkt' || this.$route.params.title === 'dysj') {
         this.$router.push({name: 'booksdetail', params: {id: id, code: code}})
       }
     },
@@ -220,6 +220,20 @@ export default {
             }
             this.$refs.loadmore.onBottomLoaded()
           })
+      } else if (this.$route.params.title === 'dysj') { // 单元设计
+        this.flag = false
+        this.active = false
+        axios.post(`/shishuiyuan/index/paper/list/key/dn/num/gk/p/{this.pageNum * 9}`)
+          .then(data => {
+            if (data.data.length === 0) {
+              this.allLoaded = true
+              Toast('已无更多数据')
+            } else {
+              this.pageNum++
+              this.list = [...this.list, ...data.data]
+            }
+            this.$refs.loadmore.onBottomLoaded()
+          })
       }
     }
   },
@@ -308,6 +322,14 @@ export default {
       this.flag = false
       this.active = false
       axios.post('/shishuiyuan/index/paper/list/key/kc/num/uh/p/0')
+        .then(data => {
+          console.log(data.data)
+          this.list = data.data
+        })
+    } else if (this.$route.params.title === 'dysj') { // 单元设计
+      this.flag = false
+      this.active = false
+      axios.post('/shishuiyuan/index/paper/list/key/dn/num/uh/p/0')
         .then(data => {
           console.log(data.data)
           this.list = data.data
