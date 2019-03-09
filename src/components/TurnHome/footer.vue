@@ -23,16 +23,23 @@ export default {
           path: '/turncourse'
         },
         {
-          icon: 'iconfont icon-talk',
+          icon: 'iconfont icon-peixun',
           name: '在线',
           path: '/online'
         },
         {
           icon: 'iconfont icon-geren',
           name: '我的',
-          path: '/turnuser'
+          path: ''
         }
       ]
+    }
+  },
+  mounted () {
+    if (localStorage.getItem('type') === '0') {
+      this.list[3].path = '/turnuser/parent'
+    } else {
+      this.list[3].path = '/turnuser/teacher'
     }
   }
 }

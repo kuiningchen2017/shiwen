@@ -79,8 +79,8 @@
     </div>
     <div class="next">
       <li>
-        <p>已选</p>
-        <span v-if="flag">{{num}}</span>
+        <p @click="goback">上一步</p>
+        <!-- <span v-if="flag">{{num}}</span> -->
       </li>
       <li @click="gonext">
         下一步
@@ -99,14 +99,14 @@ export default {
     return {
       list: [],
       pageNum: 1,
-      allLoaded: false,
-      num: 0,
-      flag: false
+      allLoaded: false
+      // num: 0,
+      // flag: false
     }
   },
   methods: {
     loadBottom () {
-      axios.post(`/shishuiyuan/index/top/sandglass/id/AB/num/uh/p/${this.pageNum * 10}`)
+      axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/AB/num/uh/p/${this.pageNum * 10}`)
         .then(data => {
           if (data.data.length === 0) {
             this.allLoaded = true
@@ -118,12 +118,16 @@ export default {
           this.$refs.loadmore.onBottomLoaded()
         })
     },
+    goback () {
+      this.$router.go(-1)
+    },
     gonext () {
+      console.log(sessionStorage.getItem('HomeWorkID'))
       this.$router.push('/success')
     }
   },
   mounted () {
-    axios.post('/shishuiyuan/index/top/sandglass/id/AB/num/uh/p/fist')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/AB/num/uh/p/fist`)
       .then(data => {
         console.log(data.data)
         this.list = data.data
@@ -144,6 +148,7 @@ export default {
 .content {
   .top {
     // @include rect(100%, rem750(394));
+    flex-shrink: 0;
     .jindu {
       @include rect(100%, rem750(114));
       border-bottom: rem750(6) solid #f5f5f5;
@@ -274,8 +279,8 @@ export default {
     }
   }
   .center {
-    height: rem750(805);
-    overflow: scroll;
+    flex-grow: 1;
+    overflow: auto;
     .list {
       padding: 0 rem750(20);
       height: auto;
@@ -319,6 +324,7 @@ export default {
   .next {
     @include rect(100%, rem750(162));
     padding: 0 rem750(200);
+    flex-shrink: 0;
     box-sizing: border-box;
     @include _flex(space-between, center);
     li {
@@ -335,18 +341,18 @@ export default {
           text-align: center;
           word-spacing: rem750(20);
         }
-        span {
-          position: absolute;
-          top: rem750(10);
-          right: rem750(20);
-          @include rect(rem750(25), rem750(25));
-          color: #fff;
-          font-size: rem750(18);
-          line-height: rem750(25);
-          text-align: center;
-          background: #f85f13;
-          border-radius: 50%
-        }
+        // span {
+        //   position: absolute;
+        //   top: rem750(10);
+        //   right: rem750(20);
+        //   @include rect(rem750(25), rem750(25));
+        //   color: #fff;
+        //   font-size: rem750(18);
+        //   line-height: rem750(25);
+        //   text-align: center;
+        //   background: #f85f13;
+        //   border-radius: 50%
+        // }
       }
       &:last-child {
         background: $bg-side;

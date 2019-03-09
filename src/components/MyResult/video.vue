@@ -19,7 +19,7 @@ export default {
     }
   },
   mounted () {
-    axios.post('/shishuiyuan/index/top/sandglass/id/zy/num/uh/p/fist')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/zy/num/uh/p/fist`)
       .then(data => {
         console.log(data.data)
         this.list = data.data

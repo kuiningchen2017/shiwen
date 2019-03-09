@@ -1,6 +1,9 @@
 <template>
   <div class="center animated fadeInLeft">
-    <ul>
+    <div v-if="falg">
+      <p>空空如也~</p>
+    </div>
+    <ul v-else>
       <li v-for="(item, index ) of list" :key="index">
         <img :src="item.img" alt="#">
         <div>
@@ -14,97 +17,24 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
-      list: [
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '肖涵哲',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '王烁',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '学生'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '张鹏',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '李磊',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '肖涵哲',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '王烁',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '学生'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '张鹏',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '李磊',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '肖涵哲',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '王烁',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '学生'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '张鹏',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '李磊',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        }
-      ]
+      falg: false,
+      list: []
     }
-  }
+  },
+  mounted() {
+    axios.post(`${this.GLOBAL.shishuiyuan}/api/user/getinvitelist?token=${localStorage.getItem('token')}&page=1`)
+      .then(data => {
+    console.log(data.data)
+        if (data.data.data.data.length === 0) {
+          this.falg = true
+          this.list = data.data.data.data
+        }
+      })
+  },
 }
 </script>
 
@@ -114,6 +44,14 @@ export default {
   margin-top: rem750(90);
   @include rect(100%, 100%);
   border-top: rem750(4) solid #f0f0f0;
+  div {
+    @include rect(100%, 100%);
+    @include _flex(center, center)
+    p {
+      font-size: rem750(50);
+      color: $bg-side
+    }
+  }
   ul {
     @include rect(100%, 100%);
     padding-left: rem750(27);

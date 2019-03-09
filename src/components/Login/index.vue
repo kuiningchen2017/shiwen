@@ -13,7 +13,7 @@
       </li>
       <li v-if="active">
         <span class="iconfont icon-mima"></span>
-        <input type="password" ref="password" @focus="password" @blur="passwordblur" placeholder="密码">
+        <input type="password" ref="password" @focus="password" @blur="passwordblur" placeholder="请输入大于6位数字字母">
         <div class="cancel">
           <img src="@/assets/close.png" v-if="mark" class="close" @click="clear">
         </div>
@@ -21,7 +21,7 @@
       </li>
       <li v-else>
         <span class="iconfont icon-mima"></span>
-        <input type="text" ref="password" @focus="password" @blur="passwordblur" placeholder="密码">
+        <input type="text" ref="password" @focus="password" @blur="passwordblur" placeholder="请输入大于6位数字字母">
         <div class="cancel">
           <img src="@/assets/close.png" v-if="mark" class="close" @click="clear">
         </div>
@@ -58,7 +58,13 @@ export default {
       this.flag = true
     },
     textblur () {
-      this.flag = false
+      const telExg = /^(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/
+      if (!telExg.test(this.$refs.tel.value)) {
+        Toast('手机号格式不对')
+        this.flag = true
+      } else {
+        this.flag = false
+      }
     },
     password () {
       this.mark = true
@@ -89,23 +95,22 @@ export default {
         Toast('请输入密码')
         return false
       } else {
-        axios.post('/daxunxun/users/login', {
-          username: this.username,
-          password: this.password
-        }).then(data => {
-          console.log(data)
-          if (data.data === 0) {
-            Toast('登录失败')
-          } else if (data.data === 1) {
-            Toast('登录成功')
-            sessionStorage.setItem('islogin', 'ok')
-            this.$router.go(-1)
-          } else if (data.data === 2) {
-            Toast('没有该用户')
-          } else {
-            Toast('密码错误')
-          }
-        })
+        axios.post(`${this.GLOBAL.shishuiyuan}/api/user/login?phone=${this.$refs.tel.value}&password=${this.$refs.password.value}`)
+          .then(data => {
+            console.log(data.data)
+            var res = data.data
+            Toast(res.message)
+            if (res.code === 0) {
+              localStorage.setItem('token', res.data.User_Token)
+              localStorage.setItem('type', res.data.User_Type)
+              localStorage.setItem('userID', res.data.User_ID)
+              if (res.data.User_Type === 0) {
+                this.$router.push('/user/parent')
+              } else {
+                this.$router.push('/user/teacher')
+              }
+            }
+          })
       }
     }
   }
@@ -126,7 +131,7 @@ export default {
     }
   }
   .box {
-    padding:0 rem750(74);
+    padding:0 rem750(70);
     li {
       width:100%;
       height: rem750(59);
@@ -135,12 +140,13 @@ export default {
       @include _flex(start,center);
       span {
         color: #c2c2c2;
-        font-size: $font-30
+        font-size: rem750(45)
       }
       input {
         width: rem750(500);
-        height: rem750(40);
+        height: rem750(50);
         padding-left: rem750(30);
+        font-size: rem750(30)
       }
       .cancel {
         width: rem750(30);
@@ -151,9 +157,8 @@ export default {
         }
       }
       .change {
-        width: rem750(32);
-        height: rem750(20);
-        padding-left: rem750(30);
+        width: rem750(40);
+        height: rem750(30)
       }
     }
     button {

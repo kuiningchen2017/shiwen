@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     back () {
-      this.$router.push('/user')
+      this.$router.go(-1)
     },
     total () {
       this.$router.push('/mytrain/all')

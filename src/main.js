@@ -6,9 +6,11 @@ import router from './router'
 import MintUI from 'mint-ui'
 // import '../static/flexible.min'
 import './mian.scss'
+import global from './components/global'
 // 页面切换效果
 import animate from 'animate.css'
 Vue.use(animate)
+Vue.prototype.GLOBAL = global
 
 Vue.config.productionTip = false
 Vue.use(MintUI)

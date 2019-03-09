@@ -1,7 +1,10 @@
 <template>
   <div class="content" ref="content">
     <div class="detail">
-      <img :src="this.img" alt="#">
+      <div class="img">
+        <img :src="this.img" alt="#">
+        <p class="look">观看次数：{{this.pageview}}</p>
+      </div>
       <div class="right">
         <li>
           <h2>{{this.name}}</h2>
@@ -18,8 +21,8 @@
         </li>
         <li>
           <h2>
-            <span>￥</span>
-            <b>{{this.price}}</b>
+            <!-- <span>￥</span> -->
+            <b>￥{{this.price}}</b>
           </h2>
         </li>
       </div>
@@ -38,7 +41,7 @@
       <div class="head">
         <h2>
           <b></b>
-          课本章节
+          {{this.kbzj}}
         </h2>
       </div>
       <div class="box">
@@ -58,7 +61,7 @@
           <b></b>
           评论
         </h2>
-        <span>
+        <span @click="gocommentlist">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
@@ -70,10 +73,17 @@
           <b></b>
           推荐课程
         </h2>
-        <span>
+        <span @click="golist">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
+      </div>
+      <div class="box1">
+        <li v-for = "(items,index) of tuijianlist" :key ="index" @click="detail(items.File_ID, items.File_Code)">
+          <img :src="items.Attachment_Path" alt="#">
+          <span>{{items.File_Name}}</span>
+          <!-- <span>{{items.File_SubName}}</span> -->
+        </li>
       </div>
     </div>
   </div>
@@ -93,8 +103,11 @@ export default {
       grade: '',
       teacher: '',
       price: '',
+      pageview: '',
+      kbzj: '课本章节',
       catalog: [],
       order: true,
+      tuijianlist: [],
       navlist: [
         {
           name: '概述',
@@ -121,14 +134,40 @@ export default {
       if (num === 1) {
         this.$router.push({name: 'videodetail', params: {id: id, code: code}})
       }
+    },
+    detail (id, code) {
+      console.log(id, code)
+      this.$router.push({name: 'booksdetail', params: {id: id, code: code}})
+    },
+    gocommentlist () {
+      this.$router.push({name: 'commentlist', params: {id: this.$route.params.id, code: this.$route.params.code}})
+    },
+    golist () {
+      if (this.$route.params.title === '203' || this.$route.params.title === '365' || this.$route.params.title === 'tbkt') {
+        this.$router.push({name: 'list', params: {title: this.$route.params.title}})
+      } else {
+        this.$router.push(`${this.$route.params.title}`)
+      }
+    }
+  },
+  watch: {
+    '$route.path' (newVal, oldVal) {
+      console.log(newVal, oldVal)
+      if (newVal !== oldVal) {
+        window.location.reload()
+      }
     }
   },
   mounted () {
+    if (this.$route.params.title === '365') {
+      this.navlist[1].name = '单元'
+      this.kbzj = '课本单元'
+    }
     Indicator.open({
       text: '加载中...',
       spinnerType: 'fading-circle'
     })
-    axios.post(`/shishuiyuan/index/paper/listing/keys/${this.$route.params.code}/pid/${this.$route.params.id}`)
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/paper/listing/keys/${this.$route.params.code}/pid/${this.$route.params.id}`)
       .then(data => {
         console.log(data.data)
         this.title = data.data.File_Name
@@ -139,6 +178,7 @@ export default {
         this.teacher = data.data.File_SubName
         this.price = data.data.Resource_Price
         this.catalog = data.data.catalog
+        this.pageview = data.data.pageview
         if (this.catalog.length === 0) {
           Indicator.close()
         } else {
@@ -146,6 +186,14 @@ export default {
             this.order = false
           }
           Indicator.close()
+        }
+      })
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/refer/id/${this.$route.params.id}/key/${this.$route.params.code}`)
+      .then(data => {
+        for (let i in data.data) {
+          if (i <= 1) {
+            this.tuijianlist.push(data.data[i])
+          }
         }
       })
   }
@@ -164,9 +212,23 @@ export default {
     padding: rem750(27) rem750(30) rem750(36) rem750(20);
     box-sizing: border-box;
     @include _flex(space-between,center);
-    img {
-      width: rem750(254);
+    .img {
+      position: relative;
       height: 100%;
+      img {
+        width: rem750(254);
+        height: 100%;
+      }
+      .look {
+        position: absolute;
+        @include rect(rem750(254), rem750(35));
+        background: rgba(0, 0, 0, .5);
+        line-height: rem750(35);
+        text-align: center;
+        color: #fff;
+        font-size: rem750(22);
+        bottom: 0;
+      }
     }
     .right {
       width: rem750(423);
@@ -185,8 +247,8 @@ export default {
               font-size: rem750(24);
             }
             b {
-              color: #f00000;
-              font-size: rem750(30);
+              color: #b3b3b3;
+              font-size: rem750(20);
             }
           }
         }
@@ -239,13 +301,13 @@ export default {
     }
   }
   .book {
-    height: rem750(620);
+    max-height: rem750(500);
   }
   .comment {
     height: rem750(370);
   }
   .video {
-    height: rem750(357);
+    height: rem750(380);
   }
   .comment, .book, .video{
     .head {
@@ -275,7 +337,7 @@ export default {
       }
     }
     .box {
-      @include rect(100%, rem750(533));
+      @include rect(100%, rem750(413));
       padding: rem750(39) rem750(32) 0;
       box-sizing: border-box;
       overflow: scroll;
@@ -304,6 +366,31 @@ export default {
               }
             }
           }
+        }
+      }
+    }
+    .box1 {
+      width: 100%;
+      box-sizing: border-box;
+      padding: rem750(19) rem750(20) 0 rem750(20);
+      @include _flex(space-between,flex-start);
+      li {
+        width: rem750(346);
+        @include _flex(flex-start,flex-start,column);
+        img {
+          @include rect(100%, rem750(210));
+          border-radius: rem750(10);
+          margin-bottom: rem750(17);
+        }
+        span {
+          line-height: rem750(40);
+          font-size: $font-26;
+          color: $text-black;
+          padding-left: rem750(15);
+          width: rem750(320);
+          overflow: hidden;
+          text-overflow:ellipsis;
+          white-space: nowrap;
         }
       }
     }

@@ -82,35 +82,16 @@ export default new Router({
       }
     },
     {
-      path: '/user',
+      path: '/user/:type',
       name: 'user',
       components: {
         header: () => import('@/components/User/header'),
         default: () => import('@/components/User/teacher'),
         footer: () => import('@/components/Home/footer')
       }
-      // children: [
-      //   {
-      //     path: 'teacher',
-      //     component: () => import('@/components/User/teacher')
-      //   },
-      //   {
-      //     path: 'parent',
-      //     component: () => import('@/components/User/parent')
-      //   }
-      // ]
     },
     {
-      path: '/turnuser',
-      name: 'turnuser',
-      components: {
-        header: () => import('@/components/User/header'),
-        default: () => import('@/components/User/parent'),
-        footer: () => import('@/components/TurnHome/footer')
-      }
-    },
-    {
-      path: '/teacheruser/:router',
+      path: '/teacheruser/:type',
       name: 'teacheruser',
       components: {
         header: () => import('@/components/User/header'),
@@ -119,11 +100,20 @@ export default new Router({
       }
     },
     {
-      path: '/parentuser',
-      name: 'parenutser',
+      path: '/turnuser/:type',
+      name: 'turnuser',
       components: {
         header: () => import('@/components/User/header'),
-        default: () => import('@/components/User/parent'),
+        default: () => import('@/components/User/teacher'),
+        footer: () => import('@/components/TurnHome/footer')
+      }
+    },
+    {
+      path: '/parentuser/:type',
+      name: 'parentuser',
+      components: {
+        header: () => import('@/components/User/header'),
+        default: () => import('@/components/User/teacher'),
         footer: () => import('@/components/ParentHome/footer')
       }
     },
@@ -194,7 +184,7 @@ export default new Router({
       }
     },
     {
-      path: '/booksdetail/:id/:code',
+      path: '/booksdetail/:title/:id/:code',
       name: 'booksdetail',
       components: {
         header: () => import('@/components/Detail/header'),
@@ -209,6 +199,23 @@ export default new Router({
         header: () => import('@/components/Detail/header'),
         default: () => import('@/components/Detail/teacherdetail'),
         footer: () => import('@/components/Detail/footer1')
+      }
+    },
+    {
+      path: '/commentlist/:id/:code',
+      name: 'commentlist',
+      components: {
+        header: () => import('@/components/CommentList/header'),
+        default: () => import('@/components/CommentList/index'),
+        footer: () => import('@/components/CommentList/footer')
+      }
+    },
+    {
+      path: '/comments/:id/:code',
+      name: 'comments',
+      components: {
+        header: () => import('@/components/Comments/header'),
+        default: () => import('@/components/Comments/index')
       }
     },
     {
@@ -241,6 +248,14 @@ export default new Router({
       components: {
         header: () => import('@/components/MyClass/header'),
         default: () => import('@/components/MyClass/index')
+      }
+    },
+    {
+      path: '/myclassroom',
+      name: 'myclassroom',
+      components: {
+        header: () => import('@/components/MyClassroom/header'),
+        default: () => import('@/components/MyClassroom/index')
       }
     },
     {
@@ -453,7 +468,7 @@ export default new Router({
       }
     },
     {
-      path: '/kejian',
+      path: '/kejian/:id/:code',
       name: 'kejian',
       components: {
         header: () => import('@/components/Kejian/header'),

@@ -8,15 +8,15 @@
     <div class="list">
       <li>
         <span class="iconfont icon-location"></span>
-        <p>地区：河南省-郑州市-金水区-南阳路街道</p>
+        <p>地区：{{this.area}}</p>
       </li>
       <li>
         <span class="iconfont icon-xuexiao"></span>
-        <p>学校：南阳路第二小学</p>
+        <p>学校：{{this.school}}</p>
       </li>
       <li>
         <span class="iconfont icon-wode"></span>
-        <p>年级：六年级</p>
+        <p>年级：{{this.class}}</p>
       </li>
     </div>
     <div class="guanzhu">
@@ -27,17 +27,21 @@
     <div class="kemu">
       <li>
         <span class="iconfont icon-kemu"></span>
-        <p>语文 数学 英语</p>
+        <p v-for="(item, index) of list" :key="index">{{item}}</p>
       </li>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
-
+      list: [],
+      area: '',
+      class: '',
+      school: ''
     }
   },
   methods: {
@@ -47,6 +51,18 @@ export default {
     mysubject () {
       this.$router.push('/guanzhuxueke')
     }
+  },
+  mounted () {
+    axios.post(`${this.GLOBAL.shishuiyuan}/api/user/getuserinfo?token=${localStorage.getItem('token')}`)
+      .then(data => {
+        console.log(data.data)
+        let obj = data.data.data
+        this.list = obj.User_FavoriteSubjectFormat
+        let res = obj.User_ClassIDFormat
+        this.class = res.join(' ')
+        this.school = obj.User_SchoolIDFormat
+        this.area = `${obj.User_ProvinceFormat}-${obj.User_CityFormat}-${obj.User_AreaFormat}-${obj.User_StreetFormat}`
+      })
   }
 }
 </script>

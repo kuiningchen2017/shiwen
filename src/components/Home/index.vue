@@ -19,7 +19,7 @@
           <b></b>
           <span>中原名师</span>
         </h2>
-        <span @click="goteacher">
+        <span @click="golist('725')">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
@@ -38,7 +38,7 @@
           <b></b>
           <span>精品课程</span>
         </h2>
-        <span @click="gocourse">
+        <span @click="golist('023')">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
@@ -57,7 +57,7 @@
           <b></b>
           <span>名师论道</span>
         </h2>
-        <span @click="gotheory">
+        <span @click="golist('926')">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
@@ -108,24 +108,20 @@ export default {
     }
   },
   created () {
-    axios.post('/shishuiyuan/index/picture/view/id/dg/num/3')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/picture/view/id/dg/num/3`)
       .then(data => {
-        console.log(data.data)
         this.banner = data.data
       })
-    axios.post('/shishuiyuan/index/mod/gaste/key/pm/del/mt/c/0')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/mod/gaste/id/pm/num/mt/p/0`)
       .then(data => {
-        console.log(data.data)
         this.teacherlist = data.data
       })
-    axios.post('/shishuiyuan/index/top/sandglass/id/AB/num/mq/p/0')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/AB/num/mq/p/0`)
       .then(data => {
-        console.log(data.data)
         this.courselist = data.data
       })
-    axios.post('/shishuiyuan/index/top/sandglass/id/gd/num/mq/p/0')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/gd/num/mq/p/0`)
       .then(data => {
-        console.log(data.data)
         this.theorylist = data.data
       })
   },
@@ -138,20 +134,11 @@ export default {
         window.location.href = URL
       }
     },
-    goteacher () {
-      let title = 'zyms'
-      this.$router.push({name: 'list', params: {title: title}})
-    },
-    gocourse () {
-      let title = 'jpkc'
-      this.$router.push({name: 'list', params: {title: title}})
-    },
-    gotheory () {
-      let title = 'msld'
+    golist (type) {
+      let title = type
       this.$router.push({name: 'list', params: {title: title}})
     },
     godetail (id, code, mark) {
-      console.log(mark)
       if (mark === 'video') {
         this.$router.push({name: 'videodetail', params: {id: id, code: code}})
       } else {

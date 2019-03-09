@@ -4,21 +4,23 @@
       <li>
         <h3>头像</h3>
         <div class="box">
-          <img src="@/assets/headimg.png">
-          <span class="iconfont icon-iconfontjiantou4"></span>
+          <img :src="this.headimg">
+          <span class="iconfont icon-iconfontjiantou4" @click.stop="uploadHeadImg">
+            <input type="file" @change="handleFile" class="hiddenInput" style="display:none">
+          </span>
         </div>
       </li>
       <li>
         <h3>用户名</h3>
         <div class="box">
-          <p>陌陌的妈妈</p>
+          <p>{{this.account}}</p>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
       </li>
       <li>
         <h3>昵称</h3>
         <div class="box" @click="setname">
-          <p>{{this.nick}}</p>
+          <p>{{this.Nickname}}</p>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
       </li>
@@ -46,6 +48,7 @@
         </mt-datetime-picker>
       </li>
     </div>
+    <button @click="cancel"> 退出登录</button>
     <div class="sex" v-if="active">
       <mt-popup v-model="active" position="bottom" class="mint-popup">
         <mt-picker :slots="slots" :show-toolbar="true"  ref="picker">
@@ -57,13 +60,16 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Vue from 'vue'
-import { MessageBox, DatetimePicker, Picker } from 'mint-ui'
+import { MessageBox, DatetimePicker, Picker, Toast } from 'mint-ui'
 Vue.component(DatetimePicker.name, DatetimePicker, Picker.name, Picker)
 export default {
   data () {
     return {
-      nick: '还是空的，快来去个有逼格的名字吧',
+      headimg: require('@/assets/headimg.png'),
+      account: '',
+      Nickname: '未设置',
       birthday: '未设置',
       startDate: new Date('1968-01-01'),
       slots: [{values: ['男', '女']}],
@@ -72,13 +78,38 @@ export default {
     }
   },
   methods: {
+    // 打开图片上传
+    uploadHeadImg () {
+      this.$el.querySelector('.hiddenInput').click()
+    },
+    // 将头像显示
+    handleFile (e) {
+      let $target = e.target || e.srcElement
+      let file = $target.files[0]
+      let data = new FormData()
+      data.append('file', file)
+      axios.post(`${this.GLOBAL.shishuiyuan}/api/utility/uploadfile?token=${localStorage.getItem('token')}`, data)
+        .then(data => {
+          let res = data.data.data
+          this.headimg = res.full_path
+          if (data.data.code === 0) {
+            axios.post(`${this.GLOBAL.shishuiyuan}/api/user/setuseravatar?token=${localStorage.getItem('token')}&origin_name=${res.origin_name}&path=${res.path}`)
+              .then(data => {
+                Toast(data.data.message)
+              })
+          }
+        })
+    },
     setname () {
       MessageBox.prompt('请输入昵称', '')
         .then(({ value, action }) => {
-          this.nick = value
-        })
-        .catch(error => {
-          console.log(error)
+          axios.post(`${this.GLOBAL.shishuiyuan}/api/user/setuserinfo?token=${localStorage.getItem('token')}&nickname=${value}`)
+            .then(data => {
+              Toast(data.data.message)
+              if (data.data.code === 0) {
+                this.Nickname = value
+              }
+            })
         })
     },
     setdate () {
@@ -94,15 +125,65 @@ export default {
       if (day < 10) {
         day = '0' + day
       }
-      this.birthday = `${date.getFullYear()}-${month}-${day}`
+      let birthday = `${date.getFullYear()}-${month}-${day}`
+      axios.post(`${this.GLOBAL.shishuiyuan}/api/user/setuserinfo?token=${localStorage.getItem('token')}&birthday=${birthday}`)
+        .then(data => {
+          Toast(data.data.message)
+          if (data.data.code === 0) {
+            this.birthday = `${date.getFullYear()}-${month}-${day}`
+          }
+        })
     },
     setsex () {
       this.active = true
     },
     sure () {
-      this.sex = this.$refs.picker.getValues()[0]
+      let sex = this.$refs.picker.getValues()[0]
+      console.log(this.sex)
       this.active = false
+      let num = ''
+      if (sex === '男') {
+        num = 1
+      } else {
+        num = 2
+      }
+      axios.post(`${this.GLOBAL.shishuiyuan}/api/user/setuserinfo?token=${localStorage.getItem('token')}&sex=${num}`)
+        .then(data => {
+          Toast(data.data.message)
+          if (data.data.code === 0) {
+            this.sex = sex
+          }
+        })
+    },
+    cancel () {
+      localStorage.clear()
+      this.$router.push('/login')
     }
+  },
+  mounted () {
+    axios.post(`${this.GLOBAL.shishuiyuan}/api/user/getuserinfo?token=${localStorage.getItem('token')}`)
+      .then(data => {
+        console.log(data.data)
+        if (data.data.code === 0) {
+          this.account = data.data.data.User_Account
+          if (data.data.data.User_Nickname !== '') {
+            this.Nickname = data.data.data.User_Nickname
+          }
+          if (data.data.data.User_HeadImg !== '') {
+            this.headimg = data.data.data.User_HeadImg
+          }
+          if (data.data.data.User_Sex !== 0) {
+            if (data.data.data.User_Sex === 1) {
+              this.sex = '男'
+            } else {
+              this.sex = '女'
+            }
+          }
+          if (data.data.data.User_BirthDate !== '') {
+            this.birthday = data.data.data.User_BirthDate
+          }
+        }
+      })
   }
 }
 </script>
@@ -145,6 +226,17 @@ export default {
         }
       }
     }
+  }
+  button {
+    margin-top: rem750(200);
+    margin-left: rem750(75);
+    width:rem750(600);
+    height: rem750(90);
+    border-radius: rem750(45);
+    background: $bg-side;
+    color: #fff;
+    font-size: $font-30;
+    margin-bottom: rem750(36);
   }
 }
 </style>

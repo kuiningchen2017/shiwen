@@ -25,9 +25,21 @@ export default {
         {
           icon: 'iconfont icon-geren',
           name: '我的',
-          path: '/user'
+          path: ''
         }
       ]
+    }
+  },
+  mounted () {
+    if (localStorage.getItem('type') === '0') {
+      this.list[2].path = '/user/parent'
+    } else {
+      this.list[2].path = '/user/teacher'
+    }
+  },
+  watch: {
+    '$route.path' (newVal, oldVal) {
+      console.log(newVal, oldVal)
     }
   }
 }

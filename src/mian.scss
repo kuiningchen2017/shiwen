@@ -100,93 +100,109 @@ html, body, .container {
     line-height: rem750(45)
   }
 }
-#imgcode {
-  #verifyCanvas {
-    width: rem750(100);
-    height: rem750(50)
+#qrcode {
+  @include rect(100%, rem750(400));
+  @include _flex(center, center);
+  img {
+    width: rem750(300);
+    height: rem750(300);
   }
 }
-.mint-msgbox {
-  height: rem750(207);
-  .mint-msgbox-header {
-    padding-top: rem750(15);
-    .mint-msgbox-title {
-      font-size: rem750(30)
-    }
-  }
-  .mint-msgbox-content {
-    height: rem750(126);
-    padding: rem750(10) rem750(20) rem750(15) rem750(20);
-    .mint-msgbox-message {
-      font-size: rem750(30);
-      height: rem750(36);
-      line-height: rem750(36)
-    }
-    .mint-msgbox-input {
-      padding-top: rem750(15);
-      input {
-        height: rem750(45);
-        font-size: rem750(28)
-      }
-    }
-  }
-  .mint-msgbox-btns {
-    height: rem750(55);
-    .mint-msgbox-btn {
-      height: 100%;
-      line-height: rem750(55);
-      font-size: rem750(30)
-    }
-  }
-}
- .mint-datetime-picker {
-   height: rem750(293);
-  .picker-toolbar {
-    height: rem750(40);
-    border-bottom: rem750(1) solid #eaeaea;
-    .mint-datetime-action {
-      line-height: rem750(40);
-      font-size: rem750(28)
-    }
-  }
-  .picker-items {
-    height: rem750(252);
-    .picker-slot-wrapper {
-      height: rem750(252)!important;
-      .picker-item {
-        height: rem750(36)!important;
-        line-height: rem750(36)!important;
-        font-size: rem750(28)
-      }
-    }
-  }
-}
+// #imgcode {
+//   #verifyCanvas {
+//     width: rem750(100);
+//     height: rem750(50)
+//   }
+// }
+// .mint-msgbox {
+//   height: rem750(212);
+//   .mint-msgbox-header {
+//     padding-top: rem750(15);
+//     .mint-msgbox-title {
+//       font-size: rem750(30)
+//     }
+//   }
+//   .mint-msgbox-content {
+//     height: rem750(126);
+//     padding: rem750(10) rem750(20) rem750(15) rem750(20);
+//     .mint-msgbox-message {
+//       font-size: rem750(30);
+//       height: rem750(36);
+//       line-height: rem750(36)
+//     }
+//     .mint-msgbox-input {
+//       padding-top: rem750(15);
+//       input {
+//         width: rem750(597);
+//         height: rem750(45);
+//         font-size: rem750(28);
+//         padding: rem750(4) rem750(5);
+//       }
+//     }
+//   }
+//   .mint-msgbox-btns {
+//     height: rem750(60);
+//     .mint-msgbox-btn {
+//       height: 100%;
+//       line-height: rem750(60);
+//       font-size: rem750(30)
+//     }
+//   }
+// }
+// .mint-datetime-picker {
+//     height: rem750(293);
+//   .picker-toolbar {
+//     height: rem750(40);
+//     border-bottom: rem750(1) solid #eaeaea;
+//     .mint-datetime-action {
+//       line-height: rem750(40);
+//       font-size: rem750(28)
+//     }
+//   }
+//   .picker-items {
+//     height: rem750(252);
+//     .picker-slot-wrapper {
+//       height: rem750(252)!important;
+//       .picker-item {
+//         height: rem750(36)!important;
+//         line-height: rem750(36)!important;
+//         font-size: rem750(28)
+//       }
+//     }
+//   }
+// }
 .sex {
-  position: absolute;
-  bottom: 0;
-  background: rgba(0, 0, 0, .1);
-  width: 100%;
-  height: 100%;
-  .picker{
-    @include rect(rem750(750), rem750(220));
-    .picker-items {
-      @include rect(100%, 100%);
-      .picker-item {
-        height: rem750(40)!important;
-        line-height: rem750(40)!important;
-        font-size: rem750(28)
+  .mint-popup {
+    width: 100%;
+    height: rem750(240);
+    .picker {
+      .picker-toolbar {
+        @include rect(100%, rem750(60));
+        .mint-button {
+          @include rect(100%, 100%);
+          color: #26a2ff;
+          font-size: rem750(30)
+        }
       }
-      .picker-center-highlight {
-        height: rem750(40)!important;
-      }
-    }
-    .picker-toolbar {
-      @include rect(100%, rem750(40));
-      .mint-button {
-        @include rect(100%, 100%);
-        color: #26a2ff;
-        font-size: rem750(30)
-      }
+      // .picker-items {
+      //   @include rect(100%, rem750(180));
+      //   .picker-slot-center {
+      //     @include rect(rem750(38), rem750(180));
+      //     .picker-slot-wrapper {
+      //       height: rem750(180)!important;
+      //       // transform: translate(0px, rem750(72)) translateZ(0px)!important;
+            .picker-item {
+              // height: rem750(36)!important;
+              // line-height: rem750(36)!important;
+              font-size: rem750(28)
+            }
+      //     }
+      //   }
+      //   .picker-center-highlight {
+      //     height: rem750(36)!important;
+      //     margin-top: rem750(-18)!important;
+      //   }
+      // }
     }
   }
-}
+ }

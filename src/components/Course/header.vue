@@ -3,24 +3,27 @@
     <mt-header title="课本">
     </mt-header>
     <div class="filter">
+      <div class="all">
+        <h3 @click="getAll">全部</h3>
+      </div>
       <div class="grade">
-        <h3 @click="getgrade">{{this.title}}</h3>
-        <ul v-show="grade" class="switch animated fadeInLeft" ref="grade">
-          <li v-for="(item, index) of nianji" :key="index" :class="{'bor':clicked===index}" @click="changeTab(index,item.CD_Name)">
+        <h3 @click="getGrade">{{this.titleGrade}}</h3>
+        <ul v-if="grade" :class="isOk?classA:classB">
+          <li v-for="(item, index) of gradeList" :key="index" :class="{'bor':clickGrade===index}" @click="changeGrade(index,item.CD_Name,item.CD_ID)">
             {{item.CD_Name}}</li>
         </ul>
       </div>
       <div class="subject">
-        <h3 @click="getsubject">{{this.title1}}</h3>
-        <ul v-show="subject" class="switchA animated fadeInLeft">
-          <li v-for="(item, index) of xueke" :key="index" :class="{'bor':clicked1===index}" @click="changeTab1(index,item.CD_Name)">
+        <h3 @click="getSub">{{this.titleSub}}</h3>
+        <ul v-if="sub" :class="isOk?classA:classB">
+          <li v-for="(item, index) of subList" :key="index" :class="{'bor':clickSub===index}" @click="changeSub(index,item.CD_Name,item.CD_ID)">
             {{item.CD_Name}}</li>
         </ul>
       </div>
       <div class="press">
-        <h3 @click="getpress">{{this.title2}}</h3>
-        <ul v-show="press" class="switchB animated fadeInLeft">
-          <li v-for="(item, index) of chubanshe" :key="index" :class="{'bor':clicked2===index}" @click="changeTab2(index,item.CD_Name)">{{item.CD_Name}}</li>
+        <h3 @click="getPress">{{this.titlePress}}</h3>
+        <ul v-if="press" :class="isOk?classA:classB">
+          <li v-for="(item, index) of pressList" :key="index" :class="{'bor':clickPress===index}" @click="changePress(index,item.CD_Name,item.CD_ID)">{{item.CD_Name}}</li>
         </ul>
       </div>
     </div>
@@ -29,120 +32,135 @@
 
 <script>
 import axios from 'axios'
+import Vue from 'vue'
+import VueBus from 'vue-bus'
+Vue.use(VueBus)
 export default {
   data () {
     return {
-      clicked: '',
-      clicked1: '',
-      clicked2: '',
+      titleGrade: '',
+      titleSub: '',
+      titlePress: '',
       grade: false,
-      gradenum: 1,
-      subject: false,
-      subjectnum: 1,
+      gradeNum: 1,
+      sub: false,
+      subNum: 1,
       press: false,
-      pressnum: 1,
-      nianji: [],
-      xueke: [],
-      chubanshe: [],
-      title: '',
-      title1: '',
-      title2: ''
+      pressNum: 1,
+      isOk: false,
+      classA: 'animated fadeInLeft',
+      classB: 'animated fadeOutLeft',
+      gradeList: [],
+      subList: [],
+      pressList: [],
+      clickGrade: '',
+      clickSub: '',
+      clickPress: ''
     }
   },
   methods: {
-    getgrade () {
+    getGrade () {
       this.grade = true
-      this.subject = false
+      this.sub = false
+      this.subNum = 1
       this.press = false
-      var num = this.gradenum % 2
-      if (num !== 0) {
-        var open = document.querySelector('.switch')
-        open.setAttribute('class', 'switch animated fadeInLeft')
-        this.gradenum++
+      this.pressNum = 1
+      if (this.gradeNum === 1) {
+        this.isOk = true
+        this.gradeNum = 0
       } else {
-        var close = document.querySelector('.switch')
-        close.setAttribute('class', 'switch animated fadeOutLeft')
-        this.gradenum++
+        this.isOk = false
+        this.gradeNum = 1
       }
     },
-    getsubject () {
+    getSub () {
       this.grade = false
-      this.subject = true
+      this.gradeNum = 1
+      this.sub = true
       this.press = false
-      var num1 = this.subjectnum % 2
-      if (num1 !== 0) {
-        var open = document.querySelector('.switchA')
-        open.setAttribute('class', 'switchA animated fadeInLeft')
-        this.subjectnum++
+      this.pressNum = 1
+      if (this.subNum === 1) {
+        this.isOk = true
+        this.subNum = 0
       } else {
-        var close = document.querySelector('.switchA')
-        close.setAttribute('class', 'switchA animated fadeOutLeft')
-        this.subjectnum++
+        this.isOk = false
+        this.subNum = 1
       }
     },
-    getpress () {
+    getPress () {
       this.grade = false
-      this.subject = false
+      this.gradeNum = 1
+      this.sub = false
+      this.subNum = 1
       this.press = true
-      var num2 = this.pressnum % 2
-      if (num2 !== 0) {
-        var open = document.querySelector('.switchB')
-        open.setAttribute('class', 'switchB animated fadeInLeft')
-        this.pressnum++
+      if (this.pressNum === 1) {
+        this.isOk = true
+        this.pressNum = 0
       } else {
-        var close = document.querySelector('.switchB')
-        close.setAttribute('class', 'switchB animated fadeOutLeft')
-        this.pressnum++
+        this.isOk = false
+        this.pressNum = 1
       }
     },
-    changeTab (index, val) {
-      this.clicked = index
-      console.log(val)
-      this.title = val
-      var close = document.querySelector('.switch')
-      close.setAttribute('class', 'switch animated fadeOutLeft')
+    getAll () {
+      this.grade = false
+      this.gradeNum = 1
+      this.sub = false
+      this.subNum = 1
+      this.press = false
+      this.pressNum = 1
+      this.titleGrade = '年级'
+      this.titleSub = '学科'
+      this.titlePress = '出版社'
+      this.clickGrade = ''
+      this.clickSub = ''
+      this.clickPress = ''
+      this.$bus.emit('all', 'all')
     },
-    changeTab1 (index, val) {
-      this.clicked1 = index
-      console.log(val)
-      this.title1 = val
-      var close = document.querySelector('.switchA')
-      close.setAttribute('class', 'switchA animated fadeOutLeft')
+    changeGrade (index, val, id) {
+      this.clickGrade = index
+      this.titleGrade = val
+      this.gradeNum = 1
+      this.grade = false
+      this.$bus.emit('gradeID', id)
     },
-    changeTab2 (index, val) {
-      this.clicked2 = index
-      console.log(val)
-      this.title2 = val
-      var close = document.querySelector('.switchB')
-      close.setAttribute('class', 'switchB animated fadeOutLeft')
+    changeSub (index, val, id) {
+      this.clickSub = index
+      this.titleSub = val
+      this.subNum = 1
+      this.sub = false
+      this.$bus.emit('subID', id)
+    },
+    changePress (index, val, id) {
+      this.clickPress = index
+      this.titlePress = val
+      this.pressNum = 1
+      this.press = false
+      this.$bus.emit('pressID', id)
     }
   },
   mounted () {
-    axios.post('/shishuiyuan/index/peri/top/id/hk')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/peri/top/id/hk`)
       .then(data => {
         console.log(data.data)
-        this.nianji = data.data
-        let nianji = data.data
-        nianji.map((value) => {
-          this.title = value.Category_Name
+        this.gradeList = data.data
+        data.data.map((value) => {
+          this.titleGrade = value.Category_Name
         })
       })
-    axios.post('/shishuiyuan/index/peri/top/id/huy')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/peri/top/id/huy`)
       .then(data => {
         console.log(data.data)
-        this.xueke = data.data
-        let xueke = data.data
-        xueke.map((value) => {
-          this.title1 = value.Category_Name
+        this.subList = data.data
+        data.data.map((value) => {
+          this.titleSub = value.Category_Name
         })
       })
-    axios.post('/shishuiyuan/index/peri/top/id/pu')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/peri/top/id/pu`)
       .then(data => {
         console.log(data.data)
-        this.chubanshe = data.data
-        let chubanshe = data.data
-        chubanshe.map((value) => {
-          this.title2 = value.Category_Name
+        this.pressList = data.data
+        data.data.map((value) => {
+          this.titlePress = value.Category_Name
         })
       })
   }
@@ -171,7 +189,7 @@ export default {
     top: rem750(86);
     z-index: 1001;
     @include _flex(flex-start,flex-start);
-    .grade, .subject, .press {
+    .all, .grade, .subject, .press {
       h3 {
         @include rect(rem750(120),rem750(72));
         line-height: rem750(72);
@@ -188,7 +206,7 @@ export default {
           border-bottom: rem750(1) solid #f2f2f2;
         }
         .bor{
-          color: #118ecd;
+          color: $bg-side;
         }
       }
     }

@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     back () {
-      this.$router.push('/user')
+      this.$router.go(-1)
     },
     code () {
       this.$router.push('/recommend/code')
@@ -49,6 +49,9 @@ export default {
     if (this.$route.path === '/recommend/list') {
       this.active = false
       this.flage = true
+    } else {
+      this.active = true
+      this.flage = false
     }
   }
 }

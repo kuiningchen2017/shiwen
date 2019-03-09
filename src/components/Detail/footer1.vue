@@ -37,23 +37,30 @@ export default {
 <style lang='scss' scoped>
 @import '@/style/base/index.scss';
 .footer {
-  border-top: rem750(1) solid #999;
+  border-top: rem750(1) solid #f0f0f0;
   padding: 0 rem750(40);
   div {
-    width:rem750(150);
+    @include rect(rem750(160), rem750(70));
     @include _flex(space-around , center);
     .icon-xing {
       color: #d81e06
     }
     span {
-      color: #000;
-      font-size: $font-34;
+      color: $text-black;
+      font-size: $font-40;
+    }
+    .icon-xiaoxi {
+      font-size: rem750(45);
+      margin-top: rem750(5)
     }
     p {
-      width:rem750(90);
-      line-height:rem750(40);
+      width:rem750(110);
+      height: rem750(50);
+      line-height:rem750(50);
+      padding-left: rem750(10);
       color: #2e2e2e;
       font-size: rem750(30);
+      letter-spacing: rem750(4)
     }
   }
 }

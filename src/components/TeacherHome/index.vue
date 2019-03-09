@@ -19,7 +19,7 @@
           <b></b>
           <span>精品课程</span>
         </h2>
-        <span @click="gocourse">
+        <span @click="golist('023')">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
@@ -38,7 +38,7 @@
           <b></b>
           <span>精准培训</span>
         </h2>
-        <span @click="gotrain">
+        <span @click="golist('014')">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
@@ -57,7 +57,7 @@
           <b></b>
           <span>中原名师</span>
         </h2>
-        <span @click="goteacher">
+        <span @click="golist('725')">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
@@ -76,7 +76,7 @@
           <b></b>
           <span>家校共建</span>
         </h2>
-        <span @click="gocommon">
+        <span @click="golist('jxgj')">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
@@ -84,7 +84,7 @@
       <div class="box">
         <li v-for = "(item,index) of commonlist" :key ="index" @click="godetails(item.News_URL,item.News_Property,item.File_ID,item.File_Code)">
           <img :src="item.Attachment_Path" alt="#">
-          <span>{{item.File_Name}}</span>
+          <span>{{item.File_SubName}}</span>
           <!-- <span>{{item.File_SubName}}</span> -->
         </li>
       </div>
@@ -112,12 +112,12 @@ export default {
         {
           imgUrl: require('@/assets/icon_04.png'),
           name: '单元设计',
-          path: '/list/dysj'
+          path: '/list/365'
         },
         {
           imgUrl: require('@/assets/icon_05.png'),
           name: '课时设计',
-          path: '/list/kssj'
+          path: '/list/203'
         },
         {
           imgUrl: require('@/assets/icon_06.png'),
@@ -127,33 +127,33 @@ export default {
         {
           imgUrl: require('@/assets/icon_07.png'),
           name: '我的课堂',
-          path: '/teacheruser/class'
+          path: '/myclassroom'
         }
       ]
     }
   },
   created () {
-    axios.post('/shishuiyuan/index/picture/view/id/wcc/num/3')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/picture/view/id/wcc/num/3`)
       .then(data => {
         console.log(data.data)
         this.banner = data.data
       })
-    axios.post('/shishuiyuan/index/top/sandglass/id/AB/num/mq/p/0')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/AB/num/mq/p/0`)
       .then(data => {
         console.log(data.data)
         this.courselist = data.data
       })
-    axios.post('/shishuiyuan/index/top/sandglass/id/zy/num/mq/p/0')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/zy/num/mq/p/0`)
       .then(data => {
         console.log(data.data)
         this.trainlist = data.data
       })
-    axios.post('/shishuiyuan/index/mod/gaste/key/pm/del/mt/c/0')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/mod/gaste/id/pm/num/mt/p/0`)
       .then(data => {
         console.log(data.data)
         this.teacherlist = data.data
       })
-    axios.post('/shishuiyuan/index/asked/view/id/gk/num/mt/p/0')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/asked/view/id/gk/num/mt/p/0`)
       .then(data => {
         console.log(data.data)
         this.commonlist = data.data
@@ -168,20 +168,8 @@ export default {
         window.location.href = URL
       }
     },
-    gocourse () {
-      let title = 'jpkc'
-      this.$router.push({name: 'list', params: {title: title}})
-    },
-    gotrain () {
-      let title = 'jzpx'
-      this.$router.push({name: 'list', params: {title: title}})
-    },
-    goteacher () {
-      let title = 'zyms'
-      this.$router.push({name: 'list', params: {title: title}})
-    },
-    gocommon () {
-      let title = 'jxgj'
+    golist (type) {
+      let title = type
       this.$router.push({name: 'list', params: {title: title}})
     },
     godetail (id, code, mark) {

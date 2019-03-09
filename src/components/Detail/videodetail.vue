@@ -4,18 +4,18 @@
       <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true" :options="playerOptions" @play="onPlayerPlay($event)" @pause="onPlayerPause($event)"></video-player>
       <div class="info">
         <li class="title">
-          <h2>{{this.name}}</h2>
-          <em class="iconfont icon-yanjing-active">10690</em>
+          <h2>{{this.File_Name}}</h2>
+          <em class="iconfont icon-yanjing-active">{{this.pageview}}</em>
         </li>
         <li class="xingji">
           <h2>星级</h2>
           <p>￥<span>{{this.price}}</span></p>
         </li>
         <li class="speaker">
-          <h2>主讲人：王志宏</h2>
-          <h2>省级高级教师</h2>
+          <h2>主讲人：{{this.teacher_name}}</h2>
+          <h2>{{this.teacher_title}}</h2>
         </li>
-        <li class="ziyuan" v-if="flag" @click="goziyuan">
+        <li class="ziyuan" v-if="flag" @click="gokejian">
           <div class="left">
             <span>尊享</span>
             <p>课件资源：教学设计、PPT、Word</p>
@@ -43,7 +43,7 @@
           <b></b>
           评论
         </h2>
-        <span>
+        <span @click="gocommentlist">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
@@ -55,10 +55,17 @@
           <b></b>
           推荐视频
         </h2>
-        <span>
+        <span @click="golist">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
+      </div>
+      <div class="box">
+        <li v-for = "(items,index) of tuijianlist" :key ="index" @click="godetail(items.File_ID, items.File_Code)">
+          <img :src="items.Attachment_Path" alt="#">
+          <span>{{items.File_Name}}</span>
+          <span>{{items.File_SubName}}</span>
+        </li>
       </div>
     </div>
   </div>
@@ -77,10 +84,15 @@ export default {
     return {
       current: 0,
       content: '',
-      name: '',
+      File_Name: '',
       price: '',
+      pageview: '',
+      teacher_name: '',
+      teacher_title: '',
       flag: true,
       timer: null,
+      tuijianlist: [],
+      classA: '',
       navlist: [
         {
           name: '概述',
@@ -133,8 +145,26 @@ export default {
       document.querySelector(selector).scrollIntoView(true)
       this.current = index
     },
-    goziyuan () {
-      this.$router.push('/kejian')
+    gokejian () {
+      this.$router.push({name: 'kejian', params: {id: this.$route.params.id, code: this.$route.params.code}})
+    },
+    godetail (id, code) {
+      console.log(id, code)
+      this.$router.push({name: 'videodetail', params: {id: id, code: code}})
+    },
+    golist () {
+      this.$router.push({name: 'list', params: {title: this.classA}})
+    },
+    gocommentlist () {
+      this.$router.push({name: 'commentlist', params: {id: this.$route.params.id, code: this.$route.params.code}})
+    }
+  },
+  watch: {
+    '$route.path' (newVal, oldVal) {
+      console.log(newVal, oldVal)
+      if (newVal !== oldVal) {
+        window.location.reload()
+      }
     }
   },
   mounted () {
@@ -142,19 +172,33 @@ export default {
       text: '加载中...',
       spinnerType: 'fading-circle'
     })
-    axios.post(`/shishuiyuan/index/top/ledger/id/${this.$route.params.id}/key/${this.$route.params.code}`)
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/ledger/id/${this.$route.params.id}/key/${this.$route.params.code}`)
       .then(data => {
         console.log(data.data)
         this.playerOptions.poster = data.data.Image
         this.playerOptions.sources[0].type = `video/${data.data.type}`
         this.playerOptions.sources[0].src = data.data.Charge
         this.content = data.data.Content
-        this.name = data.data.File_Name
+        this.File_Name = data.data.File_Name
+        this.teacher_name = data.data.File_SubName
         this.price = data.data.Price
+        this.pageview = data.data.pageview
+        if (data.data.teacher_title !== 0) {
+          this.teacher_title = data.data.teacher_title
+        }
         if (data.data.isAttachment === '0') {
           this.flag = false
         }
         Indicator.close()
+      })
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/refer/id/${this.$route.params.id}/key/${this.$route.params.code}`)
+      .then(data => {
+        this.classA = data.data.classA
+        for (let i in data.data) {
+          if (i <= 1) {
+            this.tuijianlist.push(data.data[i])
+          }
+        }
       })
   }
 }
@@ -190,11 +234,11 @@ export default {
       .xingji {
         height: rem750(49);
         p {
-          color: #f00000;
+          color: #b3b3b3;
           padding-right: rem750(12);
           font-weight: 600;
           span {
-            font-size: rem750(27)
+            font-size: rem750(20)
           }
         }
       }
@@ -280,7 +324,7 @@ export default {
       }
     }
     .article>p/deep/p {
-      font-size: rem750(20)
+      font-size: rem750(28)
     }
   }
   .comment {
@@ -317,8 +361,29 @@ export default {
       }
     }
     .box {
-      width: rem750(710);
-      margin: rem750(23) 0 0 rem750(20);
+      width: 100%;
+      box-sizing: border-box;
+      padding: rem750(19) rem750(20) 0 rem750(20);
+      @include _flex(space-between,flex-start);
+      li {
+        width: rem750(346);
+        @include _flex(flex-start,flex-start,column);
+        img {
+          @include rect(100%, rem750(210));
+          border-radius: rem750(10);
+          margin-bottom: rem750(17);
+        }
+        span {
+          line-height: rem750(40);
+          font-size: $font-26;
+          color: $text-black;
+          padding-left: rem750(15);
+          width: rem750(320);
+          overflow: hidden;
+          text-overflow:ellipsis;
+          white-space: nowrap;
+        }
+      }
     }
   }
 }

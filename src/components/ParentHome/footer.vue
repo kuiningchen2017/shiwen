@@ -30,9 +30,16 @@ export default {
         {
           icon: 'iconfont icon-geren',
           name: '我的',
-          path: '/parentuser'
+          path: ''
         }
       ]
+    }
+  },
+  mounted () {
+    if (localStorage.getItem('type') === '0') {
+      this.list[3].path = '/parentuser/parent'
+    } else {
+      this.list[3].path = '/parentuser/teacher'
     }
   }
 }

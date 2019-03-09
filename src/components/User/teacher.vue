@@ -1,23 +1,23 @@
 <template>
   <div class="content animated fadeInLeft">
-    <div class="top" v-if="active">
+    <div class="top">
       <div class="message">
-        <img src="@/assets/headimg.png" >
+        <img :src="this.headimg" >
         <div class="data">
-          <h1>师问</h1>
-          <p>大家好！</p>
+          <h1>{{this.Nickname}}</h1>
+          <!-- <p>大家好！</p> -->
         </div>
         <span class="iconfont icon-iconfontjiantou4" @click="goset"></span>
       </div>
     </div>
-    <div class="center">
+    <div class="center" v-if="active">
       <li  @click="goclass">
         <img src="@/assets/geren_01.png" alt="#">
         <h2>我的班级</h2>
       </li>
       <li  @click="gohomework">
         <img src="@/assets/geren_02.png" alt="#">
-        <h2>作业布置</h2>
+        <h2>我的发布</h2>
       </li>
     </div>
     <div class="list">
@@ -35,51 +35,105 @@
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
       </li>
-      <li>
-        <span class="iconfont icon-peixun" style="color:#f9c148"></span>
-        <div class="box" @click="gotrain">
-          <h3>我的培训</h3>
-          <span class="iconfont icon-iconfontjiantou4"></span>
-        </div>
-      </li>
-      <li>
-        <span class="iconfont icon-dingdan" style="color:#4276e4"></span>
-        <div class="box" @click="goorder">
-          <h3>订单中心</h3>
-          <span class="iconfont icon-iconfontjiantou4"></span>
-        </div>
-      </li>
-      <li>
-        <span class="iconfont icon-chengguo" style="color:#dd4e53"></span>
-        <div class="box mark" @click="goresult">
-          <h3>我的成果</h3>
-          <span class="iconfont icon-iconfontjiantou4"></span>
-        </div>
-      </li>
+      <div class="teacher" v-if="active">
+        <li>
+          <span class="iconfont icon-peixun" style="color:#f9c148"></span>
+          <div class="box" @click="gotrain">
+            <h3>我的培训</h3>
+            <span class="iconfont icon-iconfontjiantou4"></span>
+          </div>
+        </li>
+        <li>
+          <span class="iconfont icon-dingdan" style="color:#4276e4"></span>
+          <div class="box" @click="goorder">
+            <h3>订单中心</h3>
+            <span class="iconfont icon-iconfontjiantou4"></span>
+          </div>
+        </li>
+        <li>
+          <span class="iconfont icon-chengguo" style="color:#dd4e53"></span>
+          <div class="box" @click="goresult">
+            <h3>我的成果</h3>
+            <span class="iconfont icon-iconfontjiantou4"></span>
+          </div>
+        </li>
+        <!-- <li>
+          <span class="iconfont icon-shoucang1" style="color:#f9c148"></span>
+          <div class="box mark" @click="gofollow">
+            <h3>我的关注</h3>
+            <span class="iconfont icon-iconfontjiantou4"></span>
+          </div>
+        </li> -->
+      </div>
+      <div class="parent" v-else>
+        <li>
+          <span class="iconfont icon-peixun" style="color:#f9c148"></span>
+          <div class="box" @click="gostudy">
+            <h3>我的学习</h3>
+            <span class="iconfont icon-iconfontjiantou4"></span>
+          </div>
+        </li>
+        <li>
+          <span class="iconfont icon-shoucang1" style="color:#f9c148"></span>
+          <div class="box" @click="gofollow">
+            <h3>我的关注</h3>
+            <span class="iconfont icon-iconfontjiantou4"></span>
+          </div>
+        </li>
+        <li>
+          <span class="iconfont icon-zuoye" style="color:#55b782"></span>
+          <div class="box mark" @click="gowork">
+            <h3>我的任务</h3>
+            <span class="iconfont icon-iconfontjiantou4"></span>
+          </div>
+        </li>
+      </div>
     </div>
-    <div class="foot">
-      <!-- <li>
+    <!-- <div class="foot">
+      <li>
         <span class="iconfont icon-shoucang1" style="color:#f9c148"></span>
         <div class="box" @click="gofollow">
           <h3>我的关注</h3>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
-      </li> -->
-    </div>
+      </li>
+    </div> -->
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
+  beforeRouteEnter (to, from, next) {
+    if (localStorage.getItem('token')) {
+      next()
+    } else {
+      next('/login')
+    }
+  },
   data () {
     return {
-      active: true
+      active: true,
+      Nickname: '未设置',
+      headimg: require('@/assets/headimg.png')
     }
   },
   mounted () {
-    if (this.$route.params.router === 'class') {
+    if (this.$route.params.type === 'parent') {
       this.active = false
     }
+    axios.post(`${this.GLOBAL.shishuiyuan}/api/user/getuserinfo?token=${localStorage.getItem('token')}`)
+      .then(data => {
+        console.log(data.data)
+        if (data.data.code === 0) {
+          if (data.data.data.User_Nickname !== '') {
+            this.Nickname = data.data.data.User_Nickname
+          }
+          if (data.data.data.User_HeadImg !== '') {
+            this.headimg = data.data.data.User_HeadImg
+          }
+        }
+      })
   },
   methods: {
     goset () {
@@ -108,6 +162,12 @@ export default {
     },
     gohomework () {
       this.$router.push('/homework')
+    },
+    gostudy () {
+      this.$router.push('/mystudy')
+    },
+    gowork () {
+      this.$router.push('/mywork')
     }
   }
 }
@@ -136,6 +196,7 @@ export default {
       .data {
         width: rem750(460);
         height: 100%;
+        @include _flex(space-around,space-around,column);
         h1 {
           line-height: rem750(50);
           font-weight: 400;
@@ -156,9 +217,9 @@ export default {
     @include rect(100%, rem750(200));
     @include _flex(space-around, center);
     background: #fff;
+    flex-shrink: 0;
     margin-bottom: rem750(12);
     li {
-      width: rem750(120);
       height: rem750(110);
       @include _flex(space-between, center, column);
       img {
@@ -166,7 +227,7 @@ export default {
       }
       h2 {
         line-height: rem750(40);
-        font-size: rem750(30);
+        font-size: $font-32;
       }
     }
   }
@@ -180,20 +241,27 @@ export default {
     background: #fff;
     margin-bottom: rem750(12);
     li {
-      height: rem750(100);
+      height: rem750(120);
       @include _flex(space-between,center);
+      .teacher {
+        li{
+          &:last-child {
+            margin-bottom: rem750(12);
+          }
+        }
+      }
       span {
-        font-size: $font-40;
+        font-size: rem750(45);
       }
       .box {
         width: 91%;
-        height: rem750(100);
+        height: rem750(120);
         box-sizing: border-box;
         padding-right: rem750(36);
         border-bottom: rem750(1) solid #efefef;
         @include _flex(space-between,center);
         h3 {
-          font-size: $font-30;
+          font-size: $font-32;
           font-weight: 400;
         }
         span {

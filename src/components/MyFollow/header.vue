@@ -15,7 +15,7 @@ Vue.use(Header)
 export default {
   methods: {
     back () {
-      this.$router.push('/user')
+      this.$router.go(-1)
     }
   }
 }

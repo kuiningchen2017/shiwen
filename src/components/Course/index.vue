@@ -24,18 +24,48 @@ export default {
     return {
       list: [],
       allLoaded: false,
-      pageNum: 1
+      pageNum: 1,
+      gradeID: 0,
+      subID: 0,
+      pressID: 0
     }
   },
   mounted () {
-    axios.post('/shishuiyuan/index/paper/list/key/fx/num/gk/p/0')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/paper/list/key/fx/num/gk/p/0`)
       .then(data => {
         this.list = data.data
       })
+    this.$bus.on('gradeID', (data) => {
+      this.gradeID = data
+      axios.post(`${this.GLOBAL.shishuiyuan}/index/paper/list/key/fx/num/gk/p/0/class/${data}/sub/${this.subID}/press/${this.pressID}`)
+        .then(data => {
+          this.list = data.data
+        })
+    })
+    this.$bus.on('subID', (data) => {
+      this.pressID = data
+      axios.post(`${this.GLOBAL.shishuiyuan}/index/paper/list/key/fx/num/gk/p/0/class/${this.gradeID}/sub/${data}/press/${this.pressID}`)
+        .then(data => {
+          this.list = data.data
+        })
+    })
+    this.$bus.on('pressID', (data) => {
+      this.pressID = data
+      axios.post(`${this.GLOBAL.shishuiyuan}/index/paper/list/key/fx/num/gk/p/0/class/${this.gradeID}/sub/${this.subID}/press/${data}`)
+        .then(data => {
+          this.list = data.data
+        })
+    })
+    this.$bus.on('all', (data) => {
+      axios.post(`${this.GLOBAL.shishuiyuan}/index/paper/list/key/fx/num/gk/p/0`)
+        .then(data => {
+          this.list = data.data
+        })
+    })
   },
   methods: {
     loadBottom () {
-      axios.post(`/shishuiyuan/index/paper/list/key/fx/num/gk/p/${this.pageNum * 9}`)
+      axios.post(`${this.GLOBAL.shishuiyuan}/index/paper/list/key/fx/num/gk/p/${this.pageNum * 9}`)
         .then(data => {
           if (data.data.length === 0) {
             this.allLoaded = true
@@ -48,8 +78,11 @@ export default {
         })
     },
     godetail (id, code) {
-      this.$router.push({name: 'booksdetail', params: {id: id, code: code}})
+      this.$router.push({name: 'booksdetail', params: {title: this.$route.path, id: id, code: code}})
     }
+  },
+  beforeDestroy () {
+    this.$bus.off('gradeID', 'subID', 'pressID', 'all')
   }
 }
 </script>

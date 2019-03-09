@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <mt-header title="布置作业">
+    <mt-header title="发布新任务">
       <div @click="back" class="back" slot="left">
         <mt-button icon="back"></mt-button>
       </div>

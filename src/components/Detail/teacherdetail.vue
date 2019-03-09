@@ -9,7 +9,7 @@
       <div class="title">
         <li>
           <span>教师：{{this.teacher}}<i>{{this.subname}}</i></span>
-          <em class="iconfont icon-yanjing-active">10690</em>
+          <em class="iconfont icon-yanjing-active">{{this.pageview}}</em>
         </li>
         <li>星级</li>
       </div>
@@ -35,6 +35,13 @@
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
       </div>
+      <div class="box">
+        <li v-for = "(ite,index) of videolist" :key ="index" @click="godetail(ite.File_ID, ite.File_Code, 'video')">
+          <img :src="ite.Attachment_Path" alt="#">
+          <span>{{ite.File_Name}}</span>
+          <span>{{ite.File_SubName}}</span>
+        </li>
+      </div>
     </div>
     <div class="comment" id="comment">
       <div class="head">
@@ -42,7 +49,7 @@
           <b></b>
           评论
         </h2>
-        <span>
+        <span @click="gocommentlist">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
@@ -54,10 +61,17 @@
           <b></b>
           推荐讲师
         </h2>
-        <span>
+        <span @click="golist">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
+      </div>
+      <div class="box">
+        <li v-for = "(items,index) of tuijianlist" :key ="index" @click="godetail(items.File_ID, items.File_Code, 'teacher')">
+          <img :src="items.Attachment_Path" alt="#">
+          <span>{{items.File_Name}}</span>
+          <span>{{items.File_SubName}}</span>
+        </li>
       </div>
     </div>
   </div>
@@ -72,6 +86,9 @@ export default {
   data () {
     return {
       current: 0,
+      pageview: '',
+      tuijianlist: [],
+      videolist: [],
       navlist: [
         {
           name: '概述',
@@ -96,6 +113,27 @@ export default {
     goAnchor (selector, index) {
       document.querySelector(selector).scrollIntoView(true)
       this.current = index
+    },
+    godetail (id, code, mark) {
+      if (mark === 'teacher') {
+        this.$router.push({name: 'teacherdetail', params: {id: id, code: code}})
+      } else {
+        this.$router.push({name: 'videodetail', params: {id: id, code: code}})
+      }
+    },
+    golist () {
+      this.$router.push({name: 'list', params: {title: this.classA}})
+    },
+    gocommentlist () {
+      this.$router.push({name: 'commentlist', params: {id: this.$route.params.id, code: this.$route.params.code}})
+    }
+  },
+  watch: {
+    '$route.path' (newVal, oldVal) {
+      console.log(newVal, oldVal)
+      if (newVal !== oldVal) {
+        window.location.reload()
+      }
     }
   },
   mounted () {
@@ -103,14 +141,25 @@ export default {
       text: '加载中...',
       spinnerType: 'fading-circle'
     })
-    axios.post(`/shishuiyuan/index/mod/trait/nu/${this.$route.params.id}/p/${this.$route.params.code}`)
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/mod/trait/nu/${this.$route.params.id}/p/${this.$route.params.code}`)
       .then(data => {
         console.log(data.data)
         this.banner = data.data.Image
         this.teacher = data.data.File_Name
         this.subname = data.data.File_SubName
         this.content = data.data.Content
+        this.videolist = data.data.video
+        this.pageview = data.data.pageview
         Indicator.close()
+      })
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/refer/id/${this.$route.params.id}/key/${this.$route.params.code}`)
+      .then(data => {
+        this.classA = data.data.classA
+        for (let i in data.data) {
+          if (i <= 1) {
+            this.tuijianlist.push(data.data[i])
+          }
+        }
       })
   }
 }
@@ -150,6 +199,7 @@ export default {
           }
         }
         em {
+          color: #666;
           font-size: rem750(20)
         }
       }
@@ -228,8 +278,29 @@ export default {
       }
     }
     .box {
-      width: rem750(710);
-      margin: rem750(23) 0 0 rem750(20);
+      width: 100%;
+      box-sizing: border-box;
+      padding: rem750(19) rem750(20) 0 rem750(20);
+      @include _flex(space-between,flex-start);
+      li {
+        width: rem750(346);
+        @include _flex(flex-start,flex-start,column);
+        img {
+          @include rect(100%, rem750(210));
+          border-radius: rem750(10);
+          margin-bottom: rem750(17);
+        }
+        span {
+          line-height: rem750(40);
+          font-size: $font-26;
+          color: $text-black;
+          padding-left: rem750(15);
+          width: rem750(320);
+          overflow: hidden;
+          text-overflow:ellipsis;
+          white-space: nowrap;
+        }
+      }
     }
   }
 }

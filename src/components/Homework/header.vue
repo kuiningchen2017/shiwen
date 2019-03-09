@@ -1,11 +1,11 @@
 <template>
   <div class="header">
-    <mt-header title="作业布置">
+    <mt-header title="我的发布">
       <div @click="back" class="back" slot="left">
         <mt-button icon="back"></mt-button>
       </div>
       <mt-button slot="right">
-        <span @click="add">布置新作业</span>
+        <span @click="add">发布新任务</span>
       </mt-button>
     </mt-header>
   </div>
@@ -18,7 +18,7 @@ Vue.use(Header)
 export default {
   methods: {
     back () {
-      this.$router.push('/user')
+      this.$router.go(-1)
     },
     add () {
       this.$router.push('/newwork')

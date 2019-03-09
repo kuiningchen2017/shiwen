@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <mt-header title="我的作业">
+    <mt-header title="我的任务">
       <div @click="back" class="back" slot="left">
         <mt-button icon="back"></mt-button>
       </div>
@@ -36,33 +36,33 @@ export default {
   },
   methods: {
     back () {
-      this.$router.push('/user')
+      this.$router.go(-1)
     },
     total () {
-      this.$router.push('/mytrain/all')
+      this.$router.push('/mywork/all')
       this.all = true
       this.study = false
       this.over = false
     },
     wait () {
-      this.$router.push('/mytrain/study')
+      this.$router.push('/mywork/study')
       this.all = false
       this.study = true
       this.over = false
     },
     complete () {
-      this.$router.push('/mytrain/over')
+      this.$router.push('/mywork/over')
       this.all = false
       this.study = false
       this.over = true
     }
   },
   mounted () {
-    if (this.$route.path === '/mytrain/study') {
+    if (this.$route.path === '/mywork/study') {
       this.all = false
       this.study = true
       this.over = false
-    } else if (this.$route.path === '/mytrain/over') {
+    } else if (this.$route.path === '/mywork/over') {
       this.all = false
       this.study = false
       this.over = true

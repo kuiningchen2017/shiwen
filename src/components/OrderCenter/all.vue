@@ -36,7 +36,7 @@ export default {
         text: '加载中...',
         spinnerType: 'fading-circle'
       })
-      axios.post(`/shishuiyuan/index/top/sandglass/id/AB/num/uh/p/${this.pageNum * 10}`)
+      axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/AB/num/uh/p/${this.pageNum * 10}`)
         .then(data => {
           console.log(data.data)
           if (data.data.length === 0) {
@@ -54,7 +54,7 @@ export default {
     }
   },
   mounted () {
-    axios.post('/shishuiyuan/index/top/sandglass/id/AB/num/uh/p/fist')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/AB/num/uh/p/fist`)
       .then(data => {
         console.log(data.data)
         this.list = data.data

@@ -19,7 +19,7 @@
           <b></b>
           <span>精品课程</span>
         </h2>
-        <span @click="gocourse">
+        <span @click="golist('023')">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
@@ -38,7 +38,7 @@
           <b></b>
           <span>家校共建</span>
         </h2>
-        <span @click="gocommon">
+        <span @click="golist('jxgj')">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
@@ -46,7 +46,7 @@
       <div class="box">
         <li v-for = "(item,index) of commonlist" :key ="index" @click="godetails(item.News_URL,item.News_Property,item.File_ID,item.File_Code)">
           <img :src="item.Attachment_Path" alt="#">
-          <span>{{item.File_Name}}</span>
+          <span>{{item.File_SubName}}</span>
         </li>
       </div>
     </div>
@@ -56,7 +56,7 @@
           <b></b>
           <span>第二课堂</span>
         </h2>
-        <span @click="goclassroom">
+        <span @click="golist('drkt')">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
@@ -96,38 +96,38 @@ export default {
         {
           imgUrl: require('@/assets/icon_09.png'),
           name: '疑难解析',
-          path: '/list/ynjx'
+          path: '/list/235'
         },
         {
           imgUrl: require('@/assets/icon_10.png'),
           name: '直播课堂',
-          path: '123'
+          path: '/live'
         },
         {
           imgUrl: require('@/assets/icon_11.png'),
-          name: '我的学习',
-          path: '123'
+          name: '我的任务',
+          path: '/mywork/all'
         }
       ]
     }
   },
   created () {
-    axios.post('/shishuiyuan/index/picture/view/id/mvb/num/3')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/picture/view/id/mvb/num/3`)
       .then(data => {
         console.log(data.data)
         this.banner = data.data
       })
-    axios.post('/shishuiyuan/index/top/sandglass/id/AB/num/mq/p/0')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/AB/num/mq/p/0`)
       .then(data => {
         console.log(data.data)
         this.courselist = data.data
       })
-    axios.post('/shishuiyuan/index/asked/view/id/gk/num/mt/p/0')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/asked/view/id/gk/num/mt/p/0`)
       .then(data => {
         console.log(data.data)
         this.commonlist = data.data
       })
-    axios.post('/shishuiyuan/index/asked/view/id/doc/num/mt/p/0')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/asked/view/id/doc/num/mt/p/0`)
       .then(data => {
         console.log(data.data)
         this.classroomlist = data.data
@@ -143,16 +143,8 @@ export default {
         window.location.href = URL
       }
     },
-    gocourse () {
-      let title = 'jpkc'
-      this.$router.push({name: 'list', params: {title: title}})
-    },
-    gocommon () {
-      let title = 'jxgj'
-      this.$router.push({name: 'list', params: {title: title}})
-    },
-    goclassroom () {
-      let title = 'drkt'
+    golist (type) {
+      let title = type
       this.$router.push({name: 'list', params: {title: title}})
     },
     godetail (id, code) {

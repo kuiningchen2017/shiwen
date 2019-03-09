@@ -13,10 +13,14 @@
       </li>
       <li>
         <span class="iconfont icon-yanzheng"></span>
-        <input type="number" ref="code" placeholder="请输入验证码">
-        <!-- <div class="cancel">
-          <img src="@/assets/close.png" v-if="flag" class="close" @click="goclear">
-        </div> -->
+        <input type="text" ref="imgCode" placeholder="请输入图形验证码">
+        <div class="imgCode">
+          <img :src="this.captchaApi" @click="getCaptcha">
+        </div>
+      </li>
+      <li>
+        <span class="iconfont icon-yanzheng"></span>
+        <input type="number" ref="numCode" placeholder="请输入短信验证码">
         <input type="button" class="getNumber" v-model="codeMsg" @click="getCode" :disabled="codeDisabled" />
       </li>
       <button @click="login">登录</button>
@@ -40,10 +44,18 @@ export default {
       // 按钮上的文字
       codeMsg: '获取验证码',
       // 定时器
-      timer: null
+      timer: null,
+      captchaApi: ''
     }
   },
+  mounted () {
+    this.getCaptcha()
+  },
   methods: {
+    getCaptcha () {
+      var captchaApi = `http://sw.shishuiyuan999.com/api/utility/getcaptcha?_rand=${(new Date()).getTime()}`
+      this.captchaApi = captchaApi
+    },
     goclear () {
       this.$refs.tel.value = ''
     },
@@ -51,12 +63,28 @@ export default {
       this.flag = true
     },
     textblur () {
-      this.flag = false
+      const telExg = /^(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/
+      if (!telExg.test(this.$refs.tel.value)) {
+        Toast('手机号格式不对')
+        this.flag = true
+      } else {
+        this.flag = false
+      }
     },
     getback () {
       this.$router.push('./getback')
     },
     getCode () {
+      if (this.codeDisabled) {
+        return false
+      } else {
+        axios.get(`${this.GLOBAL.shishuiyuan}/api/sms/send?phone=${this.$refs.tel.value}&captcha=${this.$refs.imgCode.value}`)
+          .then(data => {
+            var result = data.data
+            Toast(result.message)
+            console.log(result)
+          })
+      }
       // 验证码60秒倒计时
       if (!this.timer) {
         console.log('111')
@@ -88,23 +116,22 @@ export default {
         Toast('请输入验证码')
         return false
       } else {
-        axios.post('/daxunxun/users/login', {
-          username: this.username,
-          password: this.password
-        }).then(data => {
-          console.log(data)
-          if (data.data === 0) {
-            Toast('登录失败')
-          } else if (data.data === 1) {
-            Toast('登录成功')
-            sessionStorage.setItem('islogin', 'ok')
-            this.$router.go(-1)
-          } else if (data.data === 2) {
-            Toast('没有该用户')
-          } else {
-            Toast('密码错误')
-          }
-        })
+        axios.post(`${this.GLOBAL.shishuiyuan}/api/user/smslogin?phone=${this.$refs.tel.value}&captcha=${this.$refs.imgCode.value}&sms_code=${this.$refs.numCode.value}`)
+          .then(data => {
+            console.log(data.data)
+            var res = data.data
+            Toast(res.message)
+            if (res.code === 0) {
+              localStorage.setItem('token', res.data.User_Token)
+              localStorage.setItem('type', res.data.User_Type)
+              localStorage.setItem('userID', res.data.User_ID)
+              if (res.data.User_Type === 0) {
+                this.$router.push('/user/parent')
+              } else {
+                this.$router.push('/user/teacher')
+              }
+            }
+          })
       }
     }
   }
@@ -125,7 +152,7 @@ export default {
     }
   }
   .box {
-    padding:0 rem750(74);
+    padding:0 rem750(70);
     li {
       width:100%;
       height: rem750(59);
@@ -134,12 +161,13 @@ export default {
       @include _flex(start,center);
       span {
         color: #c2c2c2;
-        font-size: $font-30
+        font-size: rem750(45)
       }
       input {
         width: rem750(500);
-        height: rem750(40);
+        height: rem750(50);
         padding-left: rem750(30);
+        font-size: rem750(30)
       }
       .cancel {
         width: rem750(30);
@@ -150,9 +178,8 @@ export default {
         }
       }
       .change {
-        width: rem750(32);
-        height: rem750(20);
-        padding-left: rem750(30);
+        width: rem750(40);
+        height: rem750(30)
       }
       .getNumber {
         width: rem750(160);
@@ -161,7 +188,7 @@ export default {
         border-radius: rem750(10);
         padding-left: 0;
         color: $bg-side;
-        font-size: $font-18;
+        font-size: $font-22;
       }
     }
     button {

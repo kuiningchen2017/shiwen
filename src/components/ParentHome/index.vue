@@ -19,7 +19,7 @@
           <b></b>
           <span>音频资源</span>
         </h2>
-        <span @click="goaudio">
+        <span @click="golist('057')">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
@@ -38,7 +38,7 @@
           <b></b>
           <span>视频资源</span>
         </h2>
-        <span @click="govideo">
+        <span @click="golist('526')">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
@@ -51,13 +51,13 @@
         </li>
       </div>
     </div>
-    <div class="live">
+    <!-- <div class="live">
       <div class="head">
         <h2>
           <b></b>
           <span>直播课堂</span>
         </h2>
-        <span>
+        <span @click="golist()">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
@@ -69,7 +69,7 @@
           <span></span>
         </router-link>
       </div>
-    </div>
+    </div> -->
     <div class="company">
      <p>&copy;2018郑州石水源教育科技有限公司&nbsp;&nbsp;豫ICP备17001731号-2</p>
     </div>
@@ -91,17 +91,17 @@ export default {
         {
           imgUrl: require('@/assets/icon_12.png'),
           name: '音频资源',
-          path: '/list/audio'
+          path: '/list/057'
         },
         {
           imgUrl: require('@/assets/icon_13.png'),
           name: '视频资源',
-          path: '/list/video'
+          path: '/list/526'
         },
         {
           imgUrl: require('@/assets/icon_14.png'),
           name: '直播课堂',
-          path: '123'
+          path: '/live'
         },
         {
           imgUrl: require('@/assets/icon_15.png'),
@@ -112,17 +112,17 @@ export default {
     }
   },
   created () {
-    axios.post('/shishuiyuan/index/picture/view/id/mp3/num/3')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/picture/view/id/mp3/num/3`)
       .then(data => {
         console.log(data.data)
         this.banner = data.data
       })
-    axios.post('/shishuiyuan/index/top/sandglass/id/Vn/num/mq/p/0')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/Vn/num/mq/p/0`)
       .then(data => {
         console.log(data.data)
         this.audiolist = data.data
       })
-    axios.post('/shishuiyuan/index/top/sandglass/id/sn/num/mq/p/0')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/sn/num/mq/p/0`)
       .then(data => {
         console.log(data.data)
         this.videolist = data.data
@@ -137,12 +137,8 @@ export default {
         window.location.href = URL
       }
     },
-    goaudio () {
-      let title = 'audio'
-      this.$router.push({name: 'list', params: {title: title}})
-    },
-    govideo () {
-      let title = 'video'
+    golist (type) {
+      let title = type
       this.$router.push({name: 'list', params: {title: title}})
     },
     godetail (id, code, mark) {

@@ -25,14 +25,21 @@ export default {
         {
           icon: 'iconfont icon-peixun',
           name: '培训',
-          path: '/train'
+          path: '/mytrain/all'
         },
         {
           icon: 'iconfont icon-geren',
           name: '我的',
-          path: '/teacheruser/wode'
+          path: ''
         }
       ]
+    }
+  },
+  mounted () {
+    if (localStorage.getItem('type') === '0') {
+      this.list[3].path = '/teacheruser/parent'
+    } else {
+      this.list[3].path = '/teacheruser/teacher'
     }
   }
 }

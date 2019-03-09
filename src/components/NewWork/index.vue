@@ -31,10 +31,18 @@
     <div class="center">
       <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
         <div class="list">
-          <li class="animated zoomIn" v-for="item of list" :key="item.Resource_ID">
+          <li class="animated zoomIn" v-for="(item, index) of list" :key="index">
             <img :src="item.Attachment_Path" alt="#" @click="godetail(item.File_ID, item.File_Code)">
-            <h3>{{item.File_Name}}</h3>
-            <p>{{item.File_SubName}}</p>
+            <dl>
+              <dd>
+                <input type="checkbox" :id="item.File_ID" class="gcs-checkbox" v-model="checkedValue" :value="(item.File_ID, item.File_Code)">
+                <label :for="item.File_ID"></label>
+              </dd>
+              <dt>
+                <h3>{{item.File_Name}}</h3>
+                <p>{{item.File_SubName}}</p>
+              </dt>
+            </dl>
           </li>
         </div>
       </mt-loadmore>
@@ -42,7 +50,7 @@
     <div class="next">
       <li>
         <p>已选</p>
-        <span v-if="flag">{{num}}</span>
+        <span v-if="falg">{{num}}</span>
       </li>
       <li @click="gonext">
         下一步
@@ -62,13 +70,13 @@ export default {
       list: [],
       pageNum: 1,
       allLoaded: false,
-      num: 0,
-      flag: false
+      falg: false,
+      checkedValue: []
     }
   },
   methods: {
     loadBottom () {
-      axios.post(`/shishuiyuan/index/top/sandglass/id/AB/num/uh/p/${this.pageNum * 10}`)
+      axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/AB/num/uh/p/${this.pageNum * 10}`)
         .then(data => {
           if (data.data.length === 0) {
             this.allLoaded = true
@@ -84,22 +92,39 @@ export default {
       this.$router.push({name: 'videodetail', params: {id: id, code: code}})
     },
     gonext () {
-      this.$router.push('/chooseclass')
+      if (this.checkedValue.length !== 0) {
+        this.$router.push('/chooseclass')
+      } else {
+        alert('至少选择一个')
+      }
+    }
+  },
+  computed: {
+    num () {
+      if (this.checkedValue.length !== 0) {
+        sessionStorage.setItem('HomeWorkID', this.checkedValue)
+        return this.checkedValue.length
+      } else {
+        sessionStorage.removeItem('HomeWorkID')
+        return 0
+      }
+    }
+  },
+  watch: {
+    num () {
+      if (this.checkedValue.length !== 0) {
+        this.falg = true
+      } else {
+        this.falg = false
+      }
     }
   },
   mounted () {
-    axios.post('/shishuiyuan/index/top/sandglass/id/AB/num/uh/p/fist')
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/AB/num/uh/p/fist`)
       .then(data => {
         console.log(data.data)
         this.list = data.data
       })
-  },
-  watch: {
-    num (oldval, newval) {
-      if (newval !== 0) {
-        this.flag = true
-      }
-    }
   }
 }
 </script>
@@ -109,6 +134,7 @@ export default {
 .content {
   .top {
     @include rect(100%, rem750(306));
+    flex-shrink: 0;
     .jindu {
       @include rect(100%, rem750(114));
       border-bottom: rem750(6) solid #f5f5f5;
@@ -116,7 +142,7 @@ export default {
         padding: rem750(23) rem750(93) 0 rem750(89);
         @include rect(100%, rem750(51));
         box-sizing: border-box;
-        @include _flex(space-between, center);
+        @include _flex(center, center);
         p {
           @include rect(rem750(28), rem750(28));
           line-height: rem750(28);
@@ -129,7 +155,7 @@ export default {
           }
         }
         b {
-          @include rect(rem750(121), rem750(2));
+          @include rect(rem750(121), rem750(4));
           background: #e9ebf4;
           &:nth-of-type(1) {
             background: $bg-side;
@@ -190,8 +216,8 @@ export default {
     }
   }
   .center {
-    height: rem750(805);
-    overflow: scroll;
+    flex-grow: 1;
+    overflow: auto;
     .list {
       padding: 0 rem750(20);
       height: auto;
@@ -211,29 +237,65 @@ export default {
           @include rect(100%, rem750(210));
           border-radius: rem750(10)
         }
-        h3 {
-          line-height: rem750(36);
-          font-size: $font-list-title1;
-          color: $text-black;
-          font-weight: normal;
-          padding-left: rem750(10);
-          padding-top: rem750(9);
-          width: rem750(320);
-          overflow: hidden;
-          text-overflow:ellipsis;
-          white-space: nowrap;
-        }
-        p {
-          line-height: rem750(36);
-          font-size: $font-26;
-          color: #595959;
-          padding-left: rem750(10);
+        dl {
+          @include _flex(space-between, center);
+          dd {
+            .gcs-checkbox {
+              @include rect(rem750(24), rem750(24));
+              display: none;
+            }
+            .gcs-checkbox+label {
+              border-radius: rem750(5);
+              border: rem750(2) solid #b0b1b1;
+              @include rect(rem750(20), rem750(20));
+              display: inline-block;
+              text-align: center;
+              vertical-align: bottom;
+              line-height: rem750(20);
+            }
+            .gcs-checkbox:checked+label {
+              background: $bg-side;
+              border: rem750(2) solid $bg-side;
+            }
+            .gcs-checkbox:checked+label:after {
+              content: "\2714";
+              color: white;
+            }
+          }
+          dt {
+            h3 {
+              line-height: rem750(36);
+              font-size: $font-list-title1;
+              color: $text-black;
+              font-weight: normal;
+              padding-left: rem750(10);
+              padding-top: rem750(9);
+              width: rem750(320);
+              overflow: hidden;
+              text-overflow:ellipsis;
+              white-space: nowrap;
+            }
+            p {
+              width: 100%;
+              overflow: hidden;
+              text-overflow:ellipsis;
+              white-space: nowrap;
+              line-height: rem750(36);
+              font-size: $font-26;
+              color: #595959;
+              padding-left: rem750(10);
+            }
+          }
         }
       }
     }
   }
   .next {
     @include rect(100%, rem750(162));
+    // position: fixed;
+    // bottom: 0;
+    flex-shrink: 0;
+    background: #fff;
     padding: 0 rem750(200);
     box-sizing: border-box;
     @include _flex(space-between, center);

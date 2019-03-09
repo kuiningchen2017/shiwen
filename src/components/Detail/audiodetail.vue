@@ -1,11 +1,18 @@
 <template>
   <div class="content animated fadeInLeftBig">
     <div class="detail">
-      <img :src="this.img" alt="#">
+      <div class="img">
+        <img :src="this.img" alt="#">
+        <p class="look iconfont icon-erji">&nbsp;{{this.pageview}}</p>
+      </div>
       <div class="audio-wrapper">
         <audio ref="audio">
           <source :src="this.url" type="audio/mp3">
         </audio>
+        <!-- <div class="audio-left" @click="player">
+          <img id="audioPlayer"  v-if="active" src="@/assets/pause.png">
+          <img id="audioPlayer" v-else src="@/assets/start.gif">
+        </div> -->
         <div class="audio-left" @click="player" v-if="active">
           <img id="audioPlayer" src="@/assets/pause.png">
         </div>
@@ -37,7 +44,7 @@
           <b></b>
           评论
         </h2>
-        <span>
+        <span @click="gocommentlist">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
@@ -49,10 +56,17 @@
           <b></b>
           推荐音频
         </h2>
-        <span>
+        <span @click="golist">
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
+      </div>
+      <div class="box">
+        <li v-for = "(items,index) of tuijianlist" :key ="index" @click="godetail(items.File_ID, items.File_Code)">
+          <img :src="items.Attachment_Path" alt="#">
+          <span>{{items.File_Name}}</span>
+          <span>{{items.File_SubName}}</span>
+        </li>
       </div>
     </div>
   </div>
@@ -69,9 +83,11 @@ export default {
       current: 0,
       active: true,
       img: '',
+      pageview: '',
       url: '',
       title: '',
       content: '',
+      tuijianlist: [],
       navlist: [
         {
           name: '概述',
@@ -84,10 +100,28 @@ export default {
       ]
     }
   },
+  watch: {
+    '$route.path' (newVal, oldVal) {
+      console.log(newVal, oldVal)
+      if (newVal !== oldVal) {
+        window.location.reload()
+      }
+    }
+  },
   methods: {
     goAnchor (selector, index) {
       document.querySelector(selector).scrollIntoView(true)
       this.current = index
+    },
+    godetail (id, code) {
+      console.log(id, code)
+      this.$router.push({name: 'audiodetail', params: {id: id, code: code}})
+    },
+    golist () {
+      this.$router.push({name: 'list', params: {title: this.classA}})
+    },
+    gocommentlist () {
+      this.$router.push({name: 'commentlist', params: {id: this.$route.params.id, code: this.$route.params.code}})
     },
     paused () {
       var audio = this.$refs.audio
@@ -98,12 +132,13 @@ export default {
       }
     },
     player () {
-      var audio = this.$refs.audio
-      if (this.num === 0) {
+      var that = this
+      var audio = that.$refs.audio
+      if (that.num === 0) {
         // 第一次点击
-        this.num++
         audio.load()
-        this.active = false
+        that.active = false
+        that.num++
         audio.oncanplaythrough = function () {
           // 监听音频播放时间并更新进度条
           audio.addEventListener('timeupdate', function () {
@@ -180,7 +215,8 @@ export default {
             $('#progressBar').css('width', 0)
             $('#progressDot').css('left', 0)
             $('#audioCurTime').html(transTime(0))
-            $('#audioPlayer').attr('src', require('@/assets/pause.png'))
+            // $('#audioPlayer').attr('src', require('@/assets/pause.png'))
+            that.active = true
           }
           dragProgressDotEvent(audio)
           /**
@@ -239,6 +275,10 @@ export default {
                 var rate = (position.oriOffestLeft + length) / pgsWidth
                 audio.currentTime = audio.duration * rate
                 updateProgress(audio)
+                // console.log(audio.paused)
+                // if (audio.paused) {
+                //   that.active = false
+                // }
               }
             }
             function end () {
@@ -250,25 +290,35 @@ export default {
         // 改变播放/暂停图片
         if (audio.paused) {
           // 开始播放当前点击的音频
-          this.active = false
+          that.active = false
           audio.play()
         }
       }
     }
   },
-  created () {
+  mounted () {
     Indicator.open({
       text: '加载中...',
       spinnerType: 'fading-circle'
     })
-    axios.post(`/shishuiyuan/index/top/ledger/id/${this.$route.params.id}/key/${this.$route.params.code}`)
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/ledger/id/${this.$route.params.id}/key/${this.$route.params.code}`)
       .then(data => {
         console.log(data.data)
         this.url = data.data.Charge
         this.title = data.data.File_Name
         this.content = data.data.Content
         this.img = data.data.Image
+        this.pageview = data.data.pageview
         Indicator.close()
+      })
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/refer/id/${this.$route.params.id}/key/${this.$route.params.code}`)
+      .then(data => {
+        this.classA = data.data.classA
+        for (let i in data.data) {
+          if (i <= 1) {
+            this.tuijianlist.push(data.data[i])
+          }
+        }
       })
   }
 }
@@ -286,8 +336,24 @@ export default {
     padding: rem750(27) rem750(30) rem750(36) rem750(20);
     box-sizing: border-box;
     @include _flex(space-between,center,column);
-    img {
-      @include rect(rem750(300),rem750(300));
+
+    .img {
+      position: relative;
+      img {
+        @include rect(rem750(300),rem750(300));
+        border-radius: rem750(10)
+      }
+      .look {
+        position: absolute;
+        @include rect(rem750(80), rem750(35));
+        background: rgba(0, 0, 0, .5);
+        line-height: rem750(35);
+        text-align: center;
+        color: #fff;
+        font-size: rem750(22);
+        bottom: 0;
+        right: 0;
+      }
     }
     .audio-wrapper {
       background-color: #fcfcfc;
@@ -316,7 +382,7 @@ export default {
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
-          width: rem750(300);
+          width: rem750(450);
         }
         .progress-bar-bg {
           background-color: #d9d9d9;
@@ -430,9 +496,30 @@ export default {
         }
       }
     }
-     .box {
-      width: rem750(710);
-      margin: rem750(23) 0 0 rem750(20);
+    .box {
+      width: 100%;
+      box-sizing: border-box;
+      padding: rem750(19) rem750(20) 0 rem750(20);
+      @include _flex(space-between,flex-start);
+      li {
+        width: rem750(346);
+        @include _flex(flex-start,flex-start,column);
+        img {
+          @include rect(100%, rem750(210));
+          border-radius: rem750(10);
+          margin-bottom: rem750(17);
+        }
+        span {
+          line-height: rem750(40);
+          font-size: $font-26;
+          color: $text-black;
+          padding-left: rem750(15);
+          width: rem750(320);
+          overflow: hidden;
+          text-overflow:ellipsis;
+          white-space: nowrap;
+        }
+      }
     }
   }
 }
