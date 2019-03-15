@@ -1,9 +1,9 @@
 <template>
   <div class="content animated fadeInLeft">
-    <div class="top">
+    <div class="top" @click="myshool">
       <img src="@/assets/school.png">
       <h1>我的学校</h1>
-      <span @click="myshool"></span>
+      <span></span>
     </div>
     <div class="list">
       <li>
@@ -19,13 +19,13 @@
         <p>年级：{{this.class}}</p>
       </li>
     </div>
-    <div class="guanzhu">
+    <div class="guanzhu" @click="mysubject">
       <img src="@/assets/guanzhu.png">
       <h1>关注学科</h1>
-      <span @click="mysubject"></span>
+      <span></span>
     </div>
     <div class="kemu">
-      <li>
+      <li class="mark">
         <span class="iconfont icon-kemu"></span>
         <p v-for="(item, index) of list" :key="index">{{item}}</p>
       </li>
@@ -58,10 +58,22 @@ export default {
         console.log(data.data)
         let obj = data.data.data
         this.list = obj.User_FavoriteSubjectFormat
-        let res = obj.User_ClassIDFormat
-        this.class = res.join(' ')
-        this.school = obj.User_SchoolIDFormat
-        this.area = `${obj.User_ProvinceFormat}-${obj.User_CityFormat}-${obj.User_AreaFormat}-${obj.User_StreetFormat}`
+        if (obj.User_SchoolID !== 0) {
+          this.school = obj.User_SchoolIDFormat
+        } else {
+          this.school = '未设置'
+        }
+        if (obj.User_ClassID !== '') {
+          let res = obj.User_ClassIDFormat
+          this.class = res.join(' ')
+        } else {
+          this.class = '未设置'
+        }
+        if (obj.User_Province !== 0 || obj.User_City !== 0 || obj.User_Area !== 0 || obj.User_Street !== 0) {
+          this.area = `${obj.User_ProvinceFormat}-${obj.User_CityFormat}-${obj.User_AreaFormat}-${obj.User_StreetFormat}`
+        } else {
+          this.area = '未设置'
+        }
       })
   }
 }
@@ -113,6 +125,15 @@ export default {
         height: 100%;
         line-height: rem750(94);
         font-size: $font-30;
+        width: rem750(637);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+    .mark {
+      p {
+        width: rem750(60);
       }
     }
   }

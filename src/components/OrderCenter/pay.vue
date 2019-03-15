@@ -36,7 +36,6 @@ export default {
 <style lang="scss" scoped>
 @import '@/style/base/index.scss';
 .center {
-  margin-top: rem750(90);
   @include rect(100%, 100%);
   .list {
     @include rect(100%, 100%);

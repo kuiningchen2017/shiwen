@@ -19,7 +19,7 @@ export default {
         },
         {
           icon: 'iconfont icon-kecheng',
-          name: '课程',
+          name: '课本',
           path: '/turncourse'
         },
         {
@@ -36,10 +36,10 @@ export default {
     }
   },
   mounted () {
-    if (localStorage.getItem('type') === '0') {
-      this.list[3].path = '/turnuser/parent'
+    if (localStorage.getItem('type') === '3') {
+      this.list[3].path = '/turnuser/teacher/three'
     } else {
-      this.list[3].path = '/turnuser/teacher'
+      this.list[3].path = '/turnuser/parent/three'
     }
   }
 }

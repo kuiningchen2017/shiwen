@@ -57,13 +57,13 @@
             <span class="iconfont icon-iconfontjiantou4"></span>
           </div>
         </li>
-        <!-- <li>
+        <li>
           <span class="iconfont icon-shoucang1" style="color:#f9c148"></span>
           <div class="box mark" @click="gofollow">
             <h3>我的关注</h3>
             <span class="iconfont icon-iconfontjiantou4"></span>
           </div>
-        </li> -->
+        </li>
       </div>
       <div class="parent" v-else>
         <li>
@@ -137,37 +137,37 @@ export default {
   },
   methods: {
     goset () {
-      this.$router.push('/personalinfo')
+      this.$router.push({name: 'personalinfo', params: {enter: this.$route.params.enter}})
     },
     goschool () {
-      this.$router.push('/schoolmessage')
+      this.$router.push({name: 'schoolmessage', params: {enter: this.$route.params.enter}})
     },
     goclass () {
-      this.$router.push('/myclass')
+      this.$router.push({name: 'myclass', params: {enter: this.$route.params.enter}})
     },
     gotuijian () {
-      this.$router.push('/recommend')
+      this.$router.push({name: 'recommend', params: {enter: this.$route.params.enter}})
     },
     gotrain () {
-      this.$router.push('/mytrain')
+      this.$router.push({name: 'mytrain', params: {enter: this.$route.params.enter}})
     },
     goorder () {
-      this.$router.push('/ordercenter')
+      this.$router.push({name: 'ordercenter', params: {enter: this.$route.params.enter}})
     },
     goresult () {
-      this.$router.push('/myresult')
+      this.$router.push({name: 'myresult', params: {enter: this.$route.params.enter}})
     },
     gofollow () {
       this.$router.push('/myfollow')
     },
     gohomework () {
-      this.$router.push('/homework')
+      this.$router.push({name: 'homework', params: {enter: this.$route.params.enter}})
     },
     gostudy () {
-      this.$router.push('/mystudy')
+      this.$router.push({name: 'mystudy', params: {enter: this.$route.params.enter}})
     },
     gowork () {
-      this.$router.push('/mywork')
+      this.$router.push({name: 'mywork', params: {enter: this.$route.params.enter}})
     }
   }
 }
@@ -219,11 +219,13 @@ export default {
     background: #fff;
     flex-shrink: 0;
     margin-bottom: rem750(12);
+    padding: 0 rem750(80);
+    box-sizing: border-box;
     li {
-      height: rem750(110);
-      @include _flex(space-between, center, column);
+      height: rem750(150);
+      @include _flex(space-around, center, column);
       img {
-        @include rect(rem750(80), rem750(60));
+        @include rect(rem750(80), rem750(80));
       }
       h2 {
         line-height: rem750(40);

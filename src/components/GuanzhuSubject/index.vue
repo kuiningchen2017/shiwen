@@ -5,7 +5,6 @@
         <input type="checkbox" :id="item.CD_ID" class="gcs-checkbox" v-model="checkedValue" :value="(item.CD_ID)">
         <label :for="item.CD_ID"></label><span>{{item.CD_Name}}</span>
       </li>
-      <!-- <li v-for="(item, index) of list" :class='{active:isactive}' :key="index" @click="getID(item.CD_ID, index)">{{item.CD_Name}}</li> -->
     </div>
     <button @click="submit">保存</button>
   </div>
@@ -23,26 +22,32 @@ export default {
   },
   methods: {
     submit () {
-      if (this.checkedValue.length !== 0) {
-        console.log(this.checkedValue)
-        axios.post(`${this.GLOBAL.shishuiyuan}/api/user/setuserinfo?token=${localStorage.getItem('token')}&subject=${this.checkedValue.join(',')}`)
-          .then(data => {
-            console.log(data.data)
-            Toast(data.data.message)
-            if (data.data.code === 0) {
-              this.$router.push('/schoolmessage')
-            }
-          })
-      } else {
-        return false
-      }
+      console.log(this.checkedValue)
+      axios.post(`${this.GLOBAL.shishuiyuan}/api/user/setuserinfo?token=${localStorage.getItem('token')}&subject=${this.checkedValue.join(',')}`)
+        .then(data => {
+          console.log(data.data)
+          Toast(data.data.message)
+          if (data.data.code === 0) {
+            this.$router.go(-1)
+          }
+        })
     }
   },
   mounted () {
     axios.post(`${this.GLOBAL.shishuiyuan}/api/category/getsubjectlist`)
       .then(data => {
-        console.log(data.data)
         this.list = data.data.data
+      })
+    axios.post(`${this.GLOBAL.shishuiyuan}/api/user/getuserinfo?token=${localStorage.getItem('token')}`)
+      .then(data => {
+        console.log(data.data)
+        let obj = data.data.data
+        let arr = obj.User_FavoriteSubject
+        if (arr !== '') {
+          this.checkedValue = arr.split(',')
+        } else {
+          return false
+        }
       })
   }
 }
@@ -60,12 +65,6 @@ export default {
     flex-wrap: wrap;
     justify-content: space-between;
     li {
-      // @include rect(rem750(151), rem750(68));
-      // line-height: rem750(68);
-      // text-align: center;
-      // color: #6b6b6b;
-      // border-radius: rem750(10);
-      // background: #f5f5f5;
       @include rect(rem750(100), rem750(68));
       margin-bottom: rem750(40);
       @include _flex(space-around, center)

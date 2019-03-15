@@ -108,69 +108,69 @@ html, body, .container {
     height: rem750(300);
   }
 }
-// #imgcode {
-//   #verifyCanvas {
-//     width: rem750(100);
-//     height: rem750(50)
-//   }
-// }
-// .mint-msgbox {
-//   height: rem750(212);
-//   .mint-msgbox-header {
-//     padding-top: rem750(15);
-//     .mint-msgbox-title {
-//       font-size: rem750(30)
-//     }
-//   }
-//   .mint-msgbox-content {
-//     height: rem750(126);
-//     padding: rem750(10) rem750(20) rem750(15) rem750(20);
-//     .mint-msgbox-message {
-//       font-size: rem750(30);
-//       height: rem750(36);
-//       line-height: rem750(36)
-//     }
-//     .mint-msgbox-input {
-//       padding-top: rem750(15);
-//       input {
-//         width: rem750(597);
-//         height: rem750(45);
-//         font-size: rem750(28);
-//         padding: rem750(4) rem750(5);
-//       }
-//     }
-//   }
-//   .mint-msgbox-btns {
-//     height: rem750(60);
-//     .mint-msgbox-btn {
-//       height: 100%;
-//       line-height: rem750(60);
-//       font-size: rem750(30)
-//     }
-//   }
-// }
-// .mint-datetime-picker {
-//     height: rem750(293);
-//   .picker-toolbar {
-//     height: rem750(40);
-//     border-bottom: rem750(1) solid #eaeaea;
-//     .mint-datetime-action {
-//       line-height: rem750(40);
-//       font-size: rem750(28)
-//     }
-//   }
-//   .picker-items {
-//     height: rem750(252);
-//     .picker-slot-wrapper {
-//       height: rem750(252)!important;
-//       .picker-item {
-//         height: rem750(36)!important;
-//         line-height: rem750(36)!important;
-//         font-size: rem750(28)
-//       }
-//     }
-//   }
-// }
+
+.mint-msgbox {
+  min-height: rem750(200);
+  .mint-msgbox-header {
+    padding-top: rem750(15);
+    .mint-msgbox-title {
+      font-size: rem750(30)
+    }
+  }
+  .mint-msgbox-content {
+    height: rem750(162);
+    padding: rem750(10) rem750(20) rem750(15) rem750(20);
+    .mint-msgbox-message {
+      font-size: rem750(30);
+      height: rem750(36);
+      line-height: rem750(36)
+    }
+    .mint-msgbox-input {
+      padding-top: rem750(15);
+      width: rem750(597);
+      input {
+        width: rem750(590);
+        height: rem750(45);
+        font-size: rem750(28);
+        padding: rem750(4) rem750(5);
+      }
+    }
+  }
+  .mint-msgbox-btns {
+    height: rem750(80);
+    .mint-msgbox-btn {
+      height: 100%;
+      line-height: rem750(80);
+      font-size: rem750(30)
+    }
+  }
+}
+.mint-datetime-picker {
+  min-height: rem750(293);
+  .picker-toolbar {
+    height: rem750(60);
+    border-bottom: rem750(1) solid #eaeaea;
+    .mint-datetime-action {
+      line-height: rem750(60);
+      font-size: rem750(28)
+    }
+  }
+  .picker-items {
+    height: rem750(252);
+    .picker-slot-wrapper {
+      // height: rem750(252)!important;
+      .picker-item {
+        // height: rem750(36)!important;
+        // line-height: rem750(36)!important;
+        font-size: rem750(28);
+      }
+    }
+    // .picker-center-highlight {
+    //   height: rem750(36);
+    //   margin-top: rem750(-18);
+    // }
+  }
+}
 .sex {
   .mint-popup {
     width: 100%;
@@ -184,25 +184,17 @@ html, body, .container {
           font-size: rem750(30)
         }
       }
-      // .picker-items {
-      //   @include rect(100%, rem750(180));
-      //   .picker-slot-center {
-      //     @include rect(rem750(38), rem750(180));
-      //     .picker-slot-wrapper {
-      //       height: rem750(180)!important;
-      //       // transform: translate(0px, rem750(72)) translateZ(0px)!important;
-            .picker-item {
-              // height: rem750(36)!important;
-              // line-height: rem750(36)!important;
-              font-size: rem750(28)
-            }
-      //     }
-      //   }
-      //   .picker-center-highlight {
-      //     height: rem750(36)!important;
-      //     margin-top: rem750(-18)!important;
-      //   }
-      // }
+      .picker-item {
+        font-size: rem750(28)
+      }
     }
   }
- }
+}
+.mint-toast {
+  @include rect(rem750(200), rem750(80));
+  border-radius: rem750(10);
+  .mint-toast-text {
+    line-height: rem750(60);
+    font-size: rem750(30);
+  }
+}

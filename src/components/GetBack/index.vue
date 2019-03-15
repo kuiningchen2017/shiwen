@@ -90,13 +90,7 @@ export default {
       this.mark = true
     },
     passwordblur () {
-      const passwordExg = /^[a-zA-Z0-9] {6,}$/
-      if (!passwordExg.test(this.$refs.password.value)) {
-        Toast('请输入大于6位数字字母')
-        this.mark = true
-      } else {
-        this.mark = false
-      }
+      this.mark = false
     },
     goChange () {
       this.active = false

@@ -17,16 +17,16 @@
         </li>
       </div>
       <div class="detail">
-        <img src="@/assets/live_02.png" alt="#">
+        <img src="@/assets/banner_02.png" alt="#">
         <div class="jieshao">
-          <p>【高中地理会场】第五届全国基础教育课程教育改革研</p>
+          <p>如何上好一节优质课</p>
           <li>
             <dt>
               <span class="iconfont icon-yanjing-active"></span>
-              <b>17496</b>
+              <b>19356</b>
             </dt>
             <dt>
-              <b>15</b>
+              <b>60</b>
               <span class="iconfont icon-xiaoxi"></span>
             </dt>
           </li>
@@ -42,9 +42,9 @@
         <li></li>
       </div>
       <div class="detail">
-        <img src="@/assets/live_03.png" alt="#">
+        <img src="@/assets/banner_01.png" alt="#">
         <div class="jieshao">
-          <p>【高中地理会场】第五届全国基础教育课程教育改革研</p>
+          <p>跨专业名师的逆袭之路</p>
           <li>
             <dt>
               <span class="iconfont icon-yanjing-active"></span>
@@ -66,10 +66,8 @@ export default {
   data () {
     return {
       banner: [
-        {img: require('@/assets/live_01.png')},
-        {img: require('@/assets/banner02.png')},
-        {img: require('@/assets/banner03.png')},
-        {img: require('@/assets/banner04.png')}
+        {img: require('@/assets/banner_01.png')},
+        {img: require('@/assets/banner_02.png')}
       ]
     }
   },
@@ -131,7 +129,8 @@ export default {
         @include rect(100%, rem750(95));
         p {
           line-height: rem750(49);
-          text-align: center;
+          padding-left: rem750(30);
+          // text-align: center;
           font-size: rem750(26);
         }
         li {

@@ -1,52 +1,56 @@
 <template>
   <div class="content animated fadeInLeft">
     <li>
-      <span class="iconfont icon-location"></span>
-      <p>地区:</p>
+      <div>
+        <span class="iconfont icon-location"></span>
+        <h4>地区:</h4>
+      </div>
       <div class="area">
-        <div>
+        <div @click="getProvince">
           <p>{{this.province}}</p>
-          <span class="iconfont icon-arrow" @click="getProvince"></span>
+          <span class="iconfont icon-arrow"></span>
           <ul v-show="provinceShow" :class="isOk?classA:classB">
-            <li class="province" v-for="(item, index) of provinceList" :key="index" :class="{'bor':clickProvince===index}" @click="changeProvince(index,item.Region_Name,item.Region_ID)">
+            <li class="province" v-for="(item, index) of provinceList" :key="index" :class="{'bor':clickProvince===index}" @click.stop="changeProvince(index,item.Region_Name,item.Region_ID)">
               {{item.Region_Name}}</li>
           </ul>
         </div>
-        <div>
+        <div @click="getCity">
           <p>{{this.city}}</p>
-          <span class="iconfont icon-arrow" @click="getCity"></span>
+          <span class="iconfont icon-arrow"></span>
           <ul v-show="cityShow" :class="isOk?classA:classB">
-            <li class="city" v-for="(item, index) of cityList" :key="index" :class="{'bor':clickCity===index}" @click="changeCity(index,item.Region_Name,item.Region_ID)">
+            <li class="city" v-for="(item, index) of cityList" :key="index" :class="{'bor':clickCity===index}" @click.stop="changeCity(index,item.Region_Name,item.Region_ID)">
               {{item.Region_Name}}</li>
           </ul>
         </div>
-        <div>
+        <div @click="getArea">
           <p>{{this.area}}</p>
-          <span class="iconfont icon-arrow" @click="getArea"></span>
+          <span class="iconfont icon-arrow"></span>
           <ul v-show="areaShow" :class="isOk?classA:classB">
-            <li class="areas" v-for="(item, index) of areaList" :key="index" :class="{'bor':clickArea===index}" @click="changeArea(index,item.Region_Name,item.Region_ID)">
+            <li class="areas" v-for="(item, index) of areaList" :key="index" :class="{'bor':clickArea===index}" @click.stop="changeArea(index,item.Region_Name,item.Region_ID)">
               {{item.Region_Name}}</li>
           </ul>
         </div>
-        <div>
+        <div @click="getStreet">
           <p>{{this.street}}</p>
-          <span class="iconfont icon-arrow" @click="getStreet"></span>
+          <span class="iconfont icon-arrow"></span>
           <ul v-show="streetShow" :class="isOk?classA:classB">
-            <li class="street" v-for="(item, index) of streetList" :key="index" :class="{'bor':clickStreet===index}" @click="changeStreet(index,item.Region_Name,item.Region_ID)">
+            <li class="street" v-for="(item, index) of streetList" :key="index" :class="{'bor':clickStreet===index}" @click.stop="changeStreet(index,item.Region_Name,item.Region_ID)">
               {{item.Region_Name}}</li>
           </ul>
         </div>
       </div>
     </li>
     <li>
-      <span class="iconfont icon-xuexiao"></span>
-      <p>学校:</p>
+      <div>
+        <span class="iconfont icon-xuexiao"></span>
+        <h4>学校:</h4>
+      </div>
       <div class="school">
-        <div>
+        <div @click="getSchool">
           <input type="text" ref="school" value="未设置">
-          <span class="iconfont icon-arrow" @click="getSchool"></span>
+          <span class="iconfont icon-arrow"></span>
           <ul v-show="schoolShow" :class="isOk?classA:classB">
-            <li class="schools" v-for="(item, index) of schoolList" :key="index" :class="{'bor':clickSchool===index}" @click="changeSchool(index,item.School_Name,item.School_ID)">
+            <li class="schools" v-for="(item, index) of schoolList" :key="index" :class="{'bor':clickSchool===index}" @click.stop="changeSchool(index,item.School_Name,item.School_ID)">
               {{item.School_Name}}</li>
           </ul>
         </div>
@@ -58,8 +62,10 @@
       </p>
     </li>
     <li>
-      <span class="iconfont icon-wode"></span>
-      <p>年级:</p>
+      <div>
+        <span class="iconfont icon-wode"></span>
+        <h4>年级:</h4>
+      </div>
       <div class="grade">
         <div class="box">
           <li v-for="(item, index) of gradeList" :key="index">
@@ -70,10 +76,16 @@
       </div>
     </li>
     <div class="shenfen">
-      <li v-for="(item, index) of list" :key='index'>
-        <input type="radio" name="sex" class="gcs-radio" :id="item.ID" v-model="radioValue" :value="(item.ID)">
-        <label :for="item.ID"></label><span>{{item.name}}</span>
-      </li>
+      <div>
+        <span class="iconfont icon-shenfenzheng1"></span>
+        <h4>身份:</h4>
+      </div>
+      <div class="list">
+        <li v-for="(item, index) of list" :key='index'>
+          <input type="radio" name="sex" class="gcs-radio" :id="item.ID" v-model="radioValue" :value="(item.ID)">
+          <label :for="item.ID"></label><span>{{item.name}}</span>
+        </li>
+      </div>
     </div>
     <div class="choose">
       <button @click="back">返回</button>
@@ -166,6 +178,10 @@ export default {
       this.provinceShow = false
       this.provinceNum = 1
       this.province = val
+      this.city = '市'
+      this.area = '县/区'
+      this.street = '乡镇/街道'
+      this.school = '未设置'
       this.provinceID = id
       if (id === 110000000000 || id === 120000000000 || id === 310000000000 || id === 500000000000) {
         this.city = val
@@ -202,6 +218,9 @@ export default {
       this.cityShow = false
       this.cityNum = 1
       this.city = val
+      this.area = '县/区'
+      this.street = '乡镇/街道'
+      this.school = '未设置'
       this.cityID = id
     },
     getArea () {
@@ -241,6 +260,8 @@ export default {
       this.areaShow = false
       this.areaNum = 1
       this.area = val
+      this.street = '乡镇/街道'
+      this.school = '未设置'
       this.areaID = id
     },
     getStreet () {
@@ -275,6 +296,7 @@ export default {
       this.streetShow = false
       this.streetNum = 1
       this.street = val
+      this.school = '未设置'
       this.streetID = id
     },
     getSchool () {
@@ -317,6 +339,7 @@ export default {
       this.$router.go(-1)
     },
     submit () {
+      console.log(this.radioValue)
       var radioID = ''
       if (this.radioValue === 'zero') {
         radioID = 0
@@ -325,7 +348,8 @@ export default {
       } else {
         radioID = 5
       }
-      console.log(this.checkedValue.join(','), radioID, this.provinceID, this.cityID, this.areaID, this.streetID, this.schoolID)
+      localStorage.setItem('type', radioID)
+      console.log(this.checkedValue)
       axios.post(`${this.GLOBAL.shishuiyuan}/api/user/setuserinfo?token=${localStorage.getItem('token')}&type=${radioID}&province=${this.provinceID}&city=${this.cityID}&area=${this.areaID}&street=${this.streetID}&school=${this.schoolID}&class=${this.checkedValue.join(',')}`)
         .then(data => {
           console.log(data.data)
@@ -341,6 +365,43 @@ export default {
         console.log(data.data)
         this.gradeList = data.data.data
       })
+    axios.post(`${this.GLOBAL.shishuiyuan}/api/user/getuserinfo?token=${localStorage.getItem('token')}`)
+      .then(data => {
+        console.log(data.data)
+        let obj = data.data.data
+        if (obj.User_Province !== 0) {
+          this.provinceID = obj.User_Province
+          this.province = obj.User_ProvinceFormat
+        }
+        if (obj.User_City !== 0) {
+          this.cityID = obj.User_City
+          this.city = obj.User_CityFormat
+        }
+        if (obj.User_Area !== 0) {
+          this.areaID = obj.User_Area
+          this.area = obj.User_AreaFormat
+        }
+        if (obj.User_Street !== 0) {
+          this.streetID = obj.User_Street
+          this.street = obj.User_StreetFormat
+        }
+        if (obj.User_SchoolID !== 0) {
+          this.school = obj.User_SchoolIDFormat
+        }
+        if (obj.User_Type === 5) {
+          this.radioValue = 'five'
+        } else if (obj.User_Type === 3) {
+          this.radioValue = 'three'
+        } else if (obj.User_Type === 0) {
+          this.radioValue = 'zero'
+        }
+        let arr = obj.User_ClassID
+        if (arr !== '') {
+          this.checkedValue = arr.split(',')
+        } else {
+          return false
+        }
+      })
   }
 }
 </script>
@@ -349,44 +410,28 @@ export default {
 @import '@/style/base/index.scss';
 .content {
   @include rect(100%, 100%);
-  padding: rem750(23) rem750(48);
+  padding: rem750(46) rem750(53);
   box-sizing: border-box;
   li {
-    @include _flex(space-around,center);
-    margin-bottom: rem750(54);
-    height: rem750(57);
-    &:first-child {
-      height: rem750(160);
-    }
-    &:nth-child(2) {
-      margin-bottom: 0
-    }
-    &:nth-child(3) {
-      margin-bottom: 0;
-      p {
-        font-size: rem750(22);
-        line-height: rem750(30);
-        color: #b1b1b1;
+    display: flex;
+    div {
+      width: rem750(126);
+      height: rem750(57);
+      @include _flex(flex-start, center);
+      span {
+        font-size: $font-40;
+        color: #000;
+      }
+      h4 {
+        padding-left: rem750(5);
+        line-height: rem750(57);
+        font-size: $font-30;
       }
     }
-    &:nth-child(4) {
-      height: rem750(171);
-      margin-bottom: 0;
-    }
-    span {
-      font-size: $font-40;
-      color: #000;
-    }
-    p {
-      font-size: $font-30;
-      line-height: rem750(57);
-    }
     .area, .school {
-      @include rect(rem750(517), 100%);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      width: rem750(517);
       div {
+        height: rem750(57);
         border: rem750(1) solid #eaeaea;
         border-radius: rem750(10);
         box-sizing: border-box;
@@ -399,6 +444,7 @@ export default {
         }
         span {
           color: #4f4f4f;
+          font-size: rem750(40);
           padding-right: rem750(16);
         }
         input {
@@ -410,101 +456,146 @@ export default {
           position: absolute;
           top: rem750(57);
           width: 100%;
-          height:rem750(200);
+          height:rem750(480);
           overflow: scroll;
           background: #fafafa;
           z-index: 1001;
           .province, .city, .areas, .street, .schools{
+            padding-left: rem750(25);
             height: rem750(59);
+            line-height: rem750(59);
             margin: 0;
             border-bottom: rem750(1) solid #f2f2f2;
           }
           .bor{
             color: $bg-side;
-            background: rgb(160, 154, 154);
           }
         }
       }
     }
-    .area>div {
-      @include rect(rem750(247), rem750(57));
-      margin-top: rem750(23);
-      p {
-        width: rem750(160);
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
-    }
-    .school>div {
-      @include rect(100%, 100%);
-    }
-    .grade>.box {
-      @include rect(rem750(517), rem750(171));
-      @include _flex(space-around,center);
-      flex-wrap: wrap;
-      li {
-        width: rem750(130);
-        height: rem750(57);
-        margin: 0;
-        span {
-          font-size: rem750(27);
-          color: #676767;
+    &:nth-child(1) {
+      height: rem750(150);
+      .area {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        div {
+          width: rem750(245);
+          margin-bottom: rem750(23);
         }
       }
-      .gcs-checkbox {
-        display: none;
+    }
+    &:nth-child(2) {
+      height: rem750(57);
+      margin-top: rem750(31);
+      .school {
+        width: rem750(517);
+        div {
+          width: 100%;
+        }
       }
-      .gcs-checkbox+label {
-        border-radius: rem750(5);
-        border: rem750(2) solid #b0b1b1;
-        @include rect(rem750(20), rem750(20));
-        display: inline-block;
-        text-align: center;
-        vertical-align: bottom;
-        line-height: rem750(20);
+    }
+    &:nth-child(3) {
+      height: rem750(57);
+      line-height: rem750(57);
+      p {
+        font-size: rem750(22);
+        color: #b1b1b1;
+        padding-left: rem750(135)
       }
-      .gcs-checkbox:checked+label {
-        background: $bg-side;
-        border: rem750(2) solid $bg-side;
-      }
-      .gcs-checkbox:checked+label:after {
-        content: "\2714";
-        color: white;
+    }
+    &:nth-child(4) {
+      height: rem750(171);
+      .grade{
+        @include rect(rem750(517), 100%);
+        .box {
+          @include rect(100%, 100%);
+          @include _flex(space-around,center);
+          flex-wrap: wrap;
+          li {
+            width: rem750(130);
+            height: rem750(57);
+            @include _flex(space-around,center);
+            margin: 0;
+            span {
+              font-size: rem750(27);
+              color: #676767;
+            }
+          }
+          .gcs-checkbox {
+            display: none;
+          }
+          .gcs-checkbox+label {
+            border-radius: rem750(5);
+            border: rem750(2) solid #b0b1b1;
+            @include rect(rem750(30), rem750(30));
+            display: inline-block;
+            text-align: center;
+            vertical-align: bottom;
+            line-height: rem750(20);
+          }
+          .gcs-checkbox:checked+label {
+            background: $bg-side;
+            border: rem750(2) solid $bg-side;
+          }
+          .gcs-checkbox:checked+label:after {
+            content: "\2714";
+            color: white;
+          }
+        }
       }
     }
   }
   .shenfen {
-    @include _flex(space-around, center);
-    margin-bottom: rem750(30);
-    li {
+    @include _flex(space-between, center);
+    margin-bottom: rem750(50);
+    div {
+      width: rem750(126);
       height: rem750(57);
-      width: rem750(120);
-      @include _flex(space-around, center);
-      margin: 0;
-      .gcs-radio {
-       display: none;
+      @include _flex(flex-start, center);
+      span {
+        font-size: $font-40;
+        color: #000;
       }
+      h4 {
+        line-height: rem750(57);
+        padding-left: rem750(5);
+        font-size: $font-30;
+      }
+    }
+    .list {
+      @include rect(rem750(517), 100%);
+      @include _flex(space-around, center);
+      li {
+        @include rect(rem750(100), 100%);
+        @include _flex(space-around, center);
+        margin: 0;
+        .gcs-radio {
+          display: none;
+        }
       .gcs-radio+label {
-        border-radius: rem750(5);
+        border-radius: 50%;
         border: rem750(2) solid #b0b1b1;
-        @include rect(rem750(20), rem750(20));
+        @include rect(rem750(30), rem750(30));
         display: inline-block;
         text-align: center;
         vertical-align: bottom;
         line-height: rem750(20);
       }
       .gcs-radio:checked+label {
-        background: $bg-side;
         border: rem750(2) solid $bg-side;
       }
       .gcs-radio:checked+label:after {
-        content: "\2714";
-        color: white;
+        position: relative;
+        left: rem750(-2);
+        content: "\2022";
+        color: $bg-side;
+        font-size: rem750(75);
       }
-      span {
-        font-size: rem750(27);
-        color: #676767;
+        span {
+          font-size: rem750(27);
+          color: #676767;
+        }
       }
     }
   }

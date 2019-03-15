@@ -1,6 +1,9 @@
 <template>
   <div class="content animated fadeInLeft">
-    <div class="center">
+    <div class="void" v-if="show">
+      <p>暂无内容！</p>
+    </div>
+    <div class="center" v-else>
       <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
       <div class="list" v-if="flag">
         <li class="animated zoomIn" v-for="item of list" :key="item.Resource_ID">
@@ -38,6 +41,7 @@ Vue.use(Loadmore)
 export default {
   data () {
     return {
+      show: false,
       flag: true,
       active: false,
       list: [],
@@ -56,7 +60,7 @@ export default {
   },
   methods: {
     function () {
-      if (this.$route.params.title === '023' || this.$route.params.title === '926' || this.$route.params.title === '014' || this.$route.params.title === '235' || this.$route.params.title === '526' || this.$route.params.title === '057') {
+      if (this.$route.params.title === '023' || this.$route.params.title === '926' || this.$route.params.title === '014' || this.$route.params.title === '235' || this.$route.params.title === '526' || this.$route.params.title === '057' || this.$route.params.title === '018') {
         this.page = this.pageNum * 10
         this.porp = 'top'
         this.model = 'sandglass'
@@ -74,8 +78,10 @@ export default {
           this.id = 'sn'
         } else if (this.$route.params.title === '057') {
           this.id = 'Vn'
+        } else if (this.$route.params.title === '018') {
+          this.id = 'tp'
         }
-      } else if (this.$route.params.title === 'jxgj' || this.$route.params.title === 'drkt' || this.$route.params.title === 'zxxx') {
+      } else if (this.$route.params.title === 'jxgj' || this.$route.params.title === 'zxxx') {
         this.page = this.pageNum * 10
         this.flag = false
         this.active = true
@@ -85,8 +91,6 @@ export default {
         this.num = 'fd'
         if (this.$route.params.title === 'jxgj') {
           this.id = 'gk'
-        } else if (this.$route.params.title === 'drkt') {
-          this.id = 'doc'
         } else if (this.$route.params.title === 'zxxx') {
           this.id = 'jb'
         }
@@ -103,7 +107,7 @@ export default {
         } else if (this.$route.params.title === 'tbkt') {
           this.id = 'kc'
         } else if (this.$route.params.title === '365') {
-          this.id = 'dn'
+          this.id = 'cz'
         }
       } else if (this.$route.params.title === '725') {
         this.page = this.pageNum * 10
@@ -123,7 +127,7 @@ export default {
         })
     },
     godetail (id, code) {
-      if (this.$route.params.title === '023' || this.$route.params.title === '926' || this.$route.params.title === '014' || this.$route.params.title === '235' || this.$route.params.title === '526') {
+      if (this.$route.params.title === '023' || this.$route.params.title === '926' || this.$route.params.title === '014' || this.$route.params.title === '235' || this.$route.params.title === '526' || this.$route.params.title === '018') {
         this.$router.push({name: 'videodetail', params: {id: id, code: code}})
       } else if (this.$route.params.title === '057') {
         this.$router.push({name: 'audiodetail', params: {id: id, code: code}})
@@ -142,6 +146,7 @@ export default {
       }
     },
     loadBottom () {
+      this.$options.methods.function.bind(this)()
       axios.post(`${this.GLOBAL.shishuiyuan}/index/${this.porp}/${this.model}/${this.word}/${this.id}/num/${this.num}/p/${this.page}/class/${this.gradeID}/sub/${this.subID}/press/${this.pressID}`)
         .then(data => {
           if (data.data.length === 0) {
@@ -149,6 +154,7 @@ export default {
             Toast('已无更多数据')
           } else {
             this.pageNum++
+            console.log(this.pageNum)
             this.list = [...this.list, ...data.data]
           }
           this.$refs.loadmore.onBottomLoaded()
@@ -163,7 +169,11 @@ export default {
       axios.post(`${this.GLOBAL.shishuiyuan}/index/${this.porp}/${this.model}/${this.word}/${this.id}/num/${this.num}/p/0/class/${data}/sub/${this.subID}/press/${this.pressID}`)
         .then(data => {
           console.log(data.data)
-          this.list = data.data
+          if (data.data.length !== 0) {
+            this.list = data.data
+          } else {
+            this.show = true
+          }
         })
     })
     this.$bus.on('subID', (data) => {
@@ -171,7 +181,11 @@ export default {
       axios.post(`${this.GLOBAL.shishuiyuan}/index/${this.porp}/${this.model}/${this.word}/${this.id}/num/${this.num}/p/0/class/${this.gradeID}/sub/${data}/press/${this.pressID}`)
         .then(data => {
           console.log(data.data)
-          this.list = data.data
+          if (data.data.length !== 0) {
+            this.list = data.data
+          } else {
+            this.show = true
+          }
         })
     })
     this.$bus.on('pressID', (data) => {
@@ -179,18 +193,27 @@ export default {
       axios.post(`${this.GLOBAL.shishuiyuan}/index/${this.porp}/${this.model}/${this.word}/${this.id}/num/${this.num}/p/0/class/${this.gradeID}/sub/${this.subID}/press/${data}`)
         .then(data => {
           console.log(data.data)
-          this.list = data.data
+          if (data.data.length !== 0) {
+            this.list = data.data
+          } else {
+            this.show = true
+          }
         })
     })
     this.$bus.on('ageID', (data) => {
       axios.post(`${this.GLOBAL.shishuiyuan}/index/${this.porp}/${this.model}/${this.word}/${this.id}/num/${this.num}/p/0/class/0/sub/0/press/0/age/${data}`)
         .then(data => {
           console.log(data.data)
-          this.list = data.data
+          if (data.data.length !== 0) {
+            this.list = data.data
+          } else {
+            this.show = true
+          }
         })
     })
     this.$bus.on('all', (data) => {
       this.getAll()
+      this.show = false
     })
   },
   beforeDestroy () {
@@ -202,33 +225,13 @@ export default {
 <style lang="scss" scoped>
 @import '@/style/base/index.scss';
 .content  {
-  .filter{
-    @include rect(100%,rem750(72));
-    background: $bg-base;
-    position: absolute;
-    top: 0;
-    z-index: 1001;
-    @include _flex(flex-start,flex-start);
-    .all, .grade, .subject, .press, .age {
-      h3 {
-        @include rect(rem750(120),rem750(72));
-        line-height: rem750(72);
-        text-align: center;
-        font-size: $font-26;
-      }
-      ul {
-        background: $bg-black;
-        li {
-          @include rect(100%,rem750(68));
-          line-height: rem750(68);
-          text-align: center;
-          font-size: $font-24;
-          border-bottom: rem750(1) solid #f2f2f2;
-        }
-        .bor{
-          color: #118ecd;
-        }
-      }
+  .void {
+    @include rect(100%, rem750(500));
+    flex-shrink: 0;
+    @include _flex(center, center);
+    p {
+      font-size: rem750(50);
+      color: $bg-side
     }
   }
   .center {
@@ -297,6 +300,7 @@ export default {
           }
         }
         img {
+          flex-shrink: 0;
           @include rect(rem750(218),rem750(142));
           padding-left: rem750(36)
         }

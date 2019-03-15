@@ -71,7 +71,7 @@
       </div>
     </div>
     <div class="company">
-      <p>&copy;2018郑州石水源教育科技有限公司&nbsp;&nbsp;豫ICP备17001731号-2</p>
+      <p>&copy;河南师问教育科技有限公司&nbsp;&nbsp;豫ICP备19001139号</p>
     </div>
   </div>
 </template>
@@ -91,17 +91,17 @@ export default {
       navList: [
         {
           imgUrl: require('@/assets/icon_01.png'),
-          name: '我要上课',
+          name: '教师学院',
           path: '/teacherhome'
         },
         {
           imgUrl: require('@/assets/icon_02.png'),
-          name: '我要学习',
+          name: '翻转课堂',
           path: '/turnhome'
         },
         {
           imgUrl: require('@/assets/icon_03.png'),
-          name: '我要教子',
+          name: '亲子课堂',
           path: '/parenthome'
         }
       ]

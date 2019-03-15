@@ -198,6 +198,8 @@ export default {
       }
       ul {
         background: $bg-black;
+        height: rem750(272);
+        overflow: scroll;
         li {
           @include rect(100%,rem750(68));
           line-height: rem750(68);

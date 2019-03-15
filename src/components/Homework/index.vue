@@ -1,87 +1,76 @@
 <template>
   <div class="content animated fadeInLeft">
-    <div class="banji">
-      <div class="top">
+    <div class="list">
+      <li @click="godetail(item.MyClass_CreateUserID)" v-for="(item, index) in list" :key="index">
         <img src="@/assets/pic01.png" alt="#">
-        <h2>三年级一班</h2>
-      </div>
-      <ul class="list">
-        <li>
-          <img src="@/assets/banner02.png" alt="#">
-          <div class="right">
-            <h2>北京名师教你学物理</h2>
-            <p>布置时间:2019—02-22 17:30</p>
-            <span>已完成:5人</span>
-          </div>
-        </li>
-      </ul>
+        <div>
+          <h3>{{item.MyClass_Name}}</h3>
+          <p>布置时间：{{item. MyClass_CreateDate}}</p>
+          <!-- <span>已完成：<b>5</b>/20</span> -->
+        </div>
+      </li>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
-
+      list: []
     }
   },
   methods: {
-
-  }
+    godetail (id) {
+      console.log()
+      this.$router.push({name: 'homeworklist', params: {id: id}})
+    }
+  },
+  mounted () {
+    axios.post(`${this.GLOBAL.shishuiyuan}/api/myclass/getclasslist?token=${localStorage.getItem('token')}&page=1&rows=15`)
+      .then(data => {
+        console.log(data.data)
+        this.list = data.data.data.data
+      })
+  },
 }
 </script>
 
 <style lang='scss' scoped>
 @import '@/style/base/index.scss';
 .content {
-  .banji {
-    .top {
-      border-bottom: rem750(12) solid #f5f5f5;
-      @include rect(100%, rem750(132));
-      padding-left: rem750(39);
-      box-sizing: border-box;
-      @include _flex(flex-start, center);
-      img {
-        @include rect(rem750(80), rem750(80));
-      }
-      h2 {
-        line-height: rem750(40);
-        font-size: rem750(30);
-        color: #333;
-        padding-left: rem750(20);
-      }
-    }
-  }
   .list {
-    border-bottom: rem750(12) solid #f5f5f5;
+    @include rect(100%, rem750(150));
+    padding-left: rem750(39);
+    box-sizing: border-box;
     li {
-      padding-left: rem750(50);
-      @include rect(100%, rem750(202));
-      box-sizing: border-box;
       @include _flex(flex-start, center);
-      border-bottom: rem750(1) solid #eaeaea;
+      @include rect(100%, 100%);
+      border-bottom: rem750(12) solid #f5f5f5;
       img {
-        @include rect(rem750(250), rem750(150));
-        border-radius: rem750(10);
+        @include rect(rem750(90), rem750(90));
       }
       div {
-        padding-left: rem750(20);
-        height: 100%;
-        h2 {
-          padding-top: rem750(26);
-          line-height: rem750(57);
-          font-size: rem750(30);
+        @include rect(rem750(580), rem750(80));
+        padding-left:rem750(20);
+        box-sizing: border-box;
+        @include _flex(space-around, flex-start, column);
+        h3 {
+          line-height: rem750(42);
+          font-size: rem750(28);
+          font-weight: 600;
         }
         p {
-          line-height: rem750(40);
           font-size: rem750(24);
           color: #b2b2b2;
         }
         span {
-          line-height: rem750(33);
           font-size: rem750(24);
           color: #b2b2b2;
+          b {
+            color: #fe5400;
+          }
         }
       }
     }

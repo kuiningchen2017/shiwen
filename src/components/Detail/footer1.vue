@@ -16,7 +16,8 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
+import { Toast } from 'mint-ui'
 export default {
   data () {
     return {
@@ -25,10 +26,42 @@ export default {
   },
   methods: {
     guanzhu () {
-      this.flag = true
+      if (localStorage.getItem('token')) {
+        axios.post(`${this.GLOBAL.shishuiyuan}/api/userwatch/togglewatch?token=${localStorage.getItem('token')}&file_id=${this.$route.params.id}&status=1`)
+          .then(data => {
+            if (data.data.code === 0) {
+              Toast(data.data.message)
+              this.flag = true
+            }
+          })
+      } else {
+        this.$router.push('/login')
+      }
     },
     remove () {
-      this.flag = false
+      if (localStorage.getItem('token')) {
+        axios.post(`${this.GLOBAL.shishuiyuan}/api/userwatch/togglewatch?token=${localStorage.getItem('token')}&file_id=${this.$route.params.id}&status=0`)
+          .then(data => {
+            if (data.data.code === 0) {
+              Toast(data.data.message)
+              this.flag = false
+            }
+          })
+      } else {
+        this.$router.push('/login')
+      }
+    }
+  },
+  mounted () {
+    if (localStorage.getItem('token')) {
+      axios.post(`${this.GLOBAL.shishuiyuan}/api/userwatch/iswatch?token=${localStorage.getItem('token')}&file_id=${this.$route.params.id}`)
+        .then(data => {
+          if (data.data.data !== null) {
+            if (data.data.data.UserWatch_State === 1) {
+              this.flag = true
+            }
+          }
+        })
     }
   }
 }

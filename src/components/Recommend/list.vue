@@ -1,16 +1,17 @@
 <template>
   <div class="center animated fadeInLeft">
-    <div v-if="falg">
+    <div class="void" v-if="falg">
       <p>空空如也~</p>
     </div>
     <ul v-else>
       <li v-for="(item, index ) of list" :key="index">
-        <img :src="item.img" alt="#">
+        <img v-if="item.User_HeadImg!== ''" :src="item.User_HeadImg">
+        <img v-else src='@/assets/headimg.png'>
         <div>
-          <h3>{{item.name}} <b>{{item.tel}}</b></h3>
-          <span>{{item.time}}</span>
+          <h3>{{item.User_Nickname}} <b>{{item.User_Phone}}</b></h3>
+          <span>{{item.User_RegDate}}</span>
         </div>
-        <p>{{item.status}}</p>
+        <p>{{item.User_TypeFormat}}</p>
       </li>
     </ul>
   </div>
@@ -25,28 +26,29 @@ export default {
       list: []
     }
   },
-  mounted() {
+  mounted () {
     axios.post(`${this.GLOBAL.shishuiyuan}/api/user/getinvitelist?token=${localStorage.getItem('token')}&page=1`)
       .then(data => {
-    console.log(data.data)
-        if (data.data.data.data.length === 0) {
+        console.log(data.data)
+        if (data.data.data.total === 0) {
           this.falg = true
+        } else {
           this.list = data.data.data.data
         }
       })
-  },
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 @import '@/style/base/index.scss';
 .center {
-  margin-top: rem750(90);
   @include rect(100%, 100%);
   border-top: rem750(4) solid #f0f0f0;
-  div {
-    @include rect(100%, 100%);
-    @include _flex(center, center)
+  .void {
+    @include rect(100%, rem750(500));
+    flex-shrink: 0;
+    @include _flex(center, center);
     p {
       font-size: rem750(50);
       color: $bg-side
@@ -69,6 +71,8 @@ export default {
       div {
         width: rem750(480);
         padding: rem750(25) 0 rem750(25) rem750(20);
+        box-sizing: border-box;
+        @include _flex(space-around, flex-start, column);
         h3 {
           line-height: rem750(42);
           font-size: rem750(28);

@@ -70,9 +70,13 @@ export default {
   },
   mounted () {
     this.getCaptcha()
-  },
-  computed: {
-
+    let url = this.$route.query
+    let data = JSON.stringify(url)
+    if (data !== '{}') {
+      localStorage.setItem('invite_id', url.invite_id)
+    } else {
+      return false
+    }
   },
   methods: {
     getCaptcha () {
@@ -101,13 +105,7 @@ export default {
       this.mark = true
     },
     passwordblur () {
-      const passwordExg = /^[a-zA-Z0-9] {6,}$/
-      if (!passwordExg.test(this.$refs.password.value)) {
-        Toast('请输入大于6位数字字母')
-        this.mark = true
-      } else {
-        this.mark = false
-      }
+      this.mark = false
     },
     goChange () {
       this.active = false
@@ -126,27 +124,27 @@ export default {
           .then(data => {
             var result = data.data
             Toast(result.message)
-            console.log(result)
-          })
-      }
-      // 验证码60秒倒计时
-      if (!this.timer) {
-        console.log('111')
-        this.timer = setInterval(() => {
-          if (this.countdown > 0 && this.countdown <= 60) {
-            this.countdown--
-            if (this.countdown !== 0) {
-              this.codeMsg = '重新发送(' + this.countdown + ')'
-              this.codeDisabled = true
-            } else {
-              clearInterval(this.timer)
-              this.codeMsg = '获取验证码'
-              this.countdown = 60
-              this.timer = null
-              this.codeDisabled = false
+            if (result.code === 0) {
+              // 验证码60秒倒计时
+              if (!this.timer) {
+                this.timer = setInterval(() => {
+                  if (this.countdown > 0 && this.countdown <= 60) {
+                    this.countdown--
+                    if (this.countdown !== 0) {
+                      this.codeMsg = '重新发送(' + this.countdown + ')'
+                      this.codeDisabled = true
+                    } else {
+                      clearInterval(this.timer)
+                      this.codeMsg = '获取验证码'
+                      this.countdown = 60
+                      this.timer = null
+                      this.codeDisabled = false
+                    }
+                  }
+                }, 1000)
+              }
             }
-          }
-        }, 1000)
+          })
       }
     },
     reg () {
@@ -160,7 +158,7 @@ export default {
         Toast('请输入密码')
         return false
       } else {
-        axios.post(`${this.GLOBAL.shishuiyuan}/api/user/register?phone=${this.$refs.tel.value}&captcha=${this.$refs.imgCode.value}&sms_code=${this.$refs.numCode.value}&password=${this.$refs.password.value}`)
+        axios.post(`${this.GLOBAL.shishuiyuan}/api/user/register?phone=${this.$refs.tel.value}&captcha=${this.$refs.imgCode.value}&sms_code=${this.$refs.numCode.value}&password=${this.$refs.password.value}&invite_id=${localStorage.getItem('invite_id')}`)
           .then(data => {
             console.log(data.data)
             var res = data.data
@@ -169,14 +167,27 @@ export default {
               localStorage.setItem('token', res.data.User_Token)
               localStorage.setItem('type', res.data.User_Type)
               localStorage.setItem('userID', res.data.User_ID)
-              if (res.data.User_Type === 0) {
-                this.$router.push('/user/parent')
+              if (localStorage.getItem('invite_join_class_id')) {
+                this.$router.push(`/home?invite_join_class_id=${localStorage.getItem('invite_join_class_id')}`)
+              } else if (localStorage.getItem('invite_id')) {
+                this.$router.push('/home')
               } else {
-                this.$router.push('/user/teacher')
+                if (res.data.User_Type === 0 || res.data.User_Type === 5) {
+                  this.$router.push('/user/parent/one')
+                  // this.$router.go(-1)
+                } else {
+                  this.$router.push('/user/teacher/one')
+                  // this.$router.go(-1)
+                }
               }
             }
           })
       }
+    }
+  },
+  destroyed () {
+    if (localStorage.getItem('invite_id')) {
+      localStorage.removeItem('invite_id')
     }
   }
 }
@@ -203,6 +214,14 @@ export default {
       margin-bottom: rem750(60);
       border-bottom: 1px solid #dbdbdb;
       @include _flex(start,center);
+      &:nth-child(2) {
+        position: relative;
+        .imgCode {
+          position: absolute;
+          right: 0;
+          bottom: rem750(4)
+        }
+      }
       span {
         color: #c2c2c2;
         font-size: rem750(45)
@@ -222,7 +241,7 @@ export default {
         }
       }
       .imgCode>img {
-        @include rect(rem750(150), rem750(60))
+        @include rect(rem750(200), rem750(80))
       }
       .change {
         width: rem750(40);

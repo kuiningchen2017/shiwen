@@ -1,6 +1,9 @@
 <template>
   <div class="content animated fadeInLeft">
-    <div class="center">
+    <div class="void" v-if="show">
+      <p>暂无内容!</p>
+    </div>
+    <div class="center" v-else>
       <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
       <div class="list" >
         <li class="animated zoomIn" v-for="item of list" :key="item.Resource_ID" @click="godetail(item.File_ID, item.File_Code)">
@@ -22,6 +25,7 @@ Vue.use(Loadmore)
 export default {
   data () {
     return {
+      show: false,
       list: [],
       allLoaded: false,
       pageNum: 1,
@@ -37,35 +41,51 @@ export default {
       })
     this.$bus.on('gradeID', (data) => {
       this.gradeID = data
-      axios.post(`${this.GLOBAL.shishuiyuan}/index/paper/list/key/fx/num/gk/p/0/class/${data}/sub/${this.subID}/press/${this.pressID}`)
+      axios.post(`${this.GLOBAL.shishuiyuan}/index/paper/list/key/fx/num/gk/p/0/class/${data}/sub/${this.subID}/press/${this.pressID}/token/${localStorage.getItem('token')}`)
         .then(data => {
-          this.list = data.data
+          console.log(data.data)
+          if (data.data.length !== 0) {
+            this.list = data.data
+          } else {
+            this.show = true
+          }
         })
     })
     this.$bus.on('subID', (data) => {
       this.pressID = data
-      axios.post(`${this.GLOBAL.shishuiyuan}/index/paper/list/key/fx/num/gk/p/0/class/${this.gradeID}/sub/${data}/press/${this.pressID}`)
+      axios.post(`${this.GLOBAL.shishuiyuan}/index/paper/list/key/fx/num/gk/p/0/class/${this.gradeID}/sub/${data}/press/${this.pressID}/token/${localStorage.getItem('token')}`)
         .then(data => {
-          this.list = data.data
+          console.log(data.data)
+          if (data.data.length !== 0) {
+            this.list = data.data
+          } else {
+            this.show = true
+          }
         })
     })
     this.$bus.on('pressID', (data) => {
       this.pressID = data
-      axios.post(`${this.GLOBAL.shishuiyuan}/index/paper/list/key/fx/num/gk/p/0/class/${this.gradeID}/sub/${this.subID}/press/${data}`)
+      axios.post(`${this.GLOBAL.shishuiyuan}/index/paper/list/key/fx/num/gk/p/0/class/${this.gradeID}/sub/${this.subID}/press/${data}//token/${localStorage.getItem('token')}`)
         .then(data => {
-          this.list = data.data
+          console.log(data.data)
+          if (data.data.length !== 0) {
+            this.list = data.data
+          } else {
+            this.show = true
+          }
         })
     })
     this.$bus.on('all', (data) => {
-      axios.post(`${this.GLOBAL.shishuiyuan}/index/paper/list/key/fx/num/gk/p/0`)
+      axios.post(`${this.GLOBAL.shishuiyuan}/index/paper/list/key/fx/num/gk/p/0/token/${localStorage.getItem('token')}`)
         .then(data => {
           this.list = data.data
+          this.show = false
         })
     })
   },
   methods: {
     loadBottom () {
-      axios.post(`${this.GLOBAL.shishuiyuan}/index/paper/list/key/fx/num/gk/p/${this.pageNum * 9}`)
+      axios.post(`${this.GLOBAL.shishuiyuan}/index/paper/list/key/fx/num/gk/p/${this.pageNum * 9}/token/${localStorage.getItem('token')}`)
         .then(data => {
           if (data.data.length === 0) {
             this.allLoaded = true
@@ -89,6 +109,15 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/base/index.scss';
+.void {
+  @include rect(100%, rem750(500));
+  flex-shrink: 0;
+  @include _flex(center, center);
+  p {
+    font-size: rem750(50);
+    color: $bg-side
+  }
+}
 .center {
   @include rect(100%, 100%);
   .list {

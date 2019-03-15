@@ -17,15 +17,42 @@
           <p>完成</p>
         </div>
       </div>
-      <div class="ziyuan">
+      <div class="resource">
         <h2>选择资源:</h2>
-        <li>
-          <p></p>
+        <li class="getvalue" @click="getValue">
+          {{this.selected}}
           <span class="iconfont icon-arrow"></span>
         </li>
+        <ul v-if="active" :class="isOk?classA:classB">
+          <li class="valuelist" v-for="(item, index) in navlist" :key="index" @click="changeValue(item.CD_ID,item.CD_Name,index)">
+            <p :class="{'bor':click===index}">{{item.CD_Name}}</p>
+          </li>
+        </ul>
       </div>
       <div class="choose">
-
+        <div class="all">
+          <h3 @click="getAll">全部</h3>
+        </div>
+        <div class="grade">
+          <h3 @click="getGrade">{{this.titleGrade}}</h3>
+          <ul v-if="grade" :class="isOk?classA:classB">
+            <li v-for="(item, index) of gradeList" :key="index" :class="{'bor':clickGrade===index}" @click="changeGrade(index,item.CD_Name,item.CD_ID)">
+              {{item.CD_Name}}</li>
+          </ul>
+        </div>
+        <div class="subject">
+          <h3 @click="getSub">{{this.titleSub}}</h3>
+          <ul v-if="sub" :class="isOk?classA:classB">
+            <li v-for="(item, index) of subList" :key="index" :class="{'bor':clickSub===index}" @click="changeSub(index,item.CD_Name,item.CD_ID)">
+              {{item.CD_Name}}</li>
+          </ul>
+        </div>
+        <!-- <div class="press">
+          <h3 @click="getPress">{{this.titlePress}}</h3>
+          <ul v-if="press" :class="isOk?classA:classB">
+            <li v-for="(item, index) of pressList" :key="index" :class="{'bor':clickPress===index}" @click="changePress(index,item.CD_Name,item.CD_ID)">{{item.CD_Name}}</li>
+          </ul>
+        </div> -->
       </div>
     </div>
     <div class="center">
@@ -35,7 +62,7 @@
             <img :src="item.Attachment_Path" alt="#" @click="godetail(item.File_ID, item.File_Code)">
             <dl>
               <dd>
-                <input type="checkbox" :id="item.File_ID" class="gcs-checkbox" v-model="checkedValue" :value="(item.File_ID, item.File_Code)">
+                <input type="checkbox" :id="item.File_ID" class="gcs-checkbox" v-model="checkedValue" :value="(item.File_ID)">
                 <label :for="item.File_ID"></label>
               </dd>
               <dt>
@@ -67,11 +94,35 @@ Vue.use(Loadmore)
 export default {
   data () {
     return {
+      selected: '请选择',
+      navlist: [],
+      number: 1,
+      click: '',
+      id: '',
+      active: false,
       list: [],
       pageNum: 1,
       allLoaded: false,
       falg: false,
-      checkedValue: []
+      checkedValue: [],
+      grade: false,
+      gradeNum: 1,
+      sub: false,
+      subNum: 1,
+      press: false,
+      pressNum: 1,
+      isOk: false,
+      classA: 'animated fadeInLeft',
+      classB: 'animated fadeOutLeft',
+      gradeList: [],
+      subList: [],
+      pressList: [],
+      clickGrade: '',
+      clickSub: '',
+      clickPress: '',
+      titleGrade: '年级',
+      titleSub: '学科',
+      titlePress: '出版社'
     }
   },
   methods: {
@@ -97,34 +148,178 @@ export default {
       } else {
         alert('至少选择一个')
       }
+    },
+    getValue () {
+      if (this.number === 1) {
+        this.number = 0
+        this.isOk = true
+        this.active = true
+      } else {
+        this.number = 1
+        this.active = false
+      }
+    },
+    changeValue (id, name, index) {
+      this.selected = name
+      this.id = id
+      this.number = 1
+      this.click = index
+      this.active = false
+      axios.post(`${this.GLOBAL.shishuiyuan}/api/file/getfilelist?page=1&rows=15&category_id=${id}`)
+        .then(data => {
+          this.list = data.data.data.data
+        })
+    },
+    getGrade () {
+      this.grade = true
+      this.sub = false
+      this.subNum = 1
+      this.press = false
+      this.pressNum = 1
+      if (this.gradeNum === 1) {
+        this.isOk = true
+        this.gradeNum = 0
+      } else {
+        this.isOk = false
+        this.gradeNum = 1
+      }
+    },
+    getSub () {
+      this.grade = false
+      this.gradeNum = 1
+      this.sub = true
+      this.press = false
+      this.pressNum = 1
+      if (this.subNum === 1) {
+        this.isOk = true
+        this.subNum = 0
+      } else {
+        this.isOk = false
+        this.subNum = 1
+      }
+    },
+    getPress () {
+      this.grade = false
+      this.gradeNum = 1
+      this.sub = false
+      this.subNum = 1
+      this.press = true
+      if (this.pressNum === 1) {
+        this.isOk = true
+        this.pressNum = 0
+      } else {
+        this.isOk = false
+        this.pressNum = 1
+      }
+    },
+    getAll () {
+      this.grade = false
+      this.gradeNum = 1
+      this.sub = false
+      this.subNum = 1
+      this.press = false
+      this.pressNum = 1
+      this.titleGrade = '年级'
+      this.titleSub = '学科'
+      this.titlePress = '出版社'
+      this.clickGrade = ''
+      this.clickSub = ''
+      this.clickPress = ''
+    },
+    changeGrade (index, val, id) {
+      this.clickGrade = index
+      this.titleGrade = val
+      this.gradeNum = 1
+      this.grade = false
+      axios.post(`${this.GLOBAL.shishuiyuan}/api/file/getfilelist?page=1rows=15&category_id=${this.id}&grade_id=${id}&subject_id=${this.subID}&press_id=${this.pressID}`)
+        .then(data => {
+          console.log(data.data.data.data)
+          if (data.data.data.data.length !== 0) {
+            this.list = data.data.data.data
+          } else {
+            this.show = true
+          }
+        })
+    },
+    changeSub (index, val, id) {
+      this.clickSub = index
+      this.titleSub = val
+      this.subNum = 1
+      this.sub = false
+      axios.post(`${this.GLOBAL.shishuiyuan}/api/file/getfilelist?page=1rows=15&category_id=${this.id}&grade_id=${this.gradeID}&subject_id=${id}&press_id=${this.pressID}`)
+        .then(data => {
+          console.log(data.data.data.data)
+          if (data.data.data.data.length !== 0) {
+            this.list = data.data.data.data
+          } else {
+            this.show = true
+          }
+        })
+    },
+    changePress (index, val, id) {
+      this.clickPress = index
+      this.titlePress = val
+      this.pressNum = 1
+      this.press = false
+      axios.post(`${this.GLOBAL.shishuiyuan}/api/file/getfilelist?page=1rows=15&category_id=${this.id}&grade_id=${this.gradeID}&subject_id=${this.subID}&press_id=${id}`)
+        .then(data => {
+          console.log(data.data)
+          if (data.data.data.data.length !== 0) {
+            this.list = data.data.data.data
+          } else {
+            this.show = true
+          }
+        })
     }
   },
   computed: {
     num () {
-      if (this.checkedValue.length !== 0) {
+      if (this.checkedValue.length > 0) {
         sessionStorage.setItem('HomeWorkID', this.checkedValue)
         return this.checkedValue.length
-      } else {
-        sessionStorage.removeItem('HomeWorkID')
-        return 0
       }
     }
   },
   watch: {
     num () {
-      if (this.checkedValue.length !== 0) {
+      if (this.checkedValue.length > 0) {
         this.falg = true
       } else {
         this.falg = false
+        sessionStorage.removeItem('HomeWorkID')
       }
     }
   },
   mounted () {
-    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/AB/num/uh/p/fist`)
+    axios.post(`${this.GLOBAL.shishuiyuan}/api/category/getcoursecategorylist`)
       .then(data => {
         console.log(data.data)
-        this.list = data.data
+        this.navlist = data.data.data
       })
+    axios.post(`${this.GLOBAL.shishuiyuan}/api/file/getfilelist?page=1&rows=15`)
+      .then(data => {
+        console.log(data.data)
+        this.list = data.data.data.data
+      })
+    axios.post(`${this.GLOBAL.shishuiyuan}/api/category/getgradelist`)
+      .then(data => {
+        console.log(data.data)
+        this.gradeList = data.data.data
+      })
+    axios.post(`${this.GLOBAL.shishuiyuan}/api/category/getsubjectlist`)
+      .then(data => {
+        console.log(data.data)
+        this.subList = data.data.data
+      })
+    axios.post(`${this.GLOBAL.shishuiyuan}/api/category/getpresslist`)
+      .then(data => {
+        console.log(data.data)
+        this.pressList = data.data.data
+      })
+    if (sessionStorage.getItem('HomeWorkID')) {
+      var HomeWorkID = sessionStorage.getItem('HomeWorkID')
+      this.checkedValue = HomeWorkID.split(',')
+    }
   }
 }
 </script>
@@ -179,28 +374,27 @@ export default {
         }
       }
     }
-    .ziyuan {
-      @include rect(100%, rem750(102));
+    .resource {
+      @include rect(rem750(655), rem750(102));
       box-sizing: border-box;
-      padding-left: rem750(42);
-      padding-right: rem750(53);
+      margin-left: rem750(42);
+      margin-right: rem750(53);
       @include _flex(space-between, center);
+      position: relative;
       h2 {
         line-height: rem750(30);
         font-size: rem750(24);
         color: #4d4d4d;
       }
-      li {
+      .getvalue {
         @include rect(rem750(528), rem750(44));
+        padding-left: rem750(25);
+        padding-right: rem750(25);
+        box-sizing: border-box;
         border: rem750(1) solid #ccc;
         border-radius: rem750(10);
-        @include _flex(space-around, center);
-        p {
-          line-height: 40;
-          height: rem750(40);
-          font-size: rem750(24);
-          width: rem750(400);
-        }
+        @include _flex(space-between, center);
+        font-size: rem750(28);
         span {
           @include rect(rem750(40), rem750(40));
           line-height: rem750(40);
@@ -208,11 +402,58 @@ export default {
           font-size: rem750(30)
         }
       }
+      ul {
+        position: absolute;
+        top: rem750(75);
+        right: 0;
+        z-index: 1001;
+        background: #fff;
+        .valuelist {
+          @include rect(rem750(530), rem750(60));
+          line-height:rem750(60);
+          font-size: rem750(30);
+          border-bottom: rem750(1) solid #f2f2f2;
+          p {
+            padding-left: rem750(25);
+            color: #000;
+          }
+          .bor{
+            color: $bg-side;
+          }
+        }
+      }
     }
     .choose {
-      @include rect(100%, rem750(60));
       margin-bottom: rem750(24);
-      background: #f2f2f2;
+      @include rect(100%,rem750(72));
+      flex-shrink: 0;
+      background: $bg-base;
+      @include _flex(flex-start,flex-start);
+      .all, .grade, .subject, .press {
+        h3 {
+          @include rect(rem750(120),rem750(72));
+          line-height: rem750(72);
+          text-align: center;
+          font-size: $font-26;
+        }
+        ul {
+          background: $bg-black;
+          height: rem750(272);
+          overflow: scroll;
+          position: relative;
+          z-index: 1001;
+          li {
+            @include rect(100%,rem750(68));
+            line-height: rem750(68);
+            text-align: center;
+            font-size: $font-24;
+            border-bottom: rem750(1) solid #f2f2f2;
+          }
+          .bor{
+            color: $bg-side;
+          }
+        }
+      }
     }
   }
   .center {
@@ -276,7 +517,7 @@ export default {
               white-space: nowrap;
             }
             p {
-              width: 100%;
+              width: rem750(310);
               overflow: hidden;
               text-overflow:ellipsis;
               white-space: nowrap;

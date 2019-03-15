@@ -18,69 +18,42 @@
         </div>
       </div>
       <div class="fenzu">
-        <li>
-          <input type="checkbox" id="一年级" class="gcs-checkbox">
-          <label for="一年级"></label><span>一年级</span>
-        </li>
-        <li>
-          <input type="checkbox" id="一年级1" class="gcs-checkbox">
-          <label for="一年级1"></label><span>一年级1</span>
-        </li>
-        <li>
-          <input type="checkbox" id="一年级2" class="gcs-checkbox">
-          <label for="一年级2"></label><span>一年级2</span>
-        </li>
-        <li>
-          <input type="checkbox" id="一年级3" class="gcs-checkbox">
-          <label for="一年级3"></label><span>一年级3</span>
-        </li>
-        <li>
-          <input type="checkbox" id="一年级4" class="gcs-checkbox">
-          <label for="一年级4"></label><span>一年级4</span>
-        </li>
-        <li>
-          <input type="checkbox" id="一年级5" class="gcs-checkbox">
-          <label for="一年级5"></label><span>一年级5</span>
-        </li>
-        <li>
-          <input type="checkbox" id="一年级6" class="gcs-checkbox">
-          <label for="一年级6"></label><span>一年级6</span>
-        </li>
-        <li>
-          <input type="checkbox" id="一年级7" class="gcs-checkbox">
-          <label for="一年级7"></label><span>一年级7</span>
-        </li>
-        <li>
-          <input type="checkbox" id="一年级8" class="gcs-checkbox">
-          <label for="一年级8"></label><span>一年级8</span>
+        <li v-for="(item, index) in classlist" :key="index">
+          <input type="checkbox" :id="item.MyClass_ID" class="gcs-checkbox" v-model="classValue" :value="(item.MyClass_ID)">
+          <label :for="item.MyClass_ID"></label>
+          <span>{{item.MyClass_Name}}</span>
         </li>
       </div>
       <div class="radio">
         <li>
-          <input type="radio" name="sex" class="gcs-radio" id="班级" />
+          <input type="radio" name="sex" class="gcs-radio" id="班级" v-model="radioValue" value="班级">
           <label for="班级"></label><span>班级</span>
         </li>
         <li>
-          <input type="radio" name="sex" class="gcs-radio" id="学生" />
+          <input type="radio" name="sex" class="gcs-radio" id="学生" v-model="radioValue" value="学生">
           <label for="学生"></label><span>学生</span>
         </li>
       </div>
     </div>
     <div class="center">
-      <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
-        <div class="list">
-          <li class="animated zoomIn" v-for="item of list" :key="item.Resource_ID">
-            <img :src="item.Attachment_Path" alt="#" @click="godetail(item.File_ID, item.File_Code)">
-            <h3>{{item.File_Name}}</h3>
-            <p>{{item.File_SubName}}</p>
+      <!-- <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore"> -->
+        <div class="list" v-show="falg">
+          <li v-for="(item, index ) of list" :key="index">
+            <div class="checkbox">
+              <input type="checkbox" :id="item.User_ID" class="gcs-checkbox" v-model="userValue" :value="(item.User_ID)">
+              <label :for="item.User_ID"></label>
+            </div>
+            <img v-if="item.User_HeadImg!== ''" :src="item.User_HeadImg">
+            <img v-else src='@/assets/headimg.png'>
+            <h3>{{item.User_Nickname}} <b>{{item.User_Phone}}</b></h3>
+            <p>{{item.User_TypeFormat}}</p>
           </li>
         </div>
-      </mt-loadmore>
+      <!-- </mt-loadmore> -->
     </div>
     <div class="next">
       <li>
         <p @click="goback">上一步</p>
-        <!-- <span v-if="flag">{{num}}</span> -->
       </li>
       <li @click="gonext">
         下一步
@@ -91,7 +64,7 @@
 
 <script>
 import axios from 'axios'
-import { Loadmore, Toast } from 'mint-ui'
+import { Loadmore, Toast} from 'mint-ui'
 import Vue from 'vue'
 Vue.use(Loadmore)
 export default {
@@ -99,46 +72,95 @@ export default {
     return {
       list: [],
       pageNum: 1,
-      allLoaded: false
-      // num: 0,
-      // flag: false
+      allLoaded: false,
+      falg: false,
+      classValue: [],
+      radioValue: '',
+      classlist: [],
+      userValue: [],
+      userlist: []
     }
   },
   methods: {
-    loadBottom () {
-      axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/AB/num/uh/p/${this.pageNum * 10}`)
-        .then(data => {
-          if (data.data.length === 0) {
-            this.allLoaded = true
-            Toast('已无更多数据')
-          } else {
-            this.pageNum++
-            this.list = [...this.list, ...data.data]
-          }
-          this.$refs.loadmore.onBottomLoaded()
-        })
-    },
+    // loadBottom () {
+    //   axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/AB/num/uh/p/${this.pageNum * 10}`)
+    //     .then(data => {
+    //       if (data.data.length === 0) {
+    //         this.allLoaded = true
+    //         Toast('已无更多数据')
+    //       } else {
+    //         this.pageNum++
+    //         this.list = [...this.list, ...data.data]
+    //       }
+    //       this.$refs.loadmore.onBottomLoaded()
+    //     })
+    // },
     goback () {
       this.$router.go(-1)
     },
     gonext () {
+      var set = new Set(this.userlist)
+      var arr = [...set]
+      var user = ''
+      if (this.radioValue === '班级') {
+        console.log(true)
+        user = arr.join(',')
+      } else {
+        console.log(false)
+        user = this.userValue.join(',')
+      }
+      console.log(user)
       console.log(sessionStorage.getItem('HomeWorkID'))
-      this.$router.push('/success')
+      console.log(this.classValue.join(','))
+      axios.post(`${this.GLOBAL.shishuiyuan}/api/homework/addwork?token=${localStorage.getItem('token')}&file_list=${sessionStorage.getItem('HomeWorkID')}&class_list=${this.classValue.join(',')}&user_list=${user}`)
+        .then(data => {
+          console.log(data.data)
+          if (data.data.code === 0) {
+            this.$router.push('/success')
+            sessionStorage.removeItem('HomeWorkID')
+          } else {
+            Toast(data.data.message)
+          }
+        })
+    }
+  },
+  watch: {
+    radioValue (newVal, oldVal) {
+      if (newVal === '学生') {
+        this.falg = true
+      } else {
+        this.falg = false
+      }
+    },
+    classValue: {
+      handler (newValue, oldValue) {
+        if (newValue !== oldValue) {
+          axios.post(`${this.GLOBAL.shishuiyuan}/api/myclass/getmemberlist?token=${localStorage.getItem('token')}&class_id=${this.classValue.join(',')}&user_type=0,5&page=1&rows=50`)
+            .then(data => {
+              if (data.data.code === 0) {
+                this.list = data.data.data.data
+                let arr = data.data.data.data
+                this.userlist = []
+                arr.map((value) => {
+                  this.userlist.push(value.User_ID)
+                })
+              } else {
+                this.list = []
+                this.userlist = []
+                alert(data.data.message)
+              }
+            })
+        }
+      },
+      deep: true
     }
   },
   mounted () {
-    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/AB/num/uh/p/fist`)
+    axios.post(`${this.GLOBAL.shishuiyuan}/api/myclass/getclasslist?token=${localStorage.getItem('token')}&page=1`)
       .then(data => {
         console.log(data.data)
-        this.list = data.data
+        this.classlist = data.data.data.data
       })
-  },
-  watch: {
-    num (oldval, newval) {
-      if (newval !== 0) {
-        this.flag = true
-      }
-    }
   }
 }
 </script>
@@ -147,7 +169,6 @@ export default {
 @import '@/style/base/index.scss';
 .content {
   .top {
-    // @include rect(100%, rem750(394));
     flex-shrink: 0;
     .jindu {
       @include rect(100%, rem750(114));
@@ -196,7 +217,8 @@ export default {
     .fenzu {
       padding: rem750(40) rem750(64) 0 rem750(64);
       width: 100%;
-      height: rem750(240);
+      min-height: rem750(60);
+      flex-shrink: 0;
       box-sizing: border-box;
       display: flex;
       justify-content: flex-start;
@@ -260,63 +282,83 @@ export default {
         display: none;
       }
       .gcs-radio+label {
-        border-radius: rem750(5);
+        border-radius: 50%;
         border: rem750(2) solid #b0b1b1;
-        @include rect(rem750(22), rem750(22));
+        @include rect(rem750(30), rem750(30));
         display: inline-block;
         text-align: center;
         vertical-align: bottom;
         line-height: rem750(20);
       }
       .gcs-radio:checked+label {
-        background: $bg-side;
         border: rem750(2) solid $bg-side;
       }
       .gcs-radio:checked+label:after {
-        content: "\2714";
-        color: white;
+        position: relative;
+        left: rem750(-2);
+        content: "\2022";
+        color: $bg-side;
+        font-size: rem750(75);
       }
     }
   }
   .center {
     flex-grow: 1;
     overflow: auto;
+    border-top: rem750(1) solid #e4e4e4;
     .list {
-      padding: 0 rem750(20);
-      height: auto;
+      @include rect(100%, 100%);
       box-sizing: border-box;
-      display: flex;
-      flex-wrap: wrap;
       li {
-        width: rem750(346);
-        height: rem750(315);
-        &:nth-child(odd) {
-          padding-right: rem750(9);
-        }
-        &:nth-child(even) {
-          padding-left: rem750(9);
+        @include rect(100%, rem750(130));
+        @include _flex(space-between, center);
+        padding-right: rem750(44);
+        box-sizing: border-box;
+        border-bottom: rem750(1) solid #e4e4e4;
+        .checkbox {
+          padding-left: rem750(20);
+          .gcs-checkbox {
+            display: none;
+          }
+          .gcs-checkbox+label {
+            border-radius: rem750(5);
+            border: rem750(2) solid #b0b1b1;
+            @include rect(rem750(25), rem750(25));
+            display: inline-block;
+            text-align: center;
+            vertical-align: bottom;
+            line-height: rem750(20);
+          }
+          .gcs-checkbox:checked+label {
+            background: $bg-side;
+            border: rem750(2) solid $bg-side;
+          }
+          .gcs-checkbox:checked+label:after {
+            content: "\2714";
+            color: white;
+          }
         }
         img {
-          @include rect(100%, rem750(210));
-          border-radius: rem750(10)
+          @include rect(rem750(68), rem750(68));
+          border-radius: 50%;
         }
         h3 {
-          line-height: rem750(36);
-          font-size: $font-list-title1;
-          color: $text-black;
-          font-weight: normal;
-          padding-left: rem750(10);
-          padding-top: rem750(9);
-          width: rem750(320);
-          overflow: hidden;
-          text-overflow:ellipsis;
-          white-space: nowrap;
+          width: rem750(440);
+          line-height: rem750(42);
+          font-size: rem750(28);
+          font-weight: 600;
+          b {
+          font-size: rem750(24);
+          }
         }
         p {
-          line-height: rem750(36);
-          font-size: $font-26;
-          color: #595959;
-          padding-left: rem750(10);
+          @include rect(rem750(106), rem750(42));
+          line-height: rem750(42);
+          text-align: center;
+          border: rem750(2) solid #f86d04;
+          border-radius: rem750(21);
+          color: #f86d04;
+          font-size: rem750(25)
         }
       }
     }

@@ -74,7 +74,7 @@
       <div class="head">
         <h2>
           <b></b>
-          <span>家校共建</span>
+          <span>家校共育</span>
         </h2>
         <span @click="golist('jxgj')">
           更多
@@ -90,7 +90,7 @@
       </div>
     </div>
     <div class="company">
-     <p>&copy;2018郑州石水源教育科技有限公司&nbsp;&nbsp;豫ICP备17001731号-2</p>
+      <p>&copy;河南师问教育科技有限公司&nbsp;&nbsp;豫ICP备19001139号</p>
     </div>
   </div>
 </template>

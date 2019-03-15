@@ -19,7 +19,7 @@ export default {
     }
   },
   mounted () {
-    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/AB/num/uh/p/fist`)
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/AB/num/uh/p/2`)
       .then(data => {
         console.log(data.data)
         this.list = data.data
@@ -31,7 +31,6 @@ export default {
 <style lang="scss" scoped>
 @import '@/style/base/index.scss';
 .center {
-  margin-top: rem750(90);
   @include rect(100%, 100%);
   border-top: rem750(4) solid #f0f0f0;
   .list {
@@ -40,6 +39,7 @@ export default {
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
+    align-content: flex-start;
     li {
       width: rem750(346);
       padding-bottom: rem750(30);

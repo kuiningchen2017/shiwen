@@ -202,7 +202,7 @@ export default {
       this.headtitle = '名师论道'
     } else if (this.$route.params.title === 'jxgj') {
       this.headtitle = '家校共建'
-    } else if (this.$route.params.title === 'drkt') {
+    } else if (this.$route.params.title === '018') {
       this.headtitle = '第二课堂'
     } else if (this.$route.params.title === '235') {
       this.headtitle = '疑难解析'
@@ -219,11 +219,11 @@ export default {
     } else if (this.$route.params.title === '365') {
       this.headtitle = '单元设计'
     }
-    if (this.$route.params.title === '023' || this.$route.params.title === '235') {
+    if (this.$route.params.title === '023') {
       this.gradeShow = true
       this.subShow = true
       this.pressShow = true
-    } else if (this.$route.params.title === '926' || this.$route.params.title === '014') {
+    } else if (this.$route.params.title === '926' || this.$route.params.title === '014' || this.$route.params.title === '235') {
       this.gradeShow = true
       this.subShow = true
     } else if (this.$route.params.title === '526' || this.$route.params.title === '057') {
@@ -232,6 +232,8 @@ export default {
       this.gradeShow = true
       this.subShow = true
       this.pressShow = true
+    } else if (this.$route.params.title === '018') {
+      this.subShow = true
     }
     axios.post(`${this.GLOBAL.shishuiyuan}/index/peri/top/id/hk`)
       .then(data => {
@@ -300,6 +302,8 @@ export default {
       }
       ul {
         background: $bg-black;
+        height: rem750(272);
+        overflow: scroll;
         li {
           @include rect(100%,rem750(68));
           line-height: rem750(68);

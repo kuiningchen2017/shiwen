@@ -8,8 +8,15 @@
           <em class="iconfont icon-yanjing-active">{{this.pageview}}</em>
         </li>
         <li class="xingji">
-          <h2>星级</h2>
-          <p>￥<span>{{this.price}}</span></p>
+          <div class="stars">
+            <div class="gray">
+              <img src="@/assets/star-gray.png" v-for="(item, index) of arr" :key="index">
+            </div>
+            <div class="light">
+              <img src="@/assets/star-true.png" v-for="(item, number) of stars" :key="number">
+            </div>
+          </div>
+          <!-- <p>￥<span>{{this.price}}</span></p> -->
         </li>
         <li class="speaker">
           <h2>主讲人：{{this.teacher_name}}</h2>
@@ -18,7 +25,7 @@
         <li class="ziyuan" v-if="flag" @click="gokejian">
           <div class="left">
             <span>尊享</span>
-            <p>课件资源：教学设计、PPT、Word</p>
+            <p>教学资源：教学设计、PPT、Word</p>
           </div>
           <div class="right">
             <p>查看详情</p>
@@ -47,6 +54,35 @@
           更多
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
+      </div>
+      <div class="commentbox">
+        <div class="show" v-if="show">
+          <p>暂无评论，快去发表你的看法吧！</p>
+        </div>
+        <div class="list" v-else>
+          <li v-for="(item, index) of commentlist" :key="index">
+            <div class="top">
+              <img :src ="item.image" alt="#">
+              <div class="right">
+                <div class="title">
+                  <h3>{{item.name}}</h3>
+                  <p>{{item.date}}</p>
+                </div>
+                <div class="stars">
+                  <div class="gray">
+                    <img src="@/assets/star-gray.png" v-for="(item, num) of arr" :key="num">
+                  </div>
+                  <div class="light">
+                    <img src="@/assets/star-true.png" v-for="(item, number) of starts[index]" :key="number">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="commentlist">
+              <p>{{item.content}}</p>
+            </div>
+          </li>
+        </div>
       </div>
     </div>
     <div class="video">
@@ -89,10 +125,15 @@ export default {
       pageview: '',
       teacher_name: '',
       teacher_title: '',
-      flag: true,
+      flag: false,
       timer: null,
       tuijianlist: [],
       classA: '',
+      arr: [1, 2, 3, 4, 5],
+      stars: [],
+      starts: [],
+      commentlist: [],
+      show: false,
       navlist: [
         {
           name: '概述',
@@ -103,6 +144,7 @@ export default {
           selector: '#comment'
         }
       ],
+      totalTime: '',
       playerOptions: {
         playbackRates: [0.7, 1.0, 1.5, 2.0], // 播放速度
         autoplay: false, // 如果true,浏览器准备好时开始回放。
@@ -130,16 +172,42 @@ export default {
   },
   methods: {
     onPlayerPlay (player) {
-      if (!this.timer) {
-        this.timer = setInterval(() => {
-          console.log(player.controlBar.currentTimeDisplay.formattedTime_)
-        }, 10000)
+      this.totalTime = player.controlBar.durationDisplay.duration_
+      if (localStorage.getItem('token')) {
+        axios.post(`${this.GLOBAL.shishuiyuan}/api/userlearn/recordlog?token=${localStorage.getItem('token')}&file_id=${this.$route.params.id}&learn_time=0&total_time=${this.totalTime}`)
+          .then(data => {})
+        if (!this.timer) {
+          this.timer = setInterval(() => {
+            var current = player.controlBar.currentTimeDisplay.formattedTime_
+            var learnTime = ''
+            if (current.split(':').length === 2) {
+              learnTime = (current.split(':')[0] * 60) + (current.split(':')[1] * 1)
+            } else if (current.split(':').length === 3) {
+              learnTime = (current.split(':')[0] * 3600) + (current.split(':')[1] * 60) + (current.split(':')[2] * 1)
+            }
+            axios.post(`${this.GLOBAL.shishuiyuan}/api/userlearn/recordlog?token=${localStorage.getItem('token')}&file_id=${this.$route.params.id}&learn_time=${learnTime}&total_time=${this.totalTime}`)
+              .then(data => {})
+          }, 10000)
+        }
       }
     },
     onPlayerPause (player) {
       clearInterval(this.timer)
       this.timer = null
-      console.log(player.controlBar.currentTimeDisplay.formattedTime_)
+      if (localStorage.getItem('token')) {
+        var current = player.controlBar.currentTimeDisplay.formattedTime_
+        var learnTime = ''
+        if (current.split(':').length === 2) {
+          learnTime = (current.split(':')[0] * 60) + (current.split(':')[1] * 1)
+        } else if (current.split(':').length === 3) {
+          learnTime = (current.split(':')[0] * 3600) + (current.split(':')[1] * 60) + (current.split(':')[2] * 1)
+        }
+        console.log(learnTime)
+        axios.post(`${this.GLOBAL.shishuiyuan}/api/userlearn/recordlog?token=${localStorage.getItem('token')}&file_id=${this.$route.params.id}&learn_time=${learnTime}&total_time=${this.totalTime}`)
+          .then(data => {
+            console.log(data.data)
+          })
+      }
     },
     goAnchor (selector, index) {
       document.querySelector(selector).scrollIntoView(true)
@@ -172,7 +240,7 @@ export default {
       text: '加载中...',
       spinnerType: 'fading-circle'
     })
-    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/ledger/id/${this.$route.params.id}/key/${this.$route.params.code}`)
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/ledger/id/${this.$route.params.id}/key/${this.$route.params.code}/token/${localStorage.getItem('token')}`)
       .then(data => {
         console.log(data.data)
         this.playerOptions.poster = data.data.Image
@@ -183,6 +251,15 @@ export default {
         this.teacher_name = data.data.File_SubName
         this.price = data.data.Price
         this.pageview = data.data.pageview
+        var startNum = data.data.star
+        if (data.data.filetype === 1) {
+          this.flag = true
+        }
+        var stars = []
+        for (var i = 0; i < startNum; i++) {
+          stars.push(i)
+        }
+        this.stars = stars
         if (data.data.teacher_title !== 0) {
           this.teacher_title = data.data.teacher_title
         }
@@ -193,6 +270,7 @@ export default {
       })
     axios.post(`${this.GLOBAL.shishuiyuan}/index/top/refer/id/${this.$route.params.id}/key/${this.$route.params.code}`)
       .then(data => {
+        console.log(data.data)
         this.classA = data.data.classA
         for (let i in data.data) {
           if (i <= 1) {
@@ -200,6 +278,31 @@ export default {
           }
         }
       })
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/discuss/list/id/${this.$route.params.id}/num/fd/key/${this.$route.params.code}/p/0`)
+      .then(data => {
+        console.log(data.data)
+        if (data.data.length === 0) {
+          this.show = true
+        } else {
+          for (var i = 0; i < 2; i++) {
+            if (data.data[i] === undefined) {
+              return false
+            } else {
+              this.commentlist.push(data.data[i])
+              var res = data.data[i].star
+              var startNum = res
+              var starts = []
+              for (var n = 0; n < startNum; n++) {
+                starts.push(n)
+              }
+              this.starts.push(starts)
+            }
+          }
+        }
+      })
+  },
+  destroyed () {
+    clearInterval(this.timer)
   }
 }
 </script>
@@ -212,7 +315,6 @@ export default {
     width: 100%;
     background: $bg-black;
     flex-shrink: 0;
-    // height: rem750(560);
     .info {
       padding: 0 rem750(20);
       margin-bottom: rem750(14);
@@ -232,7 +334,23 @@ export default {
         }
       }
       .xingji {
-        height: rem750(49);
+        height: rem750(50);
+        .stars {
+          height: rem750(40);
+          position: relative;
+          @include _flex(flex-start,center);
+          img{
+            @include rect(rem750(30), rem750(30));
+            padding: rem750(5);
+          }
+          .light, .gray {
+            display: flex;
+          }
+          .light {
+            position:absolute;
+            top: 0;
+          }
+        }
         p {
           color: #b3b3b3;
           padding-right: rem750(12);
@@ -319,8 +437,7 @@ export default {
       padding:rem750(27) rem750(37);
       p {
         line-height: rem750(45);
-        font-size: rem750(21);
-        text-indent: rem750(42)
+        font-size: rem750(28);
       }
     }
     .article>p/deep/p {
@@ -328,7 +445,7 @@ export default {
     }
   }
   .comment {
-    height: rem750(355);
+    height: rem750(390);
   }
   .video {
     height: rem750(404);
@@ -382,6 +499,79 @@ export default {
           overflow: hidden;
           text-overflow:ellipsis;
           white-space: nowrap;
+        }
+      }
+    }
+    .commentbox {
+      .show {
+        @include rect(100%, rem750(310));
+        @include _flex(center, center);
+        p {
+          color: rgb(97, 95, 95);
+          font-size: rem750(30)
+        }
+      }
+      .list {
+        @include rect(100%, rem750(310));
+        padding: 0 rem750(40);
+        overflow: hidden;
+        box-sizing: border-box;
+        li {
+          border-bottom: rem750(2) solid #f8f8f8;
+          .top {
+            height: rem750(106);
+            padding: 0;
+            @include _flex(space-between, center);
+            img {
+              @include rect(rem750(60), rem750(60));
+              border-radius: 50%
+            }
+            .right {
+              width: rem750(570);
+              .title {
+                @include _flex(space-between, center);
+                h3 {
+                  height: rem750(40);
+                  line-height: rem750(40);
+                  font-size: rem750(28);
+                }
+                p {
+                  padding-top: rem750(15);
+                  font-size: rem750(24);
+                  color: rgb(92, 91, 91);
+                }
+              }
+              .stars {
+                height: rem750(40);
+                position: relative;
+                @include _flex(flex-start,center);
+                img{
+                  @include rect(rem750(30), rem750(30));
+                  padding: rem750(5);
+                }
+                .light, .gray {
+                  display: flex;
+                }
+                .light {
+                  position:absolute;
+                  top: 0;
+                }
+              }
+            }
+          }
+          .commentlist {
+            width: 100%;
+            p {
+              line-height: rem750(38);
+              font-size: rem750(28);
+              color: #000;
+              padding-left: rem750(100);
+              width: rem750(550);
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
         }
       }
     }

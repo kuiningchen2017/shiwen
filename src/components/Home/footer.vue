@@ -19,7 +19,7 @@ export default {
         },
         {
           icon: 'iconfont icon-kecheng',
-          name: '课程',
+          name: '课本',
           path: '/course'
         },
         {
@@ -31,15 +31,10 @@ export default {
     }
   },
   mounted () {
-    if (localStorage.getItem('type') === '0') {
-      this.list[2].path = '/user/parent'
+    if (localStorage.getItem('type') === '3') {
+      this.list[2].path = '/user/teacher/one'
     } else {
-      this.list[2].path = '/user/teacher'
-    }
-  },
-  watch: {
-    '$route.path' (newVal, oldVal) {
-      console.log(newVal, oldVal)
+      this.list[2].path = '/user/parent/one'
     }
   }
 }

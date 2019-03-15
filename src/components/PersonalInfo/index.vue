@@ -3,9 +3,9 @@
     <div class="list">
       <li>
         <h3>头像</h3>
-        <div class="box">
+        <div class="box" @click.stop="uploadHeadImg">
           <img :src="this.headimg">
-          <span class="iconfont icon-iconfontjiantou4" @click.stop="uploadHeadImg">
+          <span class="iconfont icon-iconfontjiantou4">
             <input type="file" @change="handleFile" class="hiddenInput" style="display:none">
           </span>
         </div>
@@ -19,21 +19,21 @@
       </li>
       <li>
         <h3>昵称</h3>
-        <div class="box" @click="setname">
+        <div class="box" @click.stop="setname">
           <p>{{this.Nickname}}</p>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
       </li>
       <li>
         <h3>性别</h3>
-        <div class="box" @click="setsex">
+        <div class="box" @click.stop="setsex">
           <p>{{this.sex}}</p>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
       </li>
       <li>
         <h3>出生年月</h3>
-        <div class="box" @click="setdate">
+        <div class="box" @click.stop="setdate">
           <p>{{this.birthday}}</p>
           <span class="iconfont icon-iconfontjiantou4"></span>
         </div>
@@ -48,7 +48,7 @@
         </mt-datetime-picker>
       </li>
     </div>
-    <button @click="cancel"> 退出登录</button>
+    <div class="cancel" @click="cancel"> 退出登录</div>
     <div class="sex" v-if="active">
       <mt-popup v-model="active" position="bottom" class="mint-popup">
         <mt-picker :slots="slots" :show-toolbar="true"  ref="picker">
@@ -139,7 +139,6 @@ export default {
     },
     sure () {
       let sex = this.$refs.picker.getValues()[0]
-      console.log(this.sex)
       this.active = false
       let num = ''
       if (sex === '男') {
@@ -147,6 +146,7 @@ export default {
       } else {
         num = 2
       }
+      console.log(num)
       axios.post(`${this.GLOBAL.shishuiyuan}/api/user/setuserinfo?token=${localStorage.getItem('token')}&sex=${num}`)
         .then(data => {
           Toast(data.data.message)
@@ -157,13 +157,12 @@ export default {
     },
     cancel () {
       localStorage.clear()
-      this.$router.push('/login')
+      this.$router.push('/home')
     }
   },
   mounted () {
     axios.post(`${this.GLOBAL.shishuiyuan}/api/user/getuserinfo?token=${localStorage.getItem('token')}`)
       .then(data => {
-        console.log(data.data)
         if (data.data.code === 0) {
           this.account = data.data.data.User_Account
           if (data.data.data.User_Nickname !== '') {
@@ -227,11 +226,12 @@ export default {
       }
     }
   }
-  button {
+  .cancel {
     margin-top: rem750(200);
     margin-left: rem750(75);
-    width:rem750(600);
-    height: rem750(90);
+    @include rect(rem750(600), rem750(90));
+    line-height: rem750(90);
+    text-align: center;
     border-radius: rem750(45);
     background: $bg-side;
     color: #fff;

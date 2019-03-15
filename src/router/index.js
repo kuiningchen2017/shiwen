@@ -82,7 +82,7 @@ export default new Router({
       }
     },
     {
-      path: '/user/:type',
+      path: '/user/:type/:enter',
       name: 'user',
       components: {
         header: () => import('@/components/User/header'),
@@ -91,7 +91,7 @@ export default new Router({
       }
     },
     {
-      path: '/teacheruser/:type',
+      path: '/teacheruser/:type/:enter',
       name: 'teacheruser',
       components: {
         header: () => import('@/components/User/header'),
@@ -100,7 +100,7 @@ export default new Router({
       }
     },
     {
-      path: '/turnuser/:type',
+      path: '/turnuser/:type/:enter',
       name: 'turnuser',
       components: {
         header: () => import('@/components/User/header'),
@@ -109,7 +109,7 @@ export default new Router({
       }
     },
     {
-      path: '/parentuser/:type',
+      path: '/parentuser/:type/:enter',
       name: 'parentuser',
       components: {
         header: () => import('@/components/User/header'),
@@ -150,7 +150,7 @@ export default new Router({
       }
     },
     {
-      path: '/personalinfo',
+      path: '/personalinfo/:enter',
       name: 'personalinfo',
       components: {
         header: () => import('@/components/PersonalInfo/header'),
@@ -219,7 +219,7 @@ export default new Router({
       }
     },
     {
-      path: '/schoolmessage',
+      path: '/schoolmessage/:enter',
       name: 'schoolmessage',
       components: {
         header: () => import('@/components/SchoolMessage/header'),
@@ -243,7 +243,7 @@ export default new Router({
       }
     },
     {
-      path: '/myclass',
+      path: '/myclass/:enter',
       name: 'myclass',
       components: {
         header: () => import('@/components/MyClass/header'),
@@ -259,27 +259,12 @@ export default new Router({
       }
     },
     {
-      path: '/classmessage',
+      path: '/classmessage/:enter/:id',
       name: 'classmessage',
-      redirect: '/classmessage/code',
       components: {
         header: () => import('@/components/ClassMessage/header'),
         default: () => import('@/components/ClassMessage/index')
-      },
-      children: [
-        {
-          path: 'code',
-          component: () => import('@/components/ClassMessage/code')
-        },
-        {
-          path: 'teacher',
-          component: () => import('@/components/ClassMessage/teacher')
-        },
-        {
-          path: 'students',
-          component: () => import('@/components/ClassMessage/students')
-        }
-      ]
+      }
     },
     {
       path: '/addclass',
@@ -290,134 +275,52 @@ export default new Router({
       }
     },
     {
-      path: '/recommend',
+      path: '/recommend/:enter',
       name: 'recommend',
-      redirect: '/recommend/code',
       components: {
         header: () => import('@/components/Recommend/header'),
         default: () => import('@/components/Recommend/index')
-      },
-      children: [
-        {
-          path: 'code',
-          component: () => import('@/components/Recommend/code')
-        },
-        {
-          path: 'list',
-          component: () => import('@/components/Recommend/list')
-        }
-      ]
+      }
     },
     {
-      path: '/mytrain',
+      path: '/mytrain/:enter',
       name: 'mytrain',
-      redirect: '/mytrain/all',
       components: {
         header: () => import('@/components/MyTrain/header'),
         default: () => import('@/components/MyTrain/index')
-      },
-      children: [
-        {
-          path: 'all',
-          component: () => import('@/components/MyTrain/all')
-        },
-        {
-          path: 'study',
-          component: () => import('@/components/MyTrain/study')
-        },
-        {
-          path: 'over',
-          component: () => import('@/components/MyTrain/over')
-        }
-      ]
+      }
     },
     {
-      path: '/mystudy',
+      path: '/mystudy/:enter',
       name: 'mystudy',
-      redirect: '/mystudy/all',
       components: {
         header: () => import('@/components/MyStudy/header'),
         default: () => import('@/components/MyStudy/index')
-      },
-      children: [
-        {
-          path: 'all',
-          component: () => import('@/components/MyStudy/all')
-        },
-        {
-          path: 'study',
-          component: () => import('@/components/MyStudy/study')
-        },
-        {
-          path: 'over',
-          component: () => import('@/components/MyStudy/over')
-        }
-      ]
+      }
     },
     {
-      path: '/mywork',
+      path: '/mywork/:enter',
       name: 'mywork',
-      redirect: '/mywork/all',
       components: {
         header: () => import('@/components/MyWork/header'),
         default: () => import('@/components/MyWork/index')
-      },
-      children: [
-        {
-          path: 'all',
-          component: () => import('@/components/MyWork/all')
-        },
-        {
-          path: 'study',
-          component: () => import('@/components/MyWork/study')
-        },
-        {
-          path: 'over',
-          component: () => import('@/components/MyWork/over')
-        }
-      ]
+      }
     },
     {
-      path: '/ordercenter',
+      path: '/ordercenter/:enter',
       name: 'ordercenter',
-      redirect: '/ordercenter/all',
       components: {
         header: () => import('@/components/OrderCenter/header'),
         default: () => import('@/components/OrderCenter/index')
-      },
-      children: [
-        {
-          path: 'all',
-          component: () => import('@/components/OrderCenter/all')
-        },
-        {
-          path: 'pay',
-          component: () => import('@/components/OrderCenter/pay')
-        },
-        {
-          path: 'comment',
-          component: () => import('@/components/OrderCenter/comment')
-        }
-      ]
+      }
     },
     {
-      path: '/myresult',
+      path: '/myresult/:enter',
       name: 'myresult',
-      redirect: '/myresult/video',
       components: {
         header: () => import('@/components/MyResult/header'),
         default: () => import('@/components/MyResult/index')
-      },
-      children: [
-        {
-          path: 'video',
-          component: () => import('@/components/MyResult/video')
-        },
-        {
-          path: 'kejian',
-          component: () => import('@/components/MyResult/kejian')
-        }
-      ]
+      }
     },
     {
       path: '/myfollow',
@@ -428,11 +331,19 @@ export default new Router({
       }
     },
     {
-      path: '/homework',
+      path: '/homework/:enter',
       name: 'homework',
       components: {
         header: () => import('@/components/Homework/header'),
         default: () => import('@/components/Homework/index')
+      }
+    },
+    {
+      path: '/homeworklist/:id',
+      name: 'homeworklist',
+      components: {
+        header: () => import('@/components/HomeworkList/header'),
+        default: () => import('@/components/HomeworkList/index')
       }
     },
     {
@@ -465,6 +376,22 @@ export default new Router({
       components: {
         header: () => import('@/components/Live/header'),
         default: () => import('@/components/Live/index')
+      }
+    },
+    {
+      path: '/liveclassroom',
+      name: 'liveclassroom',
+      components: {
+        header: () => import('@/components/LiveClassroom/header'),
+        default: () => import('@/components/LiveClassroom/index')
+      }
+    },
+    {
+      path: '/liveparent',
+      name: 'liveparent',
+      components: {
+        header: () => import('@/components/LiveParent/header'),
+        default: () => import('@/components/LiveParent/index')
       }
     },
     {

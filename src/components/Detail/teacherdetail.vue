@@ -11,7 +11,16 @@
           <span>教师：{{this.teacher}}<i>{{this.subname}}</i></span>
           <em class="iconfont icon-yanjing-active">{{this.pageview}}</em>
         </li>
-        <li>星级</li>
+        <li>
+          <div class="stars">
+            <div class="gray">
+              <img src="@/assets/star-gray.png" v-for="(item, index) of arr" :key="index">
+            </div>
+            <div class="light">
+              <img src="@/assets/star-true.png" v-for="(item, number) of stars" :key="number">
+            </div>
+          </div>
+        </li>
       </div>
     </div>
     <div class="general" id="general">
@@ -54,6 +63,35 @@
           <i class="iconfont icon-iconfontjiantou4"></i>
         </span>
       </div>
+      <div class="commentbox">
+        <div class="show" v-if="show">
+          <p>暂无评论，快去发表你的看法吧！</p>
+        </div>
+        <div class="list" v-else>
+          <li v-for="(item, index) of commentlist" :key="index">
+            <div class="top">
+              <img :src ="item.image" alt="#">
+              <div class="right">
+                <div class="title">
+                  <h3>{{item.name}}</h3>
+                  <p>{{item.date}}</p>
+                </div>
+                <div class="stars">
+                  <div class="gray">
+                    <img src="@/assets/star-gray.png" v-for="(item, index) of arr" :key="index">
+                  </div>
+                  <div class="light">
+                    <img src="@/assets/star-true.png" v-for="(item, number) of starts[index]" :key="number">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="commentlist">
+              <p>{{item.content}}</p>
+            </div>
+          </li>
+        </div>
+      </div>
     </div>
     <div class="teacher" id="teacher">
       <div class="head">
@@ -89,9 +127,14 @@ export default {
       pageview: '',
       tuijianlist: [],
       videolist: [],
+      arr: [1, 2, 3, 4, 5],
+      stars: [],
+      starts: [],
+      commentlist: [],
+      show: false,
       navlist: [
         {
-          name: '概述',
+          name: '简介',
           selector: '#general'
         },
         {
@@ -150,6 +193,12 @@ export default {
         this.content = data.data.Content
         this.videolist = data.data.video
         this.pageview = data.data.pageview
+        var startNum = data.data.star
+        var stars = []
+        for (var i = 0; i < startNum; i++) {
+          stars.push(i)
+        }
+        this.stars = stars
         Indicator.close()
       })
     axios.post(`${this.GLOBAL.shishuiyuan}/index/top/refer/id/${this.$route.params.id}/key/${this.$route.params.code}`)
@@ -158,6 +207,28 @@ export default {
         for (let i in data.data) {
           if (i <= 1) {
             this.tuijianlist.push(data.data[i])
+          }
+        }
+      })
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/discuss/list/id/${this.$route.params.id}/num/fd/key/${this.$route.params.code}/p/0`)
+      .then(data => {
+        console.log(data.data)
+        if (data.data.length === 0) {
+          this.show = true
+        } else {
+          for (var i = 0; i < 2; i++) {
+            if (data.data[i] === undefined) {
+              return false
+            } else {
+              this.commentlist.push(data.data[i])
+              var res = data.data[i].star
+              var startNum = res
+              var starts = []
+              for (var n = 0; n < startNum; n++) {
+                starts.push(n)
+              }
+              this.starts.push(starts)
+            }
           }
         }
       })
@@ -189,18 +260,34 @@ export default {
       li {
         @include _flex(space-between,center);
         span {
-          font-size:rem750(25);
+          font-size:rem750(30);
           color: #2e2e2e;
           i {
             padding-left: rem750(20);
             font-style: normal;
             color: #666666;
-            font-size: rem750(18)
+            font-size: rem750(26)
           }
         }
         em {
           color: #666;
-          font-size: rem750(20)
+          font-size: rem750(24)
+        }
+        .stars {
+          height: rem750(40);
+          position: relative;
+          @include _flex(flex-start,center);
+          img{
+            @include rect(rem750(30), rem750(30));
+            padding: rem750(5);
+          }
+          .light, .gray {
+            display: flex;
+          }
+          .light {
+            position:absolute;
+            top: 0;
+          }
         }
       }
     }
@@ -239,13 +326,15 @@ export default {
       padding:rem750(27) rem750(37);
       p {
         line-height: rem750(45);
-        font-size: remr750(21);
-        text-indent: rem750(42)
+        font-size: remr750(28);
       }
+    }
+    .article>p/deep/p {
+      font-size: rem750(28)
     }
   }
   .comment {
-    height: rem750(370);
+    height: rem750(390);
   }
   .video, .teacher {
     height: rem750(430)
@@ -299,6 +388,79 @@ export default {
           overflow: hidden;
           text-overflow:ellipsis;
           white-space: nowrap;
+        }
+      }
+    }
+  }
+  .commentbox {
+    .show {
+      @include rect(100%, rem750(310));
+      @include _flex(center, center);
+      p {
+        color: rgb(97, 95, 95);
+        font-size: rem750(30)
+      }
+    }
+    .list {
+      @include rect(100%, rem750(310));
+      padding: 0 rem750(40);
+      overflow: hidden;
+      box-sizing: border-box;
+      li {
+        border-bottom: rem750(2) solid #f8f8f8;
+        .top {
+          height: rem750(106);
+          padding: 0;
+          @include _flex(space-between, center);
+          img {
+            @include rect(rem750(60), rem750(60));
+            border-radius: 50%
+          }
+          .right {
+            width: rem750(570);
+            .title {
+              @include _flex(space-between, center);
+              h3 {
+                height: rem750(40);
+                line-height: rem750(40);
+                font-size: rem750(28);
+              }
+              p {
+                padding-top: rem750(15);
+                font-size: rem750(24);
+                color: rgb(92, 91, 91);
+              }
+            }
+            .stars {
+              height: rem750(40);
+              position: relative;
+              @include _flex(flex-start,center);
+              img{
+                @include rect(rem750(30), rem750(30));
+                padding: rem750(5);
+              }
+              .light, .gray {
+                display: flex;
+              }
+              .light {
+                position:absolute;
+                top: 0;
+              }
+            }
+          }
+        }
+        .commentlist {
+          width: 100%;
+          p {
+            line-height: rem750(38);
+            font-size: rem750(28);
+            color: #000;
+            padding-left: rem750(100);
+            width: rem750(550);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
         }
       }
     }

@@ -19,9 +19,9 @@ export default {
       let qrcode = new QRCode('qrcode', {
         width: 300,
         height: 300,
-        text: `http://sw.shishuiyuan999.com/?invite_id=${localStorage.getItem('userID')}`, // 二维码地址
+        text: `http://sw.shishuiyuan999.com/#/register?invite_id=${localStorage.getItem('userID')}`, // 二维码地址
         colorDark: '#000',
-        colorLight: '#fff',
+        colorLight: '#fff'
       })
     }
   }
@@ -31,23 +31,7 @@ export default {
 <style lang="scss" scoped>
 @import '@/style/base/index.scss';
 .center {
-  margin-top: rem750(90);
   @include rect(100%, 100%);
   border-top: rem750(4) solid #f0f0f0;
-  // img {
-  //   @include rect(100%, 100%)
-  // }
-  #qrcode {
-    @include rect(100%, rem750(400));
-    @include _flex(center, center);
-    canvas {
-      width: rem750(300)!important;
-      height: rem750(300)!important;
-    }
-    img {
-      width: rem750(300)!important;
-      height: rem750(300)!important;
-    }
-  }
 }
 </style>

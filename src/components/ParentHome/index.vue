@@ -71,7 +71,7 @@
       </div>
     </div> -->
     <div class="company">
-     <p>&copy;2018郑州石水源教育科技有限公司&nbsp;&nbsp;豫ICP备17001731号-2</p>
+      <p>&copy;河南师问教育科技有限公司&nbsp;&nbsp;豫ICP备19001139号</p>
     </div>
   </div>
 </template>
@@ -90,18 +90,18 @@ export default {
       navList: [
         {
           imgUrl: require('@/assets/icon_12.png'),
-          name: '音频资源',
+          name: '亲子之声',
           path: '/list/057'
         },
         {
           imgUrl: require('@/assets/icon_13.png'),
-          name: '视频资源',
+          name: '亲子TV',
           path: '/list/526'
         },
         {
           imgUrl: require('@/assets/icon_14.png'),
-          name: '直播课堂',
-          path: '/live'
+          name: '亲子直播',
+          path: '/liveparent'
         },
         {
           imgUrl: require('@/assets/icon_15.png'),

@@ -5,17 +5,6 @@
         <mt-button icon="back"></mt-button>
       </div>
     </mt-header>
-    <div class="headbox">
-      <li>
-        <p @click="video" :class="{ active: active }">视频资源</p>
-        <span v-show="active"></span>
-      </li>
-      <span></span>
-      <li>
-        <p @click="kejian" :class="{ active: flage }">课件资源</p>
-        <span v-show="flage"></span>
-      </li>
-    </div>
   </div>
 </template>
 
@@ -24,31 +13,23 @@ import Vue from 'vue'
 import { Header } from 'mint-ui'
 Vue.use(Header)
 export default {
-  data () {
-    return {
-      active: true,
-      flage: false
-    }
-  },
   methods: {
     back () {
-      this.$router.go(-1)
-    },
-    video () {
-      this.$router.push('/myresult/video')
-      this.active = true
-      this.flage = false
-    },
-    kejian () {
-      this.$router.push('/myresult/kejian')
-      this.active = false
-      this.flage = true
-    }
-  },
-  mounted () {
-    if (this.$route.path === '/myresult/kejian') {
-      this.active = false
-      this.flage = true
+      var type = ''
+      if (localStorage.getItem('type') === '3') {
+        type = 'teacher'
+      } else {
+        type = 'parent'
+      }
+      if (this.$route.params.enter === 'one') {
+        this.$router.push({name: 'user', params: {type: type}})
+      } else if (this.$route.params.enter === 'two') {
+        this.$router.push({name: 'teacheruser', params: {type: type}})
+      } else if (this.$route.params.enter === 'three') {
+        this.$router.push({name: 'turnuser', params: {type: type}})
+      } else if (this.$route.params.enter === 'four') {
+        this.$router.push({name: 'parentuser', params: {type: type}})
+      }
     }
   }
 }
@@ -65,36 +46,6 @@ export default {
     font-size: $font-head;
     padding: 0 rem750(27);
     border-bottom: rem750(1) solid #f0f0f0;
-  }
-  .headbox {
-    @include rect(100%,rem750(90));
-    @include _flex(center, center);
-    background: #fff;
-    position: relative;
-    z-index: 1001;
-    top:0;
-    li {
-      @include rect(rem750(374), 100%);
-      @include _flex(space-between, center,column);
-      p {
-        height: rem750(86);
-        line-height: rem750(100);
-        text-align: center;
-        font-size: rem750(30);
-        color: #979797;
-      }
-      span {
-        @include rect(rem750(41), rem750(4));
-        background: $bg-side;
-      }
-      .active {
-        color: $bg-side;
-      }
-    }
-    span {
-      @include rect(rem750(2), rem750(28));
-      background: $bg-base;
-    }
   }
 }
 </style>

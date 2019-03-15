@@ -31,7 +31,6 @@ export default {
 <style lang="scss" scoped>
 @import '@/style/base/index.scss';
 .center {
-  margin-top: rem750(90);
   @include rect(100%, 100%);
   border-top: rem750(4) solid #eee;
   .list {
@@ -41,6 +40,7 @@ export default {
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
+    align-content: flex-start;
     li {
       width: rem750(346);
       padding-bottom: rem750(30);

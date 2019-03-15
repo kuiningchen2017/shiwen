@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <mt-header title="课件资源">
+    <mt-header title="教学资源">
       <div @click="back" class="back" slot="left">
         <mt-button icon="back"></mt-button>
       </div>

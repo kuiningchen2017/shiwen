@@ -15,7 +15,22 @@ Vue.use(Header)
 export default {
   methods: {
     back () {
-      this.$router.go(-1)
+      // this.$router.go(-1)
+      var type = ''
+      if (localStorage.getItem('type') === '3') {
+        type = 'teacher'
+      } else {
+        type = 'parent'
+      }
+      if (this.$route.params.enter === 'one') {
+        this.$router.push({name: 'user', params: {type: type}})
+      } else if (this.$route.params.enter === 'two') {
+        this.$router.push({name: 'teacheruser', params: {type: type}})
+      } else if (this.$route.params.enter === 'three') {
+        this.$router.push({name: 'turnuser', params: {type: type}})
+      } else if (this.$route.params.enter === 'four') {
+        this.$router.push({name: 'parentuser', params: {type: type}})
+      }
     }
   }
 }

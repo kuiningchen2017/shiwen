@@ -9,7 +9,7 @@
           <b><i>￥</i>{{item.File_ID}}</b>
           <p>{{item.File_CreateDate}}</p>
         </div>
-        <span>待付款</span>
+        <span>待评论</span>
       </li>
     </div>
   </div>
@@ -24,7 +24,7 @@ export default {
     }
   },
   mounted () {
-    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/AB/num/uh/p/fist`)
+    axios.post(`${this.GLOBAL.shishuiyuan}/index/top/sandglass/id/AB/num/uh/p/3`)
       .then(data => {
         console.log(data.data)
         this.list = data.data
@@ -36,7 +36,6 @@ export default {
 <style lang="scss" scoped>
 @import '@/style/base/index.scss';
 .center {
-  margin-top: rem750(90);
   @include rect(100%, 100%);
   .list {
     @include rect(100%, 100%);

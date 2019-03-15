@@ -104,10 +104,16 @@ export default {
               localStorage.setItem('token', res.data.User_Token)
               localStorage.setItem('type', res.data.User_Type)
               localStorage.setItem('userID', res.data.User_ID)
-              if (res.data.User_Type === 0) {
-                this.$router.push('/user/parent')
+              if (localStorage.getItem('invite_join_class_id')) {
+                this.$router.push(`/home?invite_join_class_id=${localStorage.getItem('invite_join_class_id')}`)
               } else {
-                this.$router.push('/user/teacher')
+                if (res.data.User_Type === 0 || res.data.User_Type === 5) {
+                  // this.$router.push('/user/parent/one')
+                  this.$router.go(-1)
+                } else {
+                  // this.$router.push('/user/teacher/one')
+                  this.$router.go(-1)
+                }
               }
             }
           })

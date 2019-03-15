@@ -1,109 +1,40 @@
 <template>
   <div class="center animated fadeInLeft">
-    <ul>
+    <div class="void" v-if="falg">
+      <p>暂无老师加入，快去邀请吧！</p>
+    </div>
+    <ul v-else>
       <li v-for="(item, index ) of list" :key="index">
-        <img :src="item.img" alt="#">
+        <img v-if="item.User_HeadImg!== ''" :src="item.User_HeadImg">
+        <img v-else src='@/assets/headimg.png'>
         <div>
-          <h3>{{item.name}} <b>{{item.tel}}</b></h3>
-          <span>{{item.time}}</span>
+          <h3>{{item.User_Nickname}} <b>{{item.User_Phone}}</b></h3>
+          <span>{{item.User_RegDate}}</span>
         </div>
-        <p>{{item.status}}</p>
+        <p>{{item.User_TypeFormat}}</p>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
-      list: [
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '肖涵哲',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '王烁',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '张鹏',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '李磊',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '肖涵哲',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '王烁',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '张鹏',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '李磊',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '肖涵哲',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '王烁',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '张鹏',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        },
-        {
-          img: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201306/2013062320262198.jpg',
-          name: '李磊',
-          tel: '158****7982',
-          time: '2019-01-28 13:26',
-          status: '老师'
-        }
-      ]
+      falg: false,
+      list: []
     }
+  },
+  mounted () {
+    axios.post(`${this.GLOBAL.shishuiyuan}/api/myclass/getmemberlist?token=${localStorage.getItem('token')}&class_id=${this.$route.params.id}&user_type=3&page=1`)
+      .then(data => {
+        if (data.data.data.total !== 0) {
+          this.list = data.data.data.data
+        } else {
+          this.falg = true
+        }
+      })
   }
 }
 </script>
@@ -111,9 +42,16 @@ export default {
 <style lang="scss" scoped>
 @import '@/style/base/index.scss';
 .center {
-  margin-top: rem750(90);
   @include rect(100%, 100%);
   border-top: rem750(4) solid #f0f0f0;
+  .void {
+    @include rect(100%, 100%);
+    @include _flex(center, center)
+    p {
+      font-size: rem750(50);
+      color: $bg-side
+    }
+  }
   ul {
     @include rect(100%, 100%);
     padding-left: rem750(27);
